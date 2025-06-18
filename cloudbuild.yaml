@@ -1,0 +1,23 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "asia-southeast1-docker.pkg.dev/home-care-360/user/production",
+        "-f",
+        "Dockerfile",
+        ".",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      ["push", "asia-southeast1-docker.pkg.dev/home-care-360/user/production"]
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["rollout", "restart", "deployment/user"]
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=asia-east1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1"
+      - "CLOUDSDK_CORE_PROJECT=home-care-360"
+
+options:
+  logging: CLOUD_LOGGING_ONLY

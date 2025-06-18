@@ -1,0 +1,48 @@
+# Node modules
+node_modules/
+
+# TypeScript compiled output
+dist/
+build/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Optional npm cache directory
+.npm/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Docker
+docker-compose.override.yml
+
+# PM2 logs
+pids/
+*.pid
+*.seed
+
+# Test output
+coverage/
+.jest/
+
+# Local database or temp data
+tmp/
+data/
+*.sqlite
+.vercel

@@ -1,0 +1,632 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../src/generated/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id                                 Int                     @id @default(autoincrement())
+  customerId                         Int
+  serviceId                          Int
+  providerId                         Int
+  status                             BookingStatus
+  date                               DateTime
+  note                               String?
+  createdById                        Int?
+  updatedById                        Int?
+  deletedById                        Int?
+  deletedAt                          DateTime?
+  createdAt                          DateTime                @default(now())
+  updatedAt                          DateTime
+  confirmedByCustomer                Boolean                 @default(false)
+  inspectedAt                        DateTime?
+  inspectedById                      Int?
+  inspectionNote                     String?
+  inspectionStatus                   InspectionStatus        @default(NOT_YET)
+  staffId                            Int?                    @unique
+  CustomerProfile                    CustomerProfile         @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  Staff_Booking_inspectedByIdToStaff Staff?                  @relation("Booking_inspectedByIdToStaff", fields: [inspectedById], references: [id])
+  ServiceProvider                    ServiceProvider         @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  Service                            Service                 @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  Staff_Booking_staffIdToStaff       Staff?                  @relation("Booking_staffIdToStaff", fields: [staffId], references: [id], onDelete: Cascade)
+  BookingServiceItem                 BookingServiceItem[]
+  BookingServicePackage              BookingServicePackage[]
+  InspectionReport                   InspectionReport?
+  ProposedService                    ProposedService[]
+  Transaction                        Transaction?
+  WorkLog                            WorkLog[]
+}
+
+model BookingServiceItem {
+  bookingId Int
+  serviceId Int
+  quantity  Int     @default(1)
+  Booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  Service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([bookingId, serviceId])
+}
+
+model BookingServicePackage {
+  bookingId      Int
+  packageId      Int
+  quantity       Int            @default(1)
+  Booking        Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  ServicePackage ServicePackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@id([bookingId, packageId])
+}
+
+model Category {
+  id                              Int                   @id @default(autoincrement())
+  name                            String                @db.VarChar(500)
+  logo                            String?               @db.VarChar(1000)
+  parentCategoryId                Int?
+  createdById                     Int?
+  updatedById                     Int?
+  deletedById                     Int?
+  deletedAt                       DateTime?
+  createdAt                       DateTime              @default(now())
+  updatedAt                       DateTime
+  User_Category_createdByIdToUser User?                 @relation("Category_createdByIdToUser", fields: [createdById], references: [id])
+  User_Category_deletedByIdToUser User?                 @relation("Category_deletedByIdToUser", fields: [deletedById], references: [id])
+  Category                        Category?             @relation("CategoryToCategory", fields: [parentCategoryId], references: [id])
+  other_Category                  Category[]            @relation("CategoryToCategory")
+  User_Category_updatedByIdToUser User?                 @relation("Category_updatedByIdToUser", fields: [updatedById], references: [id])
+  CategoryTranslation             CategoryTranslation[]
+  StaffCategory                   StaffCategory[]
+  Service                         Service[]             @relation("ServiceCategories")
+
+  @@index([deletedAt])
+}
+
+model CategoryTranslation {
+  id          Int       @id @default(autoincrement())
+  categoryId  Int
+  languageId  String
+  name        String    @db.VarChar(500)
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime
+  deletedAt   DateTime?
+  Category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  Language    Language  @relation(fields: [languageId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  sender          String          @db.VarChar(50)
+  message         String
+  sentAt          DateTime        @default(now())
+  isRead          Boolean         @default(false)
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+}
+
+model CustomerProfile {
+  id                    Int                     @id @default(autoincrement())
+  userId                Int                     @unique
+  address               String?
+  dateOfBirth           DateTime?
+  gender                Gender?
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime
+  Booking               Booking[]
+  ChatMessage           ChatMessage[]
+  User                  User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  PackageRecommendation PackageRecommendation[]
+  RecurringBooking      RecurringBooking[]
+  Review                Review[]
+  RewardPoint           RewardPoint[]
+}
+
+model Device {
+  id           Int            @id @default(autoincrement())
+  userId       Int
+  userAgent    String
+  ip           String
+  lastActive   DateTime
+  createdAt    DateTime       @default(now())
+  isActive     Boolean        @default(true)
+  User         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  RefreshToken RefreshToken[]
+}
+
+model Language {
+  id                              String                       @id @db.VarChar(10)
+  name                            String                       @db.VarChar(500)
+  createdById                     Int?
+  updatedById                     Int?
+  deletedById                     Int?
+  deletedAt                       DateTime?
+  createdAt                       DateTime                     @default(now())
+  updatedAt                       DateTime
+  CategoryTranslation             CategoryTranslation[]
+  User_Language_createdByIdToUser User?                        @relation("Language_createdByIdToUser", fields: [createdById], references: [id])
+  User_Language_deletedByIdToUser User?                        @relation("Language_deletedByIdToUser", fields: [deletedById], references: [id])
+  User_Language_updatedByIdToUser User?                        @relation("Language_updatedByIdToUser", fields: [updatedById], references: [id])
+  ServiceProviderTranslation      ServiceProviderTranslation[]
+  ServiceTranslation              ServiceTranslation[]
+
+  @@index([deletedAt])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  content   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PackageRecommendation {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  packageId       Int
+  reason          String?
+  accepted        Boolean         @default(false)
+  recommendedAt   DateTime        @default(now())
+  acceptedAt      DateTime?
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ServicePackage  ServicePackage  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+}
+
+model PaymentTransaction {
+  id                 Int      @id @default(autoincrement())
+  gateway            String   @db.VarChar(100)
+  transactionDate    DateTime @default(now())
+  accountNumber      String?  @db.VarChar(100)
+  subAccount         String?  @db.VarChar(250)
+  amountIn           Int      @default(0)
+  amountOut          Int      @default(0)
+  accumulated        Int      @default(0)
+  referenceNumber    String?  @db.VarChar(255)
+  transactionContent String?
+  body               String?
+  createdAt          DateTime @default(now())
+}
+
+model Permission {
+  id                                Int        @id @default(autoincrement())
+  name                              String     @unique @db.VarChar(100)
+  description                       String?
+  path                              String     @db.VarChar(500)
+  method                            HTTPMethod
+  module                            String?    @db.VarChar(100)
+  createdById                       Int?
+  updatedById                       Int?
+  deletedById                       Int?
+  deletedAt                         DateTime?
+  createdAt                         DateTime   @default(now())
+  updatedAt                         DateTime
+  User_Permission_createdByIdToUser User?      @relation("Permission_createdByIdToUser", fields: [createdById], references: [id])
+  User_Permission_deletedByIdToUser User?      @relation("Permission_deletedByIdToUser", fields: [deletedById], references: [id])
+  User_Permission_updatedByIdToUser User?      @relation("Permission_updatedByIdToUser", fields: [updatedById], references: [id])
+  Role                              Role[]     @relation("RolePermissions")
+
+  @@index([deletedAt])
+}
+
+model RecurringBooking {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  serviceId       Int
+  interval        String          @db.VarChar(100)
+  nextRunDate     DateTime
+  active          Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  Service         Service         @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  deviceId  Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  Device    Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+}
+
+model Review {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  staffId         Int
+  serviceId       Int
+  rating          Int
+  comment         String
+  createdAt       DateTime        @default(now())
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  Service         Service         @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  Staff           Staff           @relation(fields: [staffId], references: [id], onDelete: Cascade)
+}
+
+model RewardPoint {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  points          Int             @default(0)
+  reason          String?         @db.VarChar(500)
+  createdAt       DateTime        @default(now())
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+}
+
+model Role {
+  id                          Int          @id @default(autoincrement())
+  name                        String       @unique @db.VarChar(100)
+  createdById                 Int?
+  updatedById                 Int?
+  deletedById                 Int?
+  deletedAt                   DateTime?
+  createdAt                   DateTime     @default(now())
+  updatedAt                   DateTime
+  User_Role_createdByIdToUser User?        @relation("Role_createdByIdToUser", fields: [createdById], references: [id])
+  User_Role_deletedByIdToUser User?        @relation("Role_deletedByIdToUser", fields: [deletedById], references: [id])
+  User_Role_updatedByIdToUser User?        @relation("Role_updatedByIdToUser", fields: [updatedById], references: [id])
+  Permission                  Permission[] @relation("RolePermissions")
+  User_UserRoles              User[]       @relation("UserRoles")
+
+  @@index([deletedAt])
+}
+
+model Service {
+  id                             Int                  @id @default(autoincrement())
+  basePrice                      Float
+  virtualPrice                   Float
+  images                         String[]
+  durationMinutes                Int
+  providerId                     Int
+  createdById                    Int?
+  updatedById                    Int?
+  deletedById                    Int?
+  deletedAt                      DateTime?
+  createdAt                      DateTime             @default(now())
+  updatedAt                      DateTime
+  name                           String               @default("test") @db.VarChar(100)
+  publishedAt                    DateTime?            @default(now())
+  description                    String               @default("test description") @db.VarChar(100)
+  Booking                        Booking[]
+  BookingServiceItem             BookingServiceItem[]
+  ProposedService                ProposedService[]
+  RecurringBooking               RecurringBooking[]
+  Review                         Review[]
+  User_Service_createdByIdToUser User?                @relation("Service_createdByIdToUser", fields: [createdById], references: [id])
+  User_Service_deletedByIdToUser User?                @relation("Service_deletedByIdToUser", fields: [deletedById], references: [id])
+  ServiceProvider                ServiceProvider      @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  User_Service_updatedByIdToUser User?                @relation("Service_updatedByIdToUser", fields: [updatedById], references: [id])
+  ServicePackageItem             ServicePackageItem[]
+  ServiceTranslation             ServiceTranslation[]
+  Category                       Category[]           @relation("ServiceCategories")
+
+  @@index([deletedAt])
+}
+
+model ServicePackage {
+  id                                    Int                     @id @default(autoincrement())
+  name                                  String                  @db.VarChar(500)
+  description                           String?
+  price                                 Float
+  createdById                           Int?
+  updatedById                           Int?
+  createdAt                             DateTime                @default(now())
+  updatedAt                             DateTime
+  deletedAt                             DateTime?
+  BookingServicePackage                 BookingServicePackage[]
+  PackageRecommendation                 PackageRecommendation[]
+  User_ServicePackage_createdByIdToUser User?                   @relation("ServicePackage_createdByIdToUser", fields: [createdById], references: [id])
+  User_ServicePackage_updatedByIdToUser User?                   @relation("ServicePackage_updatedByIdToUser", fields: [updatedById], references: [id])
+  ServicePackageItem                    ServicePackageItem[]
+
+  @@index([deletedAt])
+}
+
+model ServiceProvider {
+  id                                      Int                          @id @default(autoincrement())
+  description                             String?
+  address                                 String
+  createdAt                               DateTime                     @default(now())
+  updatedAt                               DateTime
+  userId                                  Int                          @unique
+  companyType                             CompanyType                  @default(JOINT_STOCK)
+  industry                                String?                      @db.VarChar(255)
+  licenseNo                               String?                      @db.VarChar(100)
+  logo                                    String?                      @db.VarChar(1000)
+  taxId                                   String                       @default("98678822") @db.VarChar(100)
+  verificationStatus                      VerificationStatus           @default(PENDING)
+  verifiedAt                              DateTime?
+  verifiedById                            Int?
+  Booking                                 Booking[]
+  Service                                 Service[]
+  User_ServiceProvider_userIdToUser       User                         @relation("ServiceProvider_userIdToUser", fields: [userId], references: [id], onDelete: Cascade)
+  User_ServiceProvider_verifiedByIdToUser User?                        @relation("ServiceProvider_verifiedByIdToUser", fields: [verifiedById], references: [id])
+  ServiceProviderTranslation              ServiceProviderTranslation[]
+  Staff                                   Staff[]
+}
+
+model ServiceProviderTranslation {
+  id              Int             @id @default(autoincrement())
+  providerId      Int
+  languageId      String
+  name            String          @db.VarChar(500)
+  description     String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime
+  deletedAt       DateTime?
+  Language        Language        @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  ServiceProvider ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model ServiceTranslation {
+  id          Int       @id @default(autoincrement())
+  serviceId   Int
+  languageId  String
+  name        String    @db.VarChar(500)
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime
+  deletedAt   DateTime?
+  Language    Language  @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  Service     Service   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model Staff {
+  id                                   Int                @id @default(autoincrement())
+  userId                               Int                @unique
+  providerId                           Int
+  createdAt                            DateTime           @default(now())
+  updatedAt                            DateTime
+  isActive                             Boolean            @default(true)
+  Booking_Booking_inspectedByIdToStaff Booking[]          @relation("Booking_inspectedByIdToStaff")
+  Booking_Booking_staffIdToStaff       Booking?           @relation("Booking_staffIdToStaff")
+  InspectionReport                     InspectionReport[]
+  Review                               Review[]
+  ServiceProvider                      ServiceProvider    @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  User                                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  StaffCategory                        StaffCategory[]
+  WorkLog                              WorkLog[]
+}
+
+model StaffCategory {
+  staffId    Int
+  categoryId Int
+  Category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  Staff      Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  @@id([staffId, categoryId])
+}
+
+model Transaction {
+  id          Int           @id @default(autoincrement())
+  bookingId   Int           @unique
+  amount      Float
+  status      PaymentStatus
+  method      PaymentMethod
+  paidAt      DateTime?
+  createdById Int?
+  updatedById Int?
+  deletedById Int?
+  deletedAt   DateTime?
+  createdAt   DateTime      @default(now())
+  Booking     Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                                                 Int               @id @default(autoincrement())
+  email                                              String            @unique
+  password                                           String
+  name                                               String            @db.VarChar(500)
+  phone                                              String            @db.VarChar(50)
+  avatar                                             String?           @db.VarChar(1000)
+  totpSecret                                         String?           @db.VarChar(1000)
+  status                                             UserStatus        @default(INACTIVE)
+  createdById                                        Int?
+  updatedById                                        Int?
+  deletedById                                        Int?
+  deletedAt                                          DateTime?
+  createdAt                                          DateTime          @default(now())
+  updatedAt                                          DateTime
+  Category_Category_createdByIdToUser                Category[]        @relation("Category_createdByIdToUser")
+  Category_Category_deletedByIdToUser                Category[]        @relation("Category_deletedByIdToUser")
+  Category_Category_updatedByIdToUser                Category[]        @relation("Category_updatedByIdToUser")
+  CustomerProfile                                    CustomerProfile?
+  Device                                             Device[]
+  Language_Language_createdByIdToUser                Language[]        @relation("Language_createdByIdToUser")
+  Language_Language_deletedByIdToUser                Language[]        @relation("Language_deletedByIdToUser")
+  Language_Language_updatedByIdToUser                Language[]        @relation("Language_updatedByIdToUser")
+  Notification                                       Notification[]
+  Permission_Permission_createdByIdToUser            Permission[]      @relation("Permission_createdByIdToUser")
+  Permission_Permission_deletedByIdToUser            Permission[]      @relation("Permission_deletedByIdToUser")
+  Permission_Permission_updatedByIdToUser            Permission[]      @relation("Permission_updatedByIdToUser")
+  RefreshToken                                       RefreshToken[]
+  Role_Role_createdByIdToUser                        Role[]            @relation("Role_createdByIdToUser")
+  Role_Role_deletedByIdToUser                        Role[]            @relation("Role_deletedByIdToUser")
+  Role_Role_updatedByIdToUser                        Role[]            @relation("Role_updatedByIdToUser")
+  Service_Service_createdByIdToUser                  Service[]         @relation("Service_createdByIdToUser")
+  Service_Service_deletedByIdToUser                  Service[]         @relation("Service_deletedByIdToUser")
+  Service_Service_updatedByIdToUser                  Service[]         @relation("Service_updatedByIdToUser")
+  ServicePackage_ServicePackage_createdByIdToUser    ServicePackage[]  @relation("ServicePackage_createdByIdToUser")
+  ServicePackage_ServicePackage_updatedByIdToUser    ServicePackage[]  @relation("ServicePackage_updatedByIdToUser")
+  ServiceProvider_ServiceProvider_userIdToUser       ServiceProvider?  @relation("ServiceProvider_userIdToUser")
+  ServiceProvider_ServiceProvider_verifiedByIdToUser ServiceProvider[] @relation("ServiceProvider_verifiedByIdToUser")
+  Staff                                              Staff?
+  User_User_createdByIdToUser                        User?             @relation("User_createdByIdToUser", fields: [createdById], references: [id])
+  other_User_User_createdByIdToUser                  User[]            @relation("User_createdByIdToUser")
+  User_User_deletedByIdToUser                        User?             @relation("User_deletedByIdToUser", fields: [deletedById], references: [id])
+  other_User_User_deletedByIdToUser                  User[]            @relation("User_deletedByIdToUser")
+  User_User_updatedByIdToUser                        User?             @relation("User_updatedByIdToUser", fields: [updatedById], references: [id])
+  other_User_User_updatedByIdToUser                  User[]            @relation("User_updatedByIdToUser")
+  Role_UserRoles                                     Role[]            @relation("UserRoles")
+
+  @@index([deletedAt])
+}
+
+model VerificationCode {
+  id        Int                  @id @default(autoincrement())
+  email     String               @db.VarChar(500)
+  code      String               @db.VarChar(50)
+  type      VerificationCodeType
+  expiresAt DateTime
+  createdAt DateTime             @default(now())
+
+  @@unique([email, code, type])
+  @@index([expiresAt])
+}
+
+model WorkLog {
+  id        Int       @id @default(autoincrement())
+  staffId   Int
+  bookingId Int
+  checkIn   DateTime?
+  checkOut  DateTime?
+  note      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  Booking   Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  Staff     Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
+}
+
+model InspectionReport {
+  id            Int      @id @default(autoincrement())
+  bookingId     Int      @unique
+  staffId       Int
+  estimatedTime Int?
+  note          String?
+  images        String[]
+  createdAt     DateTime @default(now())
+  Booking       Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  Staff         Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+}
+
+model ProposedService {
+  id        Int      @id @default(autoincrement())
+  bookingId Int
+  serviceId Int
+  quantity  Int      @default(1)
+  price     Float
+  notes     String?
+  createdAt DateTime @default(now())
+  Booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  Service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model ServicePackageItem {
+  packageId      Int
+  serviceId      Int
+  quantity       Int            @default(1)
+  discount       Float?
+  note           String?
+  ServicePackage ServicePackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  Service        Service        @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([packageId, serviceId])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum HTTPMethod {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+  OPTIONS
+  HEAD
+}
+
+enum PaymentMethod {
+  CASH
+  CREDIT_CARD
+  BANK_TRANSFER
+  MOMO
+  ZALOPAY
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum Session {
+  MORNING
+  AFTERNOON
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum VerificationCodeType {
+  REGISTER
+  FORGOT_PASSWORD
+  LOGIN
+  DISABLE_2FA
+}
+
+enum WeekDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum CompanyType {
+  SOLE_PROPRIETORSHIP
+  LIMITED_LIABILITY
+  JOINT_STOCK
+  PARTNERSHIP
+  OTHER
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum InspectionStatus {
+  NOT_YET
+  IN_PROGRESS
+  DONE
+}
+
+enum TimeOffStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
