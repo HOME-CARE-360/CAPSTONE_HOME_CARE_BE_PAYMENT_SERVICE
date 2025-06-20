@@ -6,7 +6,7 @@ dotenv.config();
 console.log(process.env.APP_NAME);
 
 
-const TCP_PORT = parseInt(process.env.USER_TCP_PORT || '4000');
+const TCP_PORT = parseInt(process.env.USER_TCP_PORT || '4001');
 console.log(TCP_PORT);
 
 const TCP_HOST = '0.0.0.0';

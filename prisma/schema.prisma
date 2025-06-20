@@ -10,9 +10,8 @@ datasource db {
 }
 
 model Booking {
-  id                                 Int                     @id @default(autoincrement())
+  id                                 Int               @id @default(autoincrement())
   customerId                         Int
-  serviceId                          Int
   providerId                         Int
   status                             BookingStatus
   date                               DateTime
@@ -21,45 +20,23 @@ model Booking {
   updatedById                        Int?
   deletedById                        Int?
   deletedAt                          DateTime?
-  createdAt                          DateTime                @default(now())
+  createdAt                          DateTime          @default(now())
   updatedAt                          DateTime
-  confirmedByCustomer                Boolean                 @default(false)
   inspectedAt                        DateTime?
   inspectedById                      Int?
   inspectionNote                     String?
-  inspectionStatus                   InspectionStatus        @default(NOT_YET)
-  staffId                            Int?                    @unique
-  CustomerProfile                    CustomerProfile         @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  Staff_Booking_inspectedByIdToStaff Staff?                  @relation("Booking_inspectedByIdToStaff", fields: [inspectedById], references: [id])
-  ServiceProvider                    ServiceProvider         @relation(fields: [providerId], references: [id], onDelete: Cascade)
-  Service                            Service                 @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  Staff_Booking_staffIdToStaff       Staff?                  @relation("Booking_staffIdToStaff", fields: [staffId], references: [id], onDelete: Cascade)
-  BookingServiceItem                 BookingServiceItem[]
-  BookingServicePackage              BookingServicePackage[]
+  inspectionStatus                   InspectionStatus  @default(NOT_YET)
+  staffId                            Int?              @unique
+  serviceRequestId                   Int?              @unique
+  CustomerProfile                    CustomerProfile   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  Staff_Booking_inspectedByIdToStaff Staff?            @relation("Booking_inspectedByIdToStaff", fields: [inspectedById], references: [id])
+  ServiceProvider                    ServiceProvider   @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  ServiceRequest                     ServiceRequest?   @relation(fields: [serviceRequestId], references: [id])
+  Staff_Booking_staffIdToStaff       Staff?            @relation("Booking_staffIdToStaff", fields: [staffId], references: [id], onDelete: Cascade)
   InspectionReport                   InspectionReport?
   ProposedService                    ProposedService[]
   Transaction                        Transaction?
   WorkLog                            WorkLog[]
-}
-
-model BookingServiceItem {
-  bookingId Int
-  serviceId Int
-  quantity  Int     @default(1)
-  Booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  Service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-
-  @@id([bookingId, serviceId])
-}
-
-model BookingServicePackage {
-  bookingId      Int
-  packageId      Int
-  quantity       Int            @default(1)
-  Booking        Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  ServicePackage ServicePackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
-
-  @@id([bookingId, packageId])
 }
 
 model Category {
@@ -79,6 +56,7 @@ model Category {
   other_Category                  Category[]            @relation("CategoryToCategory")
   User_Category_updatedByIdToUser User?                 @relation("Category_updatedByIdToUser", fields: [updatedById], references: [id])
   CategoryTranslation             CategoryTranslation[]
+  ServiceRequest                  ServiceRequest[]
   StaffCategory                   StaffCategory[]
   Service                         Service[]             @relation("ServiceCategories")
 
@@ -123,6 +101,7 @@ model CustomerProfile {
   RecurringBooking      RecurringBooking[]
   Review                Review[]
   RewardPoint           RewardPoint[]
+  ServiceRequest        ServiceRequest[]
 }
 
 model Device {
@@ -174,7 +153,6 @@ model PackageRecommendation {
   recommendedAt   DateTime        @default(now())
   acceptedAt      DateTime?
   CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  ServicePackage  ServicePackage  @relation(fields: [packageId], references: [id], onDelete: Cascade)
 }
 
 model PaymentTransaction {
@@ -295,8 +273,6 @@ model Service {
   name                           String               @default("test") @db.VarChar(100)
   publishedAt                    DateTime?            @default(now())
   description                    String               @default("test description") @db.VarChar(100)
-  Booking                        Booking[]
-  BookingServiceItem             BookingServiceItem[]
   ProposedService                ProposedService[]
   RecurringBooking               RecurringBooking[]
   Review                         Review[]
@@ -304,28 +280,9 @@ model Service {
   User_Service_deletedByIdToUser User?                @relation("Service_deletedByIdToUser", fields: [deletedById], references: [id])
   ServiceProvider                ServiceProvider      @relation(fields: [providerId], references: [id], onDelete: Cascade)
   User_Service_updatedByIdToUser User?                @relation("Service_updatedByIdToUser", fields: [updatedById], references: [id])
-  ServicePackageItem             ServicePackageItem[]
+  ServiceItem                    ServiceItem[]
   ServiceTranslation             ServiceTranslation[]
   Category                       Category[]           @relation("ServiceCategories")
-
-  @@index([deletedAt])
-}
-
-model ServicePackage {
-  id                                    Int                     @id @default(autoincrement())
-  name                                  String                  @db.VarChar(500)
-  description                           String?
-  price                                 Float
-  createdById                           Int?
-  updatedById                           Int?
-  createdAt                             DateTime                @default(now())
-  updatedAt                             DateTime
-  deletedAt                             DateTime?
-  BookingServicePackage                 BookingServicePackage[]
-  PackageRecommendation                 PackageRecommendation[]
-  User_ServicePackage_createdByIdToUser User?                   @relation("ServicePackage_createdByIdToUser", fields: [createdById], references: [id])
-  User_ServicePackage_updatedByIdToUser User?                   @relation("ServicePackage_updatedByIdToUser", fields: [updatedById], references: [id])
-  ServicePackageItem                    ServicePackageItem[]
 
   @@index([deletedAt])
 }
@@ -350,6 +307,7 @@ model ServiceProvider {
   User_ServiceProvider_userIdToUser       User                         @relation("ServiceProvider_userIdToUser", fields: [userId], references: [id], onDelete: Cascade)
   User_ServiceProvider_verifiedByIdToUser User?                        @relation("ServiceProvider_verifiedByIdToUser", fields: [verifiedById], references: [id])
   ServiceProviderTranslation              ServiceProviderTranslation[]
+  ServiceRequest                          ServiceRequest[]
   Staff                                   Staff[]
 }
 
@@ -417,6 +375,7 @@ model Transaction {
   deletedById Int?
   deletedAt   DateTime?
   createdAt   DateTime      @default(now())
+  orderCode   String?       @unique @db.VarChar(255)
   Booking     Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 }
 
@@ -454,8 +413,6 @@ model User {
   Service_Service_createdByIdToUser                  Service[]         @relation("Service_createdByIdToUser")
   Service_Service_deletedByIdToUser                  Service[]         @relation("Service_deletedByIdToUser")
   Service_Service_updatedByIdToUser                  Service[]         @relation("Service_updatedByIdToUser")
-  ServicePackage_ServicePackage_createdByIdToUser    ServicePackage[]  @relation("ServicePackage_createdByIdToUser")
-  ServicePackage_ServicePackage_updatedByIdToUser    ServicePackage[]  @relation("ServicePackage_updatedByIdToUser")
   ServiceProvider_ServiceProvider_userIdToUser       ServiceProvider?  @relation("ServiceProvider_userIdToUser")
   ServiceProvider_ServiceProvider_verifiedByIdToUser ServiceProvider[] @relation("ServiceProvider_verifiedByIdToUser")
   Staff                                              Staff?
@@ -528,16 +485,32 @@ model ProposedService {
   Service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 }
 
-model ServicePackageItem {
-  packageId      Int
-  serviceId      Int
-  quantity       Int            @default(1)
-  discount       Float?
-  note           String?
-  ServicePackage ServicePackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
-  Service        Service        @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+model ServiceItem {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(255)
+  unitPrice Float
+  serviceId Int
+  Service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
 
-  @@id([packageId, serviceId])
+model ServiceRequest {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  providerId      Int
+  note            String?
+  preferredDate   DateTime
+  status          RequestStatus   @default(PENDING)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime
+  location        String          @db.VarChar(500)
+  phoneNumber     String
+  categoryId      Int
+  Booking         Booking?
+  Category        Category        @relation(fields: [categoryId], references: [id])
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ServiceProvider ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([status])
 }
 
 enum BookingStatus {
@@ -628,5 +601,13 @@ enum InspectionStatus {
 enum TimeOffStatus {
   PENDING
   APPROVED
+  REJECTED
+}
+
+enum RequestStatus {
+  PENDING
+  IN_PROGRESS
+  ESTIMATED
+  BOOKED
   REJECTED
 }

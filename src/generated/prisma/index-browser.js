@@ -123,7 +123,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.BookingScalarFieldEnum = {
   id: 'id',
   customerId: 'customerId',
-  serviceId: 'serviceId',
   providerId: 'providerId',
   status: 'status',
   date: 'date',
@@ -134,24 +133,12 @@ exports.Prisma.BookingScalarFieldEnum = {
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  confirmedByCustomer: 'confirmedByCustomer',
   inspectedAt: 'inspectedAt',
   inspectedById: 'inspectedById',
   inspectionNote: 'inspectionNote',
   inspectionStatus: 'inspectionStatus',
-  staffId: 'staffId'
-};
-
-exports.Prisma.BookingServiceItemScalarFieldEnum = {
-  bookingId: 'bookingId',
-  serviceId: 'serviceId',
-  quantity: 'quantity'
-};
-
-exports.Prisma.BookingServicePackageScalarFieldEnum = {
-  bookingId: 'bookingId',
-  packageId: 'packageId',
-  quantity: 'quantity'
+  staffId: 'staffId',
+  serviceRequestId: 'serviceRequestId'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -333,18 +320,6 @@ exports.Prisma.ServiceScalarFieldEnum = {
   description: 'description'
 };
 
-exports.Prisma.ServicePackageScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  price: 'price',
-  createdById: 'createdById',
-  updatedById: 'updatedById',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
-};
-
 exports.Prisma.ServiceProviderScalarFieldEnum = {
   id: 'id',
   description: 'description',
@@ -409,7 +384,8 @@ exports.Prisma.TransactionScalarFieldEnum = {
   updatedById: 'updatedById',
   deletedById: 'deletedById',
   deletedAt: 'deletedAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  orderCode: 'orderCode'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -477,12 +453,25 @@ exports.Prisma.ProposedServiceScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.ServicePackageItemScalarFieldEnum = {
-  packageId: 'packageId',
-  serviceId: 'serviceId',
-  quantity: 'quantity',
-  discount: 'discount',
-  note: 'note'
+exports.Prisma.ServiceItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  unitPrice: 'unitPrice',
+  serviceId: 'serviceId'
+};
+
+exports.Prisma.ServiceRequestScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  providerId: 'providerId',
+  note: 'note',
+  preferredDate: 'preferredDate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  location: 'location',
+  phoneNumber: 'phoneNumber',
+  categoryId: 'categoryId'
 };
 
 exports.Prisma.SortOrder = {
@@ -569,10 +558,16 @@ exports.VerificationCodeType = exports.$Enums.VerificationCodeType = {
   DISABLE_2FA: 'DISABLE_2FA'
 };
 
+exports.RequestStatus = exports.$Enums.RequestStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  ESTIMATED: 'ESTIMATED',
+  BOOKED: 'BOOKED',
+  REJECTED: 'REJECTED'
+};
+
 exports.Prisma.ModelName = {
   Booking: 'Booking',
-  BookingServiceItem: 'BookingServiceItem',
-  BookingServicePackage: 'BookingServicePackage',
   Category: 'Category',
   CategoryTranslation: 'CategoryTranslation',
   ChatMessage: 'ChatMessage',
@@ -589,7 +584,6 @@ exports.Prisma.ModelName = {
   RewardPoint: 'RewardPoint',
   Role: 'Role',
   Service: 'Service',
-  ServicePackage: 'ServicePackage',
   ServiceProvider: 'ServiceProvider',
   ServiceProviderTranslation: 'ServiceProviderTranslation',
   ServiceTranslation: 'ServiceTranslation',
@@ -602,7 +596,8 @@ exports.Prisma.ModelName = {
   spatial_ref_sys: 'spatial_ref_sys',
   InspectionReport: 'InspectionReport',
   ProposedService: 'ProposedService',
-  ServicePackageItem: 'ServicePackageItem'
+  ServiceItem: 'ServiceItem',
+  ServiceRequest: 'ServiceRequest'
 };
 
 /**

@@ -7,7 +7,7 @@ import {
 
 dotenv.config();
 
-const TCP_PORT = parseInt(process.env.TCP_PORT || '4000', 10);
+const TCP_PORT = parseInt(process.env.TCP_PORT || '4001', 10);
 const TCP_HOST = process.env.TCP_HOST || 'localhost';
 
 type TCPResponse<T = any> = TCPResponseSuccess<T> | TCPResponseError;

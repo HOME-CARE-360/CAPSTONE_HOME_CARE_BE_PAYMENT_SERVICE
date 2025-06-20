@@ -1,21 +1,24 @@
-
 import { AppError } from './error';
 import {
     TCPResponseError,
     TCPResponseSuccess,
 } from '../interfaces/tcp-response.interface';
-
+import {
+    CreateTransactionDto,
+    UpdateTransactionStatusDto,
+} from '../schemas/type';
+import * as paymentService from '../services/payment.service';
 
 type HandleTCPReturn<T = any> = TCPResponseSuccess<T> | TCPResponseError;
 
 export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
-    const { type, userId, data } = payload;
+    const { type, data } = payload;
 
     try {
-        if (!userId || typeof userId !== 'number') {
-            throw new AppError('Error.InvalidUserId', {
-                message: 'userId must be a valid number',
-                path: 'userId',
+        if (!type || typeof type !== 'string') {
+            throw new AppError('Error.MissingType', {
+                message: 'Missing or invalid request type',
+                path: 'type',
             }, 400);
         }
 
@@ -24,10 +27,17 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         let statusCode = 200;
 
         switch (type) {
+            case 'CREATE_TRANSACTION': {
+                const input: CreateTransactionDto = data;
+                responseData = await paymentService.createTransaction(input);
+                message = 'Transaction created successfully';
+                break;
+            }
+
 
             default:
                 throw new AppError('Error.UnknownRequestType', {
-                    message: 'Unknown request type',
+                    message: `Unknown request type: ${type}`,
                     path: 'type',
                 }, 400);
         }
