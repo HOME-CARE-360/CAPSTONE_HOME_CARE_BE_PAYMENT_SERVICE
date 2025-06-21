@@ -3,13 +3,8 @@ import dotenv from 'dotenv';
 import { handleTCPRequest } from './handlers/tcp-handler';
 
 dotenv.config();
-console.log(process.env.APP_NAME);
 
 
-const TCP_PORT = parseInt(process.env.PAYMENT_TCP_PORT || '4001');
-console.log(PAYMENT_TCP_PORT);
-
-const TCP_HOST = '0.0.0.0';
 
 const server = net.createServer((socket) => {
     console.log('🔌 New TCP connection established');
@@ -35,6 +30,6 @@ const server = net.createServer((socket) => {
     });
 });
 
-server.listen(PAYMENT_TCP_HOST, () => {
-    console.log(`🚀 TCP Microservice listening on ${PAYMENT_HOST}:${PAYMENT_TCP_PORT}`);
+server.listen(process.env.PAYMENT_TCP_HOST, () => {
+    console.log(`🚀 TCP Microservice listening on ${process.env.PAYMENT_HOST}:${process.env.PAYMENT_TCP_PORT}`);
 });
