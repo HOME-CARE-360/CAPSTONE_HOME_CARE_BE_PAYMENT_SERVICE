@@ -4,16 +4,19 @@ steps:
       [
         "build",
         "-t",
-        "asia-southeast1-docker.pkg.dev/home-care-360/user/production",
+        "asia-southeast1-docker.pkg.dev/home-care-360/payment/production",
         "-f",
         "Dockerfile",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
-      ["push", "asia-southeast1-docker.pkg.dev/home-care-360/user/production"]
+      [
+        "push",
+        "asia-southeast1-docker.pkg.dev/home-care-360/payment/production",
+      ]
   - name: "gcr.io/cloud-builders/kubectl"
-    args: ["rollout", "restart", "deployment/user"]
+    args: ["rollout", "restart", "deployment/payment"]
     env:
       - "CLOUDSDK_COMPUTE_REGION=asia-east1"
       - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1"
