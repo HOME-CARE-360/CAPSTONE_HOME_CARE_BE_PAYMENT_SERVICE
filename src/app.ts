@@ -30,6 +30,6 @@ const server = net.createServer((socket) => {
     });
 });
 
-server.listen(process.env.PAYMENT_TCP_HOST, () => {
+server.listen(process.env.PAYMENT_TCP_PORT, () => {
     console.log(`🚀 TCP Microservice listening on ${process.env.PAYMENT_HOST}:${process.env.PAYMENT_TCP_PORT}`);
 });
