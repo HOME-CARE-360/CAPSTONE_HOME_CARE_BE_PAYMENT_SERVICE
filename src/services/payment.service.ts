@@ -42,6 +42,8 @@ function validateOrThrow<T>(schema: any, data: T): void {
  */
 async function requestPayOS(orderCode: number, amount: number, bookingId: number) {
     try {
+        console.log(orderCode, amount, bookingId)
+
         const payload = {
             orderCode,
             amount,
@@ -57,6 +59,8 @@ async function requestPayOS(orderCode: number, amount: number, bookingId: number
 
         return res.checkoutUrl;
     } catch (err: any) {
+        console.log(err);
+
         console.error("🚨 PayOS Error:", err?.response?.data || err.message || err);
         throw new AppError("Error.PayosAPI", {
             message: "Không thể tạo payment link từ PayOS",
@@ -95,6 +99,8 @@ export const createTransaction = async (data: CreateTransactionDto) => {
             checkoutUrl,
         };
     } catch (err) {
+        console.log(err);
+
         throw new AppError("Error.CreateTransactionFailed", {
             message: "Lỗi khi lưu transaction vào cơ sở dữ liệu",
         }, 500);
