@@ -20,7 +20,7 @@ steps:
     env:
       - "CLOUDSDK_COMPUTE_REGION=asia-east1"
       - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1"
-      - "CLOUDSDK_CORE_PROJECT=home-care-360"
+      - "CLOUDSDK_CORE_PROJECT=melodic-media-465615-c6"
 
 options:
   logging: CLOUD_LOGGING_ONLY
