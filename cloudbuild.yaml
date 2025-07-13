@@ -18,9 +18,9 @@ steps:
   - name: "gcr.io/cloud-builders/kubectl"
     args: ["rollout", "restart", "deployment/payment"]
     env:
-      - "CLOUDSDK_COMPUTE_REGION=us-central1"
-      - "CLOUDSDK_CONTAINER_CLUSTER=homecare360"
-      - "CLOUDSDK_CORE_PROJECT=melodic-media-465615-c6"
+      - "CLOUDSDK_COMPUTE_REGION=asia-southeast1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1"
+      - "CLOUDSDK_CORE_PROJECT=homecare360-465809"
 
 options:
   logging: CLOUD_LOGGING_ONLY
