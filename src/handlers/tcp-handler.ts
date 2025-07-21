@@ -50,6 +50,7 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
             statusCode,
             timestamp: new Date().toISOString(),
         };
+console.log(result);
 
         return result;
 
