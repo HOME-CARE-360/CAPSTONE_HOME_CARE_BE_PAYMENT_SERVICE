@@ -37,8 +37,28 @@ export async function testCreateTransaction() {
     }
 }
 
+/**
+ * Test: CREATE_TOPUP
+ */
+export async function testCreateTopUp() {
+    const timestamp = new Date().toISOString();
+    const payload = {
+        type: "CREATE_TOPUP",
+        data: {
+            amount: 100000,
+            userId: 12,
+        },
+    };
+
+    try {
+        const result = await sendTCPRequest(payload);
+        logResponse("CREATE_TOPUP", result, timestamp);
+    } catch (error: any) {
+        console.error(`❌ [${timestamp}] CREATE_TOPUP Error:`, error.message);
+    }
+}
 
 (async () => {
-    await testCreateTransaction();
-
+    // await testCreateTransaction();
+    await testCreateTopUp();
 })();

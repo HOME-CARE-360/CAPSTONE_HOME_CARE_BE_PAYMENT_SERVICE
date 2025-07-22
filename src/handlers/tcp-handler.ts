@@ -6,6 +6,7 @@ import {
 import {
     CreateTransactionDto,
     UpdateTransactionStatusDto,
+    WalletTopUpDto,
 } from '../schemas/type';
 import * as paymentService from '../services/payment.service';
 
@@ -33,6 +34,13 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
                 message = 'Transaction created successfully';
                 break;
             }
+
+            case 'CREATE_TOPUP': {
+                const input: WalletTopUpDto = data;
+                responseData = await paymentService.createWalletTopUpUsingPaymentTransaction(input);
+                message = 'Wallet top-up initiated';
+                break;
+          }
 
 
             default:
