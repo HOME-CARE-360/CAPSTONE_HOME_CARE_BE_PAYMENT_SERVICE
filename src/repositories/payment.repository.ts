@@ -1,9 +1,17 @@
-import { PrismaClient, PaymentMethod, PaymentStatus, PaymentTransactionStatus, Transaction } from "../generated/prisma";
+import {
+  PrismaClient,
+  PaymentMethod,
+  PaymentStatus,
+  PaymentTransactionStatus,
+  Transaction,
+} from "../generated/prisma";
+import { AppError } from "../handlers/error";
 
 const prisma = new PrismaClient();
 
 /**
- * Create a new transaction record in the database
+ * Create a new transaction record in the database.
+ * If bookingId is unique, ensure only one transaction exists per booking.
  */
 export const createTransaction = async ({
   bookingId,
@@ -18,6 +26,23 @@ export const createTransaction = async ({
   orderCode: string;
   createdById?: number;
 }): Promise<Transaction> => {
+  const existing = await prisma.transaction.findUnique({
+    where: { bookingId },
+  });
+
+  if (existing) {
+    if (existing.status === PaymentStatus.PAID) {
+      throw new AppError("Error.TransactionAlreadyPaid", {
+        message: `Booking ${bookingId} has already been paid.`,
+      }, 409);
+    }
+
+    if (existing.status === PaymentStatus.PENDING || existing.status === PaymentStatus.FAILED) {
+      // ✅ Option: reuse existing transaction OR delete and create new one
+      await prisma.transaction.delete({ where: { bookingId } });
+    }
+  }
+
   return prisma.transaction.create({
     data: {
       bookingId,
@@ -31,24 +56,36 @@ export const createTransaction = async ({
 };
 
 /**
- * Nạp tiền vào ví (Wallet)
+ * Increase wallet balance
  */
-export async function topUpWallet(userId: number, amount: number): Promise<void> {
-  await prisma.wallet.update({
-    where: { userId },
-    data: {
-      balance: {
-        increment: amount,
+export const topUpWallet = async (userId: number, amount: number): Promise<void> => {
+  try {
+    await prisma.wallet.update({
+      where: { userId },
+      data: {
+        balance: { increment: amount },
+        updatedAt: new Date(),
       },
-      updatedAt: new Date(),
-    },
-  });
-}
+    });
+  } catch (err: any) {
+    console.error("❌ Error updating wallet:", err);
+    throw new AppError("Error.WalletTopUpFailed", {
+      message: "Failed to top up wallet",
+      error: err?.message || err,
+    }, 500);
+  }
+};
 
+/**
+ * Find transaction by orderCode
+ */
 export const findTransactionByOrderCode = async (orderCode: string) => {
   return prisma.transaction.findUnique({ where: { orderCode } });
 };
 
+/**
+ * Mark a transaction as paid
+ */
 export const markTransactionAsPaid = async (orderCode: string) => {
   return prisma.transaction.update({
     where: { orderCode },
@@ -59,6 +96,9 @@ export const markTransactionAsPaid = async (orderCode: string) => {
   });
 };
 
+/**
+ * Mark a transaction as failed
+ */
 export const markTransactionAsFailed = async (orderCode: string) => {
   return prisma.transaction.update({
     where: { orderCode },
@@ -69,7 +109,7 @@ export const markTransactionAsFailed = async (orderCode: string) => {
 };
 
 /**
- * Tạo PaymentTransaction cho top-up
+ * Create a PaymentTransaction for top-up
  */
 export const createPaymentTransaction = async ({
   userId,
@@ -84,46 +124,57 @@ export const createPaymentTransaction = async ({
   gateway: string;
   status: PaymentTransactionStatus;
 }) => {
-  return prisma.paymentTransaction.create({
-    data: {
-      gateway,
-      accountNumber: null,
-      subAccount: null,
-      amountIn: amount,
-      amountOut: 0,
-      accumulated: 0,
-      referenceNumber: orderCode,
-      transactionContent: `Top-up for user #${userId}`,
-      body: null,
-      serviceRequestId: null,
-      status,
-      userId,
-      // createdAt: new Date(), // createdAt has a @default(now()) in the schema, so it's automatically set
-    },
-  });
+  try {
+    return await prisma.paymentTransaction.create({
+      data: {
+        gateway,
+        accountNumber: null,
+        subAccount: null,
+        amountIn: amount,
+        amountOut: 0,
+        accumulated: 0,
+        referenceNumber: orderCode,
+        transactionContent: `Top-up for user #${userId}`,
+        body: null,
+        serviceRequestId: null,
+        status,
+        userId,
+      },
+    });
+  } catch (err: any) {
+    console.error("❌ Error creating paymentTransaction:", err);
+    throw new AppError("Error.PaymentTransactionCreateFailed", {
+      message: "Failed to create payment transaction",
+      error: err?.message || err,
+    }, 500);
+  }
 };
 
+/**
+ * Find payment transaction by reference number
+ */
 export const findPaymentTransactionByReference = async (orderCode: string) => {
   return prisma.paymentTransaction.findFirst({
     where: { referenceNumber: orderCode },
   });
 };
 
+/**
+ * Mark top-up transaction as paid
+ */
 export const markPaymentTransactionAsPaid = async (orderCode: string) => {
   const paymentTx = await prisma.paymentTransaction.findFirst({
     where: { referenceNumber: orderCode },
   });
 
   if (!paymentTx) {
-    throw new Error("PaymentTransaction not found");
+    throw new AppError("Error.PaymentTransactionNotFound", {
+      message: `Top-up transaction with orderCode ${orderCode} not found.`,
+    }, 404);
   }
 
-  // Use update instead of updateMany if referenceNumber is unique
-  // The schema defines serviceRequestId as unique, and referenceNumber is not explicitly unique.
-  // However, for a payment transaction specifically for a top-up, it makes sense for the referenceNumber to be unique.
-  // Assuming referenceNumber is intended to be unique for finding a single transaction:
   return prisma.paymentTransaction.update({
-    where: { id: paymentTx.id }, // Use the found ID for a more precise update
+    where: { id: paymentTx.id },
     data: {
       status: PaymentTransactionStatus.SUCCESS,
       accumulated: paymentTx.amountIn,
@@ -131,21 +182,22 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
   });
 };
 
+/**
+ * Mark top-up transaction as failed
+ */
 export const markPaymentTransactionAsFailed = async (orderCode: string) => {
-  // Use update instead of updateMany if referenceNumber is unique for a single transaction.
-  // If multiple transactions can have the same referenceNumber, updateMany is correct.
-  // Given the context of "findPaymentTransactionByReference" returning findFirst, it implies uniqueness or intent to operate on the first match.
-  // If it's truly unique, findUnique would be better.
   const paymentTx = await prisma.paymentTransaction.findFirst({
     where: { referenceNumber: orderCode },
   });
 
   if (!paymentTx) {
-    throw new Error("PaymentTransaction not found");
+    throw new AppError("Error.PaymentTransactionNotFound", {
+      message: `Top-up transaction with orderCode ${orderCode} not found.`,
+    }, 404);
   }
 
   return prisma.paymentTransaction.update({
-    where: { id: paymentTx.id }, // Use the found ID for a more precise update
+    where: { id: paymentTx.id },
     data: {
       status: PaymentTransactionStatus.FAILED,
     },

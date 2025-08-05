@@ -3,7 +3,7 @@ import { ZodError } from "zod";
 import { CreateTransactionDto, WalletTopUpDto } from "../schemas/type";
 import { CreateTransactionSchema, WalletTopUpSchema } from "../schemas/app.schema";
 import { AppError } from "../handlers/error";
-import { PaymentMethod, PaymentStatus, PaymentTransactionStatus } from "../generated/prisma"; // Import PaymentTransactionStatus
+import { PaymentMethod, PaymentStatus, PaymentTransactionStatus } from "../generated/prisma";
 import * as paymentRepo from "../repositories/payment.repository";
 import { CheckoutResponseDataType } from "@payos/node/lib/type";
 
@@ -15,9 +15,6 @@ const payos = new PayOS(
 
 /**
  * Validates data against a Zod schema and throws an AppError if validation fails.
- * @param schema The Zod schema to validate against.
- * @param data The data to validate.
- * @throws {AppError} If validation fails.
  */
 function validateOrThrow<T>(schema: any, data: T): void {
   try {
@@ -38,47 +35,36 @@ function validateOrThrow<T>(schema: any, data: T): void {
 }
 
 /**
- * Requests a payment link from PayOS.
- * Dynamically sets cancelUrl and returnUrl based on clientType (web or native).
- * @param orderCode The unique order code for the payment.
- * @param amount The amount of the transaction.
- * @param description A description for the payment.
- * @param clientType The type of client initiating the request ('web' or 'native').
- * @returns The checkout URL from PayOS.
- * @throws {AppError} If there's an issue creating the payment link with PayOS.
+ * Sends a payment link request to PayOS.
  */
 async function requestPayOS(
-  orderCode: string,
+  orderCode: number,
   amount: number,
-  description: string,
-  clientType: 'web' | 'native'
+  description: string
 ): Promise<CheckoutResponseDataType> {
+  const clientUrl = process.env.PAYOS_CLIENT_ID;
+  if (!clientUrl) {
+    throw new AppError("Error.MissingEnv", {
+      message: "Missing PAYOS_CLIENT_ID environment variable",
+    }, 500);
+  }
+
+  const cancelUrl = `${clientUrl}/payment/cancel`;
+  const returnUrl = `${clientUrl}/payment/success?orderCode=${orderCode}`;
+
+  const payload = {
+    orderCode,
+    amount,
+    description,
+    cancelUrl,
+    returnUrl,
+  };
+
+  console.log("📦 Sending to PayOS:", payload);
+
   try {
-    let cancelUrl: string;
-    let returnUrl: string;
-
-    if (clientType === 'native') {
-      // For native apps, use deep links
-      // Ensure NATIVE_APP_SCHEME is configured in your .env (e.g., myapp://)
-      // And your native app is set up to handle these deep links
-      const nativeAppScheme = process.env.NATIVE_APP_SCHEME || 'yourappscheme'; // Default for safety
-      cancelUrl = `${nativeAppScheme}://payment/cancel?orderCode=${orderCode}`;
-      returnUrl = `${nativeAppScheme}://payment/success?orderCode=${orderCode}`;
-    } else {
-      // For web apps, use standard web URLs
-      cancelUrl = `${process.env.CLIENT_URL}/payment/cancel`;
-      returnUrl = `${process.env.CLIENT_URL}/payment/success?orderCode=${orderCode}`;
-    }
-
-    const payload = {
-      orderCode: Number(orderCode), // PayOS expects orderCode as a number in this context
-      amount,
-      description,
-      cancelUrl,
-      returnUrl,
-    };
-
     const res = await payos.createPaymentLink(payload);
+
     if (!res?.checkoutUrl) {
       throw new Error("Không nhận được checkoutUrl từ PayOS");
     }
@@ -94,25 +80,20 @@ async function requestPayOS(
 }
 
 /**
- * Creates a new transaction and initiates a payment link with PayOS.
- * @param data The transaction data.
- * @param clientType The type of client initiating the request ('web' or 'native').
- * @returns An object containing transaction details and the PayOS checkout URL.
+ * Creates a booking payment transaction and generates PayOS link.
  */
-export const createTransaction = async (data: CreateTransactionDto, clientType: 'web' | 'native') => {
+export const createTransaction = async (data: CreateTransactionDto) => {
   validateOrThrow(CreateTransactionSchema, data);
 
-  // Generate a unique order code using bookingId and current timestamp
-  const orderCode = `${data.bookingId}-${Date.now()}`;
+  const orderCode = Number(`${data.bookingId}${Date.now().toString().slice(-6)}`); // Safe numeric code
   const description = `Thanh toán đơn hàng #${data.bookingId}`;
-  const checkoutUrl = await requestPayOS(orderCode, data.amount, description, clientType);
+  const responseData = await requestPayOS(orderCode, data.amount, description);
 
-  // Create a transaction record in the database
   const transaction = await paymentRepo.createTransaction({
     bookingId: data.bookingId,
     amount: data.amount,
-    method: PaymentMethod.CREDIT_CARD, // Assuming credit card for PayOS
-    orderCode: orderCode.toString(),
+    method:data.method || PaymentMethod.BANK_TRANSFER,
+    orderCode: orderCode.toString(), // Save as string in DB
     createdById: data.userId,
   });
 
@@ -125,25 +106,20 @@ export const createTransaction = async (data: CreateTransactionDto, clientType: 
     status: transaction.status,
     createdAt: transaction.createdAt,
     createdById: transaction.createdById,
-    checkoutUrl,
+    responseData,
   };
 };
 
 /**
- * Creates a payment transaction for wallet top-up and initiates a payment link with PayOS.
- * @param data The wallet top-up data.
- * @param clientType The type of client initiating the request ('web' or 'native').
- * @returns An object containing the PayOS checkout URL.
+ * Creates a wallet top-up transaction and generates PayOS link.
  */
-export const createWalletTopUpUsingPaymentTransaction = async (data: WalletTopUpDto, clientType: 'web' | 'native') => {
+export const createWalletTopUpUsingPaymentTransaction = async (data: WalletTopUpDto) => {
   validateOrThrow(WalletTopUpSchema, data);
 
-  // Generate a unique order code for the top-up
-  const orderCode = `TOPUP-${data.userId}-${Date.now()}`;
+  const orderCode = Date.now(); // Unique and numeric
   const description = `Nạp tiền vào ví #${data.userId}`;
-  const checkoutUrl = await requestPayOS(orderCode, data.amount, description, clientType);
+  const responseData = await requestPayOS(orderCode, data.amount, description);
 
-  // Create a payment transaction record in the database
   await paymentRepo.createPaymentTransaction({
     amount: data.amount,
     userId: data.userId,
@@ -152,23 +128,14 @@ export const createWalletTopUpUsingPaymentTransaction = async (data: WalletTopUp
     status: PaymentTransactionStatus.PENDING,
   });
 
-  return { checkoutUrl };
+  return { responseData };
 };
 
 /**
- * Handles the callback from PayOS after a payment attempt.
- * Updates the status of the corresponding transaction or payment transaction.
- * @param payload The payload received from PayOS callback.
- * @returns A message indicating the outcome of the handling.
- * @throws {AppError} If the transaction or payment transaction is not found or status is invalid.
+ * Handles PayOS callback (PAID or FAILED).
  */
-export const handlePayOSCallback = async (payload: {
-  orderCode: string;
-  status: "PAID" | "FAILED";
-}) => {
+export const handlePayOSCallback = async (payload: { orderCode: string; status: "PAID" | "FAILED" }) => {
   const { orderCode, status } = payload;
-
-  // Try to find a regular booking transaction first
   const transaction = await paymentRepo.findTransactionByOrderCode(orderCode);
 
   if (transaction) {
@@ -178,44 +145,46 @@ export const handlePayOSCallback = async (payload: {
 
     if (status === "PAID") {
       await paymentRepo.markTransactionAsPaid(orderCode);
+
       if (!transaction.bookingId || transaction.bookingId === 0) {
-        if (transaction.createdById !== null) {
+        if (transaction.createdById) {
           await paymentRepo.topUpWallet(transaction.createdById, transaction.amount);
         } else {
-          console.warn(`Transaction ${orderCode} has null createdById, cannot top up wallet.`);
+          console.warn(`Transaction ${orderCode} missing createdById for wallet top-up`);
         }
       }
-      return { message: "Payment success handled" };
+
+      return { message: "Booking payment success handled" };
     }
 
     if (status === "FAILED") {
       await paymentRepo.markTransactionAsFailed(orderCode);
-      return { message: "Payment failure handled" };
+      return { message: "Booking payment failure handled" };
     }
-  } else {
-    // If not a regular booking transaction, try to find a PaymentTransaction (for top-ups)
-    const paymentTransaction = await paymentRepo.findPaymentTransactionByReference(orderCode);
+  }
 
-    if (!paymentTransaction) {
-      throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
-    }
+  // Try wallet top-up
+  const paymentTransaction = await paymentRepo.findPaymentTransactionByReference(orderCode);
 
-    if (paymentTransaction.status !== PaymentTransactionStatus.PENDING) {
-      return { message: "PaymentTransaction already handled" };
-    }
+  if (!paymentTransaction) {
+    throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
+  }
 
-    if (status === "PAID") {
-      await paymentRepo.markPaymentTransactionAsPaid(orderCode);
-      if (paymentTransaction.userId) {
-        await paymentRepo.topUpWallet(paymentTransaction.userId, paymentTransaction.amountIn);
-      }
-      return { message: "Wallet top-up success handled" };
-    }
+  if (paymentTransaction.status !== PaymentTransactionStatus.PENDING) {
+    return { message: "Wallet top-up already handled" };
+  }
 
-    if (status === "FAILED") {
-      await paymentRepo.markPaymentTransactionAsFailed(orderCode);
-      return { message: "Wallet top-up failure handled" };
+  if (status === "PAID") {
+    await paymentRepo.markPaymentTransactionAsPaid(orderCode);
+    if (paymentTransaction.userId) {
+      await paymentRepo.topUpWallet(paymentTransaction.userId, paymentTransaction.amountIn);
     }
+    return { message: "Wallet top-up success handled" };
+  }
+
+  if (status === "FAILED") {
+    await paymentRepo.markPaymentTransactionAsFailed(orderCode);
+    return { message: "Wallet top-up failure handled" };
   }
 
   throw new AppError("Error.InvalidStatus", { status }, 400);
