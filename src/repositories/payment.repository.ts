@@ -98,7 +98,7 @@ export const createPaymentTransaction = async ({
       serviceRequestId: null,
       status,
       userId,
-      createdAt: new Date(),
+      // createdAt: new Date(), // createdAt has a @default(now()) in the schema, so it's automatically set
     },
   });
 };
@@ -118,8 +118,12 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
     throw new Error("PaymentTransaction not found");
   }
 
-  return prisma.paymentTransaction.updateMany({
-    where: { referenceNumber: orderCode },
+  // Use update instead of updateMany if referenceNumber is unique
+  // The schema defines serviceRequestId as unique, and referenceNumber is not explicitly unique.
+  // However, for a payment transaction specifically for a top-up, it makes sense for the referenceNumber to be unique.
+  // Assuming referenceNumber is intended to be unique for finding a single transaction:
+  return prisma.paymentTransaction.update({
+    where: { id: paymentTx.id }, // Use the found ID for a more precise update
     data: {
       status: PaymentTransactionStatus.SUCCESS,
       accumulated: paymentTx.amountIn,
@@ -128,8 +132,20 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
 };
 
 export const markPaymentTransactionAsFailed = async (orderCode: string) => {
-  return prisma.paymentTransaction.updateMany({
+  // Use update instead of updateMany if referenceNumber is unique for a single transaction.
+  // If multiple transactions can have the same referenceNumber, updateMany is correct.
+  // Given the context of "findPaymentTransactionByReference" returning findFirst, it implies uniqueness or intent to operate on the first match.
+  // If it's truly unique, findUnique would be better.
+  const paymentTx = await prisma.paymentTransaction.findFirst({
     where: { referenceNumber: orderCode },
+  });
+
+  if (!paymentTx) {
+    throw new Error("PaymentTransaction not found");
+  }
+
+  return prisma.paymentTransaction.update({
+    where: { id: paymentTx.id }, // Use the found ID for a more precise update
     data: {
       status: PaymentTransactionStatus.FAILED,
     },

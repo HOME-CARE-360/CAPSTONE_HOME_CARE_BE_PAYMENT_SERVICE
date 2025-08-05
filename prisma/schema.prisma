@@ -25,6 +25,7 @@ model Booking {
   Staff_Booking_staffIdToStaff Staff?            @relation("Booking_staffIdToStaff", fields: [staffId], references: [id], onDelete: Cascade)
   InspectionReport             InspectionReport?
   Proposal                     Proposal?
+  ProviderReport               ProviderReport[]
   Transaction                  Transaction?
   WorkLog                      WorkLog[]
 }
@@ -85,8 +86,11 @@ model CustomerProfile {
   updatedAt             DateTime
   Booking               Booking[]
   ChatMessage           ChatMessage[]
+  Conversation          Conversation[]
   User                  User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  FavoriteService       FavoriteService[]
   PackageRecommendation PackageRecommendation[]
+  ProviderReport        ProviderReport[]
   RecurringBooking      RecurringBooking[]
   Review                Review[]
   RewardPoint           RewardPoint[]
@@ -101,6 +105,7 @@ model Device {
   lastActive   DateTime
   createdAt    DateTime       @default(now())
   isActive     Boolean        @default(true)
+  fcmToken     String?
   User         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   RefreshToken RefreshToken[]
 }
@@ -250,6 +255,7 @@ model Service {
   categoryId                     Int
   unit                           Unit                   @default(PER_JOB)
   status                         ServiceStatus          @default(PENDING)
+  FavoriteService                FavoriteService[]
   ProposalItem                   ProposalItem[]
   RecurringBooking               RecurringBooking[]
   Review                         Review[]
@@ -279,6 +285,8 @@ model ServiceProvider {
   verifiedAt                              DateTime?
   verifiedById                            Int?
   Booking                                 Booking[]
+  Conversation                            Conversation[]
+  ProviderReport                          ProviderReport[]
   Service                                 Service[]
   ServiceItem                             ServiceItem[]
   User_ServiceProvider_userIdToUser       User                         @relation("ServiceProvider_userIdToUser", fields: [userId], references: [id], onDelete: Cascade)
@@ -286,6 +294,7 @@ model ServiceProvider {
   ServiceProviderTranslation              ServiceProviderTranslation[]
   ServiceRequest                          ServiceRequest[]
   Staff                                   Staff[]
+  WithdrawalRequest                       WithdrawalRequest[]
 }
 
 model ServiceProviderTranslation {
@@ -342,47 +351,49 @@ model Transaction {
 }
 
 model User {
-  id                                                 Int               @id @default(autoincrement())
-  email                                              String            @unique
+  id                                                 Int                 @id @default(autoincrement())
+  email                                              String              @unique
   password                                           String
-  name                                               String            @db.VarChar(500)
-  phone                                              String            @db.VarChar(50)
-  avatar                                             String?           @db.VarChar(1000)
-  totpSecret                                         String?           @db.VarChar(1000)
-  status                                             UserStatus        @default(INACTIVE)
+  name                                               String              @db.VarChar(500)
+  phone                                              String              @db.VarChar(50)
+  avatar                                             String?             @db.VarChar(1000)
+  totpSecret                                         String?             @db.VarChar(1000)
+  status                                             UserStatus          @default(INACTIVE)
   createdById                                        Int?
   updatedById                                        Int?
   deletedById                                        Int?
   deletedAt                                          DateTime?
-  createdAt                                          DateTime          @default(now())
+  createdAt                                          DateTime            @default(now())
   updatedAt                                          DateTime
-  Category_Category_createdByIdToUser                Category[]        @relation("Category_createdByIdToUser")
-  Category_Category_deletedByIdToUser                Category[]        @relation("Category_deletedByIdToUser")
-  Category_Category_updatedByIdToUser                Category[]        @relation("Category_updatedByIdToUser")
+  Category_Category_createdByIdToUser                Category[]          @relation("Category_createdByIdToUser")
+  Category_Category_deletedByIdToUser                Category[]          @relation("Category_deletedByIdToUser")
+  Category_Category_updatedByIdToUser                Category[]          @relation("Category_updatedByIdToUser")
   CustomerProfile                                    CustomerProfile?
   Device                                             Device[]
   Notification                                       Notification[]
-  Permission_Permission_createdByIdToUser            Permission[]      @relation("Permission_createdByIdToUser")
-  Permission_Permission_deletedByIdToUser            Permission[]      @relation("Permission_deletedByIdToUser")
-  Permission_Permission_updatedByIdToUser            Permission[]      @relation("Permission_updatedByIdToUser")
+  Permission_Permission_createdByIdToUser            Permission[]        @relation("Permission_createdByIdToUser")
+  Permission_Permission_deletedByIdToUser            Permission[]        @relation("Permission_deletedByIdToUser")
+  Permission_Permission_updatedByIdToUser            Permission[]        @relation("Permission_updatedByIdToUser")
+  ProviderReport                                     ProviderReport[]
   RefreshToken                                       RefreshToken[]
-  Role_Role_createdByIdToUser                        Role[]            @relation("Role_createdByIdToUser")
-  Role_Role_deletedByIdToUser                        Role[]            @relation("Role_deletedByIdToUser")
-  Role_Role_updatedByIdToUser                        Role[]            @relation("Role_updatedByIdToUser")
-  Service_Service_createdByIdToUser                  Service[]         @relation("Service_createdByIdToUser")
-  Service_Service_deletedByIdToUser                  Service[]         @relation("Service_deletedByIdToUser")
-  Service_Service_updatedByIdToUser                  Service[]         @relation("Service_updatedByIdToUser")
-  ServiceProvider_ServiceProvider_userIdToUser       ServiceProvider?  @relation("ServiceProvider_userIdToUser")
-  ServiceProvider_ServiceProvider_verifiedByIdToUser ServiceProvider[] @relation("ServiceProvider_verifiedByIdToUser")
+  Role_Role_createdByIdToUser                        Role[]              @relation("Role_createdByIdToUser")
+  Role_Role_deletedByIdToUser                        Role[]              @relation("Role_deletedByIdToUser")
+  Role_Role_updatedByIdToUser                        Role[]              @relation("Role_updatedByIdToUser")
+  Service_Service_createdByIdToUser                  Service[]           @relation("Service_createdByIdToUser")
+  Service_Service_deletedByIdToUser                  Service[]           @relation("Service_deletedByIdToUser")
+  Service_Service_updatedByIdToUser                  Service[]           @relation("Service_updatedByIdToUser")
+  ServiceProvider_ServiceProvider_userIdToUser       ServiceProvider?    @relation("ServiceProvider_userIdToUser")
+  ServiceProvider_ServiceProvider_verifiedByIdToUser ServiceProvider[]   @relation("ServiceProvider_verifiedByIdToUser")
   Staff                                              Staff?
-  User_User_createdByIdToUser                        User?             @relation("User_createdByIdToUser", fields: [createdById], references: [id])
-  other_User_User_createdByIdToUser                  User[]            @relation("User_createdByIdToUser")
-  User_User_deletedByIdToUser                        User?             @relation("User_deletedByIdToUser", fields: [deletedById], references: [id])
-  other_User_User_deletedByIdToUser                  User[]            @relation("User_deletedByIdToUser")
-  User_User_updatedByIdToUser                        User?             @relation("User_updatedByIdToUser", fields: [updatedById], references: [id])
-  other_User_User_updatedByIdToUser                  User[]            @relation("User_updatedByIdToUser")
+  User_User_createdByIdToUser                        User?               @relation("User_createdByIdToUser", fields: [createdById], references: [id])
+  other_User_User_createdByIdToUser                  User[]              @relation("User_createdByIdToUser")
+  User_User_deletedByIdToUser                        User?               @relation("User_deletedByIdToUser", fields: [deletedById], references: [id])
+  other_User_User_deletedByIdToUser                  User[]              @relation("User_deletedByIdToUser")
+  User_User_updatedByIdToUser                        User?               @relation("User_updatedByIdToUser", fields: [updatedById], references: [id])
+  other_User_User_updatedByIdToUser                  User[]              @relation("User_updatedByIdToUser")
   Wallet                                             Wallet?
-  Role_UserRoles                                     Role[]            @relation("UserRoles")
+  WithdrawalRequest                                  WithdrawalRequest[]
+  Role_UserRoles                                     Role[]              @relation("UserRoles")
 
   @@index([deletedAt])
 }
@@ -505,6 +516,89 @@ model Wallet {
   User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model ProviderReport {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  providerId      Int
+  bookingId       Int
+  reason          String          @db.VarChar(255)
+  description     String?         @db.VarChar(2000)
+  imageUrls       String[]
+  status          ReportStatus    @default(PENDING)
+  createdAt       DateTime        @default(now())
+  reviewedAt      DateTime?
+  reviewedById    Int?
+  note            String?         @db.VarChar(1000)
+  Booking         Booking         @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ServiceProvider ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  User            User?           @relation(fields: [reviewedById], references: [id])
+
+  @@index([customerId])
+  @@index([providerId])
+  @@index([status])
+}
+
+model WithdrawalRequest {
+  id              Int              @id @default(autoincrement())
+  providerId      Int
+  amount          Float
+  status          WithdrawalStatus @default(PENDING)
+  createdAt       DateTime         @default(now())
+  processedAt     DateTime?
+  processedById   Int?
+  note            String?          @db.VarChar(1000)
+  User            User?            @relation(fields: [processedById], references: [id])
+  ServiceProvider ServiceProvider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+}
+
+model Conversation {
+  id               Int             @id @default(autoincrement())
+  customerId       Int
+  providerId       Int
+  lastMessage      String?         @db.VarChar(500)
+  lastMessageAt    DateTime?
+  unreadByCustomer Int             @default(0)
+  unreadByProvider Int             @default(0)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime
+  CustomerProfile  CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ServiceProvider  ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  Message          Message[]
+
+  @@unique([customerId, providerId])
+  @@index([lastMessageAt])
+}
+
+model FavoriteService {
+  id              Int             @id @default(autoincrement())
+  customerId      Int
+  serviceId       Int
+  createdAt       DateTime?       @default(now()) @db.Timestamp(6)
+  CustomerProfile CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_fav_customer")
+  Service         Service         @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_fav_service")
+
+  @@unique([customerId, serviceId], map: "unique_fav")
+  @@index([customerId], map: "idx_fav_customer")
+  @@index([serviceId], map: "idx_fav_service")
+}
+
+model Message {
+  id             Int            @id @default(autoincrement())
+  conversationId Int
+  senderType     ChatSenderType
+  senderId       Int
+  content        String?        @db.VarChar(2000)
+  imageUrl       String?        @db.VarChar(1000)
+  isRead         Boolean        @default(false)
+  sentAt         DateTime       @default(now())
+  Conversation   Conversation   @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, sentAt])
+}
+
 enum BookingStatus {
   PENDING
   CONFIRMED
@@ -625,4 +719,24 @@ enum PaymentTransactionStatus {
   REFUNDED
   EXPIRED
   MANUAL_REVIEW
+}
+
+enum ReportStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
+}
+
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+  COMPLETED
+}
+
+enum ChatSenderType {
+  CUSTOMER
+  PROVIDER
 }

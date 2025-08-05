@@ -5,7 +5,7 @@ import {
 } from '../interfaces/tcp-response.interface';
 import {
     CreateTransactionDto,
-    UpdateTransactionStatusDto,
+    UpdateTransactionStatusDto, // This DTO is not used in the provided code, but kept for completeness if it were.
     WalletTopUpDto,
 } from '../schemas/type';
 import * as paymentService from '../services/payment.service';
@@ -30,18 +30,40 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         switch (type) {
             case 'CREATE_TRANSACTION': {
                 const input: CreateTransactionDto = data;
-                responseData = await paymentService.createTransaction(input);
+                // Assuming TCP requests for transaction creation originate from a native app context
+                // or an internal service that should behave like a native client for deep linking.
+                // If clientType can be dynamic, it should be passed in the payload.
+                responseData = await paymentService.createTransaction(input, 'native');
                 message = 'Transaction created successfully';
                 break;
             }
 
             case 'CREATE_TOPUP': {
                 const input: WalletTopUpDto = data;
-                responseData = await paymentService.createWalletTopUpUsingPaymentTransaction(input);
+                // Assuming TCP requests for wallet top-up originate from a native app context.
+                responseData = await paymentService.createWalletTopUpUsingPaymentTransaction(input, 'native');
                 message = 'Wallet top-up initiated';
                 break;
-          }
+            }
 
+            case 'HANDLE_PAYOS_CALLBACK': {
+                // This case handles the scenario where an external system (e.g., API Gateway)
+                // receives the PayOS HTTP webhook and then forwards it as a TCP request to this microservice.
+                // The 'data' payload for this type should contain 'orderCode' and 'status'.
+                const { orderCode, status } = data;
+
+                if (typeof orderCode !== 'string' || !['PAID', 'FAILED'].includes(status)) {
+                    throw new AppError('Error.InvalidCallbackPayload', {
+                        message: 'Invalid payload for PayOS callback. Expected { orderCode: string, status: "PAID" | "FAILED" }',
+                        path: 'data',
+                    }, 400);
+                }
+
+                // Call the existing handlePayOSCallback function from the payment service
+                responseData = await paymentService.handlePayOSCallback({ orderCode, status });
+                message = responseData.message || 'PayOS callback processed'; // Use message from service response
+                break;
+            }
 
             default:
                 throw new AppError('Error.UnknownRequestType', {
@@ -58,7 +80,7 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
             statusCode,
             timestamp: new Date().toISOString(),
         };
-console.log(result);
+        console.log(result);
 
         return result;
 

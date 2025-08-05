@@ -182,7 +182,8 @@ exports.Prisma.DeviceScalarFieldEnum = {
   ip: 'ip',
   lastActive: 'lastActive',
   createdAt: 'createdAt',
-  isActive: 'isActive'
+  isActive: 'isActive',
+  fcmToken: 'fcmToken'
 };
 
 exports.Prisma.NotificationScalarFieldEnum = {
@@ -473,6 +474,62 @@ exports.Prisma.WalletScalarFieldEnum = {
   bankName: 'bankName'
 };
 
+exports.Prisma.ProviderReportScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  providerId: 'providerId',
+  bookingId: 'bookingId',
+  reason: 'reason',
+  description: 'description',
+  imageUrls: 'imageUrls',
+  status: 'status',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt',
+  reviewedById: 'reviewedById',
+  note: 'note'
+};
+
+exports.Prisma.WithdrawalRequestScalarFieldEnum = {
+  id: 'id',
+  providerId: 'providerId',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt',
+  processedAt: 'processedAt',
+  processedById: 'processedById',
+  note: 'note'
+};
+
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  providerId: 'providerId',
+  lastMessage: 'lastMessage',
+  lastMessageAt: 'lastMessageAt',
+  unreadByCustomer: 'unreadByCustomer',
+  unreadByProvider: 'unreadByProvider',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FavoriteServiceScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  serviceId: 'serviceId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderType: 'senderType',
+  senderId: 'senderId',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  isRead: 'isRead',
+  sentAt: 'sentAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -588,6 +645,26 @@ exports.ProposalStatus = exports.$Enums.ProposalStatus = {
   PENDING: 'PENDING'
 };
 
+exports.ReportStatus = exports.$Enums.ReportStatus = {
+  PENDING: 'PENDING',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  RESOLVED: 'RESOLVED',
+  REJECTED: 'REJECTED'
+};
+
+exports.WithdrawalStatus = exports.$Enums.WithdrawalStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED'
+};
+
+exports.ChatSenderType = exports.$Enums.ChatSenderType = {
+  CUSTOMER: 'CUSTOMER',
+  PROVIDER: 'PROVIDER'
+};
+
 exports.Prisma.ModelName = {
   Booking: 'Booking',
   Category: 'Category',
@@ -619,7 +696,12 @@ exports.Prisma.ModelName = {
   Proposal: 'Proposal',
   ProposalItem: 'ProposalItem',
   Service_ServiceItems: 'Service_ServiceItems',
-  Wallet: 'Wallet'
+  Wallet: 'Wallet',
+  ProviderReport: 'ProviderReport',
+  WithdrawalRequest: 'WithdrawalRequest',
+  Conversation: 'Conversation',
+  FavoriteService: 'FavoriteService',
+  Message: 'Message'
 };
 
 /**
