@@ -29,7 +29,7 @@ export async function testCreateTransaction() {
     type: "CREATE_TRANSACTION",
     data: {
       bookingId: 46,
-      amount: 50000,
+      amount: 2000,
       userId: 12,
       method: "BANK_TRANSFER",
     },
@@ -66,8 +66,30 @@ export async function testCreateTopUp() {
   }
 }
 
+export async function testHandlePayOSCallback() {
+  const timestamp = new Date().toISOString();
+
+  const payload = {
+    type: "HANDLE_PAYOS_CALLBACK",
+    data: {
+      orderCode: "1754380780670",  // ✅ Replace with a real order code if testing against real data
+      status: "PAID",            // or "FAILED"
+    },
+  };
+
+  console.log(`📦 Sending HANDLE_PAYOS_CALLBACK at ${timestamp}:`, payload);
+
+  try {
+    const result = await sendTCPRequest(payload);
+    logResponse("HANDLE_PAYOS_CALLBACK", result, timestamp);
+  } catch (error: any) {
+    console.error(`❌ [${timestamp}] HANDLE_PAYOS_CALLBACK Error:`, error?.message || error);
+  }
+}
+
 // ✅ Run test cases
 (async () => {
-  await testCreateTransaction();
+  // await testCreateTransaction();
 //   await testCreateTopUp();
+  await testHandlePayOSCallback();
 })();

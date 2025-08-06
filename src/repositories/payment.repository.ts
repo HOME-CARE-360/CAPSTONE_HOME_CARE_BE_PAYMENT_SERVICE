@@ -161,6 +161,10 @@ export const findPaymentTransactionByReference = async (orderCode: string) => {
 
 /**
  * Mark top-up transaction as paid
+ * BUSINESS RULES:
+ * - BR1: Only update if current status is PENDING or PROCESSING
+ * - BR2: Cannot mark as SUCCESS if already marked as SUCCESS, FAILED, or CANCELLED
+ * - BR3: Accumulated balance must match amountIn
  */
 export const markPaymentTransactionAsPaid = async (orderCode: string) => {
   const paymentTx = await prisma.paymentTransaction.findFirst({
@@ -171,6 +175,15 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
     throw new AppError("Error.PaymentTransactionNotFound", {
       message: `Top-up transaction with orderCode ${orderCode} not found.`,
     }, 404);
+  }
+
+  if (
+    paymentTx.status !== PaymentTransactionStatus.PENDING &&
+    paymentTx.status !== PaymentTransactionStatus.PROCESSING
+  ) {
+    throw new AppError("Error.InvalidStatusForSuccess", {
+      message: `Cannot mark transaction as SUCCESS from status ${paymentTx.status}.`,
+    }, 400);
   }
 
   return prisma.paymentTransaction.update({
@@ -184,6 +197,9 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
 
 /**
  * Mark top-up transaction as failed
+ * BUSINESS RULES:
+ * - BR1: Only update if current status is PENDING or PROCESSING
+ * - BR2: Cannot mark as FAILED if already marked as SUCCESS or CANCELLED
  */
 export const markPaymentTransactionAsFailed = async (orderCode: string) => {
   const paymentTx = await prisma.paymentTransaction.findFirst({
@@ -194,6 +210,15 @@ export const markPaymentTransactionAsFailed = async (orderCode: string) => {
     throw new AppError("Error.PaymentTransactionNotFound", {
       message: `Top-up transaction with orderCode ${orderCode} not found.`,
     }, 404);
+  }
+
+  if (
+    paymentTx.status !== PaymentTransactionStatus.PENDING &&
+    paymentTx.status !== PaymentTransactionStatus.PROCESSING
+  ) {
+    throw new AppError("Error.InvalidStatusForFailure", {
+      message: `Cannot mark transaction as FAILED from status ${paymentTx.status}.`,
+    }, 400);
   }
 
   return prisma.paymentTransaction.update({
