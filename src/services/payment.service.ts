@@ -3,20 +3,28 @@ import PayOS from "@payos/node";
 import { CreateTransactionDto, WalletTopUpDto } from "../schemas/type";
 import { CreateTransactionSchema, WalletTopUpSchema } from "../schemas/app.schema";
 import { AppError } from "../handlers/error";
-import { PaymentMethod, PaymentStatus, PaymentTransactionStatus, ProposalStatus, PrismaClient } from "../generated/prisma";
-import * as paymentRepo from "../repositories/payment.repository"; // Import all functions from repository
+import {
+  PaymentMethod,
+  PaymentStatus,
+  PaymentTransactionStatus,
+  ProposalStatus,
+  PrismaClient,
+} from "../generated/prisma";
+import * as paymentRepo from "../repositories/payment.repository";
 import { CheckoutResponseDataType } from "@payos/node/lib/type";
 
-const prisma = new PrismaClient(); // Re-initialize prisma client for this service file
+// NOTE: Tốt nhất dùng 1 instance Prisma chung, nhưng giữ nguyên phong cách file này:
+const prisma = new PrismaClient();
 
+// Khởi tạo PayOS SDK (đúng bộ key của PayOS)
 const payos = new PayOS(
-  process.env.PAYOS_CLIENT_ID!,
-  process.env.PAYOS_API_KEY!,
-  process.env.PAYOS_CHECKSUM_KEY!
+  process.env.PAYOS_CLIENT_ID!,     // clientId của PayOS
+  process.env.PAYOS_API_KEY!,       // apiKey của PayOS
+  process.env.PAYOS_CHECKSUM_KEY!   // checksumKey của PayOS
 );
 
 /**
- * Validates data against a Zod schema and throws an AppError if validation fails.
+ * Validate Zod – fail thì ném AppError 422
  */
 function validateOrThrow<T>(schema: any, data: T): void {
   try {
@@ -37,68 +45,62 @@ function validateOrThrow<T>(schema: any, data: T): void {
 }
 
 /**
- * Sends a payment link request to PayOS.
+ * Gọi PayOS tạo payment link
  */
 async function requestPayOS(
   orderCode: number,
   amount: number,
   description: string
 ): Promise<CheckoutResponseDataType> {
-  const clientUrl = process.env.PAYOS_CLIENT_ID; // Assuming PAYOS_CLIENT_ID is actually the base URL for client redirects
+  // FIX: Không dùng PAYOS_CLIENT_ID làm base URL cho client; tách CLIENT_BASE_URL riêng
+  const clientUrl = process.env.CLIENT_BASE_URL;
   if (!clientUrl) {
-    throw new AppError("Error.MissingEnv", {
-      message: "Missing PAYOS_CLIENT_ID environment variable (should be client base URL)",
-    }, 500);
+    throw new AppError(
+      "Error.MissingEnv",
+      { message: "Thiếu biến môi trường CLIENT_BASE_URL (base URL của client/app)" },
+      500
+    );
   }
 
-  const cancelUrl = `${clientUrl}/payment/cancel`;
+  // FIX: gắn orderCode vào cả cancel & success để trace thuận tiện
+  const cancelUrl = `${clientUrl}/payment/cancel?orderCode=${orderCode}`;
   const returnUrl = `${clientUrl}/payment/success?orderCode=${orderCode}`;
 
-  const payload = {
-    orderCode,
-    amount,
-    description,
-    cancelUrl,
-    returnUrl,
-  };
-
+  const payload = { orderCode, amount, description, cancelUrl, returnUrl };
   console.log("📦 Sending to PayOS:", payload);
 
   try {
     const res = await payos.createPaymentLink(payload);
-
-    if (!res?.checkoutUrl) {
-      throw new Error("Không nhận được checkoutUrl từ PayOS");
-    }
-
+    if (!res?.checkoutUrl) throw new Error("Không nhận được checkoutUrl từ PayOS");
     return res;
   } catch (err: any) {
-    console.error("🚨 PayOS Error:", err?.response?.data || err.message || err);
-    throw new AppError("Error.PayosAPI", {
-      message: "Không thể tạo payment link từ PayOS",
-      error: err?.response?.data || err.message || err,
-    }, 502);
+    console.error("🚨 PayOS Error:", err?.response?.data ?? err?.message ?? err);
+    throw new AppError(
+      "Error.PayosAPI",
+      { message: "Không thể tạo payment link từ PayOS", error: err?.response?.data ?? err?.message ?? err },
+      502
+    );
   }
 }
 
 /**
- * Creates a booking payment transaction and generates PayOS link.
+ * Tạo giao dịch thanh toán booking (bảng Transaction) + tạo link PayOS
  */
 export const createTransaction = async (data: CreateTransactionDto) => {
   validateOrThrow(CreateTransactionSchema, data);
 
-  // Generate a unique orderCode for PayOS.
-  // The repository's createTransaction handles the unique bookingId constraint.
+  // orderCode numeric, không quá dài (gộp bookingId + 6 số cuối timestamp)
   const orderCode = Number(`${data.bookingId}${Date.now().toString().slice(-6)}`);
   const description = `Thanh toán đơn hàng #${data.bookingId}`;
+
   const responseData = await requestPayOS(orderCode, data.amount, description);
 
-  // Gọi hàm từ repository để tạo transaction
+  // Lưu Transaction – theo schema Transaction có orderCode (String? @unique)
   const transaction = await paymentRepo.createTransaction({
     bookingId: data.bookingId,
     amount: data.amount,
     method: data.method || PaymentMethod.BANK_TRANSFER,
-    orderCode: orderCode.toString(), // Save as string in DB
+    orderCode: orderCode.toString(),
     createdById: data.userId,
   });
 
@@ -116,37 +118,39 @@ export const createTransaction = async (data: CreateTransactionDto) => {
 };
 
 /**
- * Creates a wallet top-up transaction and generates PayOS link.
+ * Tạo giao dịch nạp ví (bảng PaymentTransaction) + tạo link PayOS
  */
 export const createWalletTopUpUsingPaymentTransaction = async (data: WalletTopUpDto) => {
   validateOrThrow(WalletTopUpSchema, data);
 
-  const orderCode = Date.now(); // Unique and numeric
+  const orderCode = Date.now(); // unique numeric
   const description = `Nạp tiền vào ví #${data.userId}`;
   const responseData = await requestPayOS(orderCode, data.amount, description);
 
-  // Gọi hàm từ repository để tạo payment transaction
+  // FIX: Schema PaymentTransaction dùng referenceNumber, amountIn (không có orderCode/amount)
   await paymentRepo.createPaymentTransaction({
-    amount: data.amount,
     userId: data.userId,
-    orderCode: orderCode.toString(),
-    gateway: "PAYOS",
+    gateway: "PAYOS",                    // gateway là String – OK
+    referenceNumber: orderCode.toString(), // lưu mã PayOS vào referenceNumber
+    amountIn: data.amount,               // số tiền nạp vào ví
+    amountOut: 0,
     status: PaymentTransactionStatus.PENDING,
+    // serviceRequestId: null // nếu repo yêu cầu, bổ sung cho đúng chữ ký
   });
 
   return { responseData };
 };
 
 /**
- * Handles PayOS callback (PAID or FAILED).
- * This function now uses Prisma transactions for atomicity via repository methods.
+ * Callback PayOS (PAID | FAILED)
+ * - Nếu là booking payment → bảng Transaction
+ * - Nếu là nạp ví → bảng PaymentTransaction (tra theo referenceNumber)
  */
 export const handlePayOSCallback = async (payload: { orderCode: string; status: "PAID" | "FAILED" }) => {
   const { orderCode, status } = payload;
 
-  // Use a transaction to ensure atomicity for the entire callback process
-  return prisma.$transaction(async (tx) => { // Use tx for all operations within this transaction
-    // Attempt to find a booking transaction first
+  return prisma.$transaction(async (tx) => {
+    // 1) Booking transaction (Transaction.orderCode)
     const transaction = await tx.transaction.findUnique({ where: { orderCode } });
 
     if (transaction) {
@@ -157,14 +161,11 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
       if (status === "PAID") {
         await tx.transaction.update({
           where: { orderCode },
-          data: {
-            status: PaymentStatus.PAID,
-            paidAt: new Date(),
-          },
+          data: { status: PaymentStatus.PAID, paidAt: new Date() },
         });
 
-        // Update the associated Proposal status to ACCEPTED if payment is successful
         if (transaction.bookingId) {
+          // tuỳ nghiệp vụ, bạn đang set Proposal → ACCEPTED
           await tx.proposal.update({
             where: { bookingId: transaction.bookingId },
             data: { status: ProposalStatus.ACCEPTED },
@@ -177,15 +178,16 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
       if (status === "FAILED") {
         await tx.transaction.update({
           where: { orderCode },
-          data: {
-            status: PaymentStatus.FAILED,
-          },
+          data: { status: PaymentStatus.FAILED },
         });
         return { message: "Booking payment failure handled" };
       }
+
+      throw new AppError("Error.InvalidStatus", { status }, 400);
     }
 
-    // If not a booking transaction, try to find a wallet top-up PaymentTransaction
+    // 2) Wallet top-up (PaymentTransaction.referenceNumber)
+    // FIX: tra theo referenceNumber (không phải orderCode)
     const paymentTransaction = await tx.paymentTransaction.findFirst({
       where: { referenceNumber: orderCode },
     });
@@ -194,8 +196,10 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
       throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
     }
 
-    if (paymentTransaction.status !== PaymentTransactionStatus.PENDING &&
-        paymentTransaction.status !== PaymentTransactionStatus.PROCESSING) {
+    if (
+      paymentTransaction.status !== PaymentTransactionStatus.PENDING &&
+      paymentTransaction.status !== PaymentTransactionStatus.PROCESSING
+    ) {
       return { message: "Wallet top-up already handled or in an unchangeable state" };
     }
 
@@ -204,24 +208,25 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
         where: { id: paymentTransaction.id },
         data: {
           status: PaymentTransactionStatus.SUCCESS,
-          accumulated: paymentTransaction.amountIn,
+          // accumulated: paymentTransaction.amountIn, // nếu bạn dùng accumulated cho báo cáo, có thể set
         },
       });
+
       if (paymentTransaction.userId) {
+        // FIX: cộng ví theo amountIn (Int) → Wallet.balance (Float)
         await tx.wallet.update({
           where: { userId: paymentTransaction.userId },
           data: { balance: { increment: paymentTransaction.amountIn } },
         });
       }
+
       return { message: "Wallet top-up success handled" };
     }
 
     if (status === "FAILED") {
       await tx.paymentTransaction.update({
         where: { id: paymentTransaction.id },
-        data: {
-          status: PaymentTransactionStatus.FAILED,
-        },
+        data: { status: PaymentTransactionStatus.FAILED },
       });
       return { message: "Wallet top-up failure handled" };
     }
@@ -230,7 +235,9 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
   });
 };
 
-
+/**
+ * Thanh toán proposal bằng ví nội bộ (atomic trong repo)
+ */
 export const payProposalWithWallet = async ({
   bookingId,
   userId,
@@ -240,34 +247,37 @@ export const payProposalWithWallet = async ({
 }) => {
   const proposal = await paymentRepo.findProposalByBookingIdWithItems(bookingId);
   if (!proposal || proposal.status !== ProposalStatus.ACCEPTED) {
-    throw new AppError("Error.ProposalNotAccepted", {
-      message: `Proposal for booking #${bookingId} is not accepted or doesn't exist.`,
-    }, 400);
+    throw new AppError(
+      "Error.ProposalNotAccepted",
+      { message: `Proposal for booking #${bookingId} is not accepted or doesn't exist.` },
+      400
+    );
   }
 
-  const total = proposal.ProposalItem.reduce((sum, item) => {
-    return sum + item.quantity * item.Service.virtualPrice;
-  }, 0);
+  const total = proposal.ProposalItem.reduce(
+    (sum, item) => sum + item.quantity * item.Service.virtualPrice,
+    0
+  );
 
-  // Tìm ví qua repository
-  // Lưu ý: Nếu bạn muốn kiểm tra số dư ví trong cùng một transaction với update,
-  // bạn cần truyền `tx` từ service xuống repo hoặc thực hiện cả hai trong service.
-  // Hiện tại, `findUnique` không nằm trong transaction.
-  // Để đảm bảo tính toàn vẹn cao nhất, toàn bộ logic này nên nằm trong một Prisma transaction.
-  const wallet = await paymentRepo.findWalletByUserId(userId); // Giả định có hàm này trong repo
+  const wallet = await paymentRepo.findWalletByUserId(userId);
   if (!wallet || wallet.balance < total) {
-    throw new AppError("Error.InsufficientWalletBalance", {
-      message: "Not enough balance to pay for proposal.",
-    }, 400);
+    throw new AppError(
+      "Error.InsufficientWalletBalance",
+      { message: "Not enough balance to pay for proposal." },
+      400
+    );
   }
 
-  // Sử dụng transaction để đảm bảo trừ tiền ví và tạo transaction là atomic
-  await paymentRepo.payProposalWithWalletAtomic(userId, bookingId, total); // Hàm mới trong repo để xử lý atomic
+  await paymentRepo.payProposalWithWalletAtomic(userId, bookingId, total);
 
   return { message: "Proposal paid successfully via wallet." };
 };
 
-
+/**
+ * Tạo thanh toán proposal (ví nội bộ tạm map = CASH; gateway khác → PayOS)
+ * Lưu ý: enum PaymentMethod hiện chưa có WALLET trong schema của bạn.
+ * Nếu muốn rõ ràng, hãy thêm WALLET vào enum và migrate DB.
+ */
 export const createProposalPayment = async ({
   bookingId,
   method,
@@ -280,48 +290,40 @@ export const createProposalPayment = async ({
   const proposal = await paymentRepo.findProposalByBookingIdWithItems(bookingId);
 
   if (!proposal) {
-    throw new AppError("Error.ProposalNotFound", {
-      message: `No proposal found for booking #${bookingId}`,
-    }, 404);
+    throw new AppError("Error.ProposalNotFound", { message: `No proposal found for booking #${bookingId}` }, 404);
   }
 
   if (proposal.status !== ProposalStatus.ACCEPTED) {
-    throw new AppError("Error.ProposalNotAccepted", {
-      message: `Proposal for booking #${bookingId} is not accepted`,
-    }, 400);
+    throw new AppError("Error.ProposalNotAccepted", { message: `Proposal for booking #${bookingId} is not accepted` }, 400);
   }
 
-  const amount = proposal.ProposalItem.reduce((sum, item) => {
-    return sum + item.quantity * item.Service.virtualPrice;
-  }, 0);
+  const amount = proposal.ProposalItem.reduce(
+    (sum, item) => sum + item.quantity * item.Service.virtualPrice,
+    0
+  );
 
   if (amount <= 0) {
-    throw new AppError("Error.InvalidAmount", {
-      message: `Invalid proposal amount`,
-    }, 400);
+    throw new AppError("Error.InvalidAmount", { message: "Invalid proposal amount" }, 400);
   }
 
   const paymentMethod = method || PaymentMethod.BANK_TRANSFER;
 
-  // CASE 1: WALLET Payment
-  if (paymentMethod === PaymentMethod.CASH) { // Changed from CASH to WALLET for consistency
-    const wallet = await paymentRepo.findWalletByUserId(userId); // Gọi qua repository
+  // FIX: tạm coi ví nội bộ = CASH (vì enum chưa có WALLET)
+  const isWallet = paymentMethod === PaymentMethod.CASH;
 
+  if (isWallet) {
+    const wallet = await paymentRepo.findWalletByUserId(userId);
     if (!wallet) {
-      throw new AppError("Error.WalletNotFound", {
-        message: "Wallet not found for user",
-      }, 404);
+      throw new AppError("Error.WalletNotFound", { message: "Wallet not found for user" }, 404);
     }
-
     if (wallet.balance < amount) {
-      throw new AppError("Error.InsufficientBalance", {
-        message: "Số dư ví không đủ để thanh toán proposal",
-        currentBalance: wallet.balance,
-        requiredAmount: amount,
-      }, 400);
+      throw new AppError(
+        "Error.InsufficientBalance",
+        { message: "Số dư ví không đủ để thanh toán proposal", currentBalance: wallet.balance, requiredAmount: amount },
+        400
+      );
     }
 
-    // Gọi hàm atomic từ repository để xử lý thanh toán ví
     const transaction = await paymentRepo.payProposalWithWalletAtomic(userId, bookingId, amount);
 
     return {
@@ -335,12 +337,11 @@ export const createProposalPayment = async ({
     };
   }
 
-  // CASE 2: PayOS / Other gateway (Bank Transfer)
+  // Pay qua PayOS (BANK_TRANSFER / v.v…)
   const orderCode = Number(`${bookingId}${Date.now().toString().slice(-6)}`);
   const description = `Thanh toán proposal ${bookingId}`;
   const responseData = await requestPayOS(orderCode, amount, description);
 
-  // Gọi hàm từ repository để tạo transaction
   const transaction = await paymentRepo.createTransaction({
     bookingId,
     amount,
@@ -359,4 +360,91 @@ export const createProposalPayment = async ({
     createdAt: transaction.createdAt,
     responseData,
   };
-};
+}
+
+
+export async function getPaymentStatus(orderCode: string, userId: number) {
+  // Validate input
+  if (!orderCode || typeof orderCode !== 'string') {
+    throw new AppError(
+      'Error.InvalidOrderCode',
+      [{ path: ['orderCode'], message: 'orderCode is required (string)' }],
+      400
+    );
+  }
+  if (!Number.isFinite(userId) || userId <= 0) {
+    throw new AppError(
+      'Error.InvalidUserId',
+      [{ path: ['userId'], message: 'userId must be a positive number' }],
+      400
+    );
+  }
+
+  // 1) Booking/Proposal: Transaction.orderCode
+const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
+  if (bookingTx) {
+    const booking = bookingTx.Booking;
+    if (!booking) {
+      throw new AppError(
+        'Error.BookingNotFound',
+        [{ path: ['booking'], message: 'Booking not found' }],
+        404
+      );
+    }
+
+    // Authorize: tuỳ mô hình. Ở đây giả định userId === customerId
+    if (booking.customerId !== userId) {
+      throw new AppError(
+        'Error.Forbidden',
+        [{ path: ['userId'], message: 'Not allowed to view this transaction' }],
+        403
+      );
+    }
+
+    return {
+      ok: true,
+      data: {
+        kind: 'booking' as const,
+        status: paymentRepo.mapBookingTxStatus(bookingTx.status), // 'PENDING' | 'PAID' | 'FAILED'
+        amount: bookingTx.amount,
+        bookingId: bookingTx.bookingId,
+        updatedAt: (bookingTx.paidAt ?? bookingTx.createdAt).toISOString(),
+      },
+    };
+  }
+
+  // 2) Top-up / Service Request deposit: PaymentTransaction.referenceNumber
+  const payTx = await paymentRepo.getPaymentTxByReference(orderCode);
+  if (!payTx) {
+    throw new AppError(
+      'Error.TransactionNotFound',
+      [{ path: ['orderCode'], message: 'Transaction not found' }],
+      404
+    );
+  }
+
+  // Authorize: nếu có userId trên paymentTransaction thì phải trùng
+  if (payTx.userId && payTx.userId !== userId) {
+    throw new AppError(
+      'Error.Forbidden',
+      [{ path: ['userId'], message: 'Not allowed to view this transaction' }],
+      403
+    );
+  }
+
+  const unifiedStatus = paymentRepo.mapPaymentTxStatus(payTx.status);
+  const kind = payTx.serviceRequestId ? ('service_request_deposit' as const) : ('topup' as const);
+
+  return {
+    ok: true,
+    data: {
+      kind,
+      status: unifiedStatus,                 // 'PENDING' | 'PAID' | 'FAILED'
+      amount: payTx.amountIn,
+      serviceRequestId: payTx.serviceRequestId ?? undefined,
+      userId: payTx.userId ?? undefined,
+      updatedAt: payTx.transactionDate.toISOString(),
+    },
+  };
+}
+

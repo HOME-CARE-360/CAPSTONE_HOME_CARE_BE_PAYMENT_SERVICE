@@ -1,28 +1,42 @@
 // FIX: Corrected import path for AppError
 import { AppError } from '../handlers/error';
 import {
-    TCPResponseError,
-    TCPResponseSuccess,
+  TCPResponseError,
+  TCPResponseSuccess,
 } from '../interfaces/tcp-response.interface';
 import {
-    CreateTransactionDto,
-    // UpdateTransactionStatusDto, // Not used in this handler
-    WalletTopUpDto,
+  CreateTransactionDto,
+  // UpdateTransactionStatusDto, // Not used in this handler
+  WalletTopUpDto,
 } from '../schemas/type';
 import * as paymentService from '../services/payment.service';
 
 type HandleTCPReturn<T = any> = TCPResponseSuccess<T> | TCPResponseError;
 
+function isPlainObject(v: unknown): v is Record<string, any> {
+  return typeof v === 'object' && v !== null && !Array.isArray(v);
+}
+
 export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
-  const { type, data } = payload;
+  const { type } = payload ?? {};
 
   try {
     if (!type || typeof type !== 'string') {
-      throw new AppError('Error.MissingType', {
-        message: 'Missing or invalid request type',
-        path: 'type',
-      }, 400);
+      throw new AppError(
+        'Error.MissingType',
+        { message: 'Missing or invalid request type', path: 'type' },
+        400
+      );
     }
+
+    // Chuẩn hoá data đầu vào
+    const data = isPlainObject(payload?.data) ? payload.data : undefined;
+
+    // Log an toàn (không dump toàn bộ payload)
+    console.log(`[TCP] Incoming: ${type}`, {
+      hasData: Boolean(data),
+      ts: new Date().toISOString(),
+    });
 
     let responseData: any;
     let message = '';
@@ -30,69 +44,146 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
 
     switch (type) {
       case 'CREATE_TRANSACTION': {
-        const input: CreateTransactionDto = data;
-        console.log("📥 [CREATE_TRANSACTION] Payload:", input);
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for CREATE_TRANSACTION', path: 'data' },
+            400
+          );
+        }
+        const input: CreateTransactionDto = data as CreateTransactionDto;
+        console.log('📥 [CREATE_TRANSACTION]');
         responseData = await paymentService.createTransaction(input);
         message = 'Transaction created successfully';
         break;
       }
 
       case 'CREATE_TOPUP': {
-        const input: WalletTopUpDto = data;
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for CREATE_TOPUP', path: 'data' },
+            400
+          );
+        }
+        const input: WalletTopUpDto = data as WalletTopUpDto;
+        console.log('📥 [CREATE_TOPUP]');
         responseData = await paymentService.createWalletTopUpUsingPaymentTransaction(input);
         message = 'Wallet top-up initiated';
         break;
       }
 
       case 'HANDLE_PAYOS_CALLBACK': {
-        const { orderCode, status } = data;
-        // Basic validation for callback payload
-        if (typeof orderCode !== 'string' || !['PAID', 'FAILED'].includes(status)) {
-          throw new AppError('Error.InvalidCallbackPayload', {
-            message: 'Invalid payload for PayOS callback. Expected { orderCode: string, status: "PAID" | "FAILED" }',
-            path: 'data',
-          }, 400);
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for HANDLE_PAYOS_CALLBACK', path: 'data' },
+            400
+          );
         }
-        responseData = await paymentService.handlePayOSCallback({ orderCode, status });
-        message = responseData.message || 'PayOS callback processed';
+        const { orderCode, status } = data as { orderCode?: unknown; status?: unknown };
+
+        if (typeof orderCode !== 'string') {
+          throw new AppError(
+            'Error.InvalidCallbackPayload',
+            { message: 'orderCode must be a string', path: 'data.orderCode' },
+            400
+          );
+        }
+        if (typeof status !== 'string' || !['PAID', 'FAILED'].includes(status)) {
+          throw new AppError(
+            'Error.InvalidCallbackPayload',
+            { message: 'status must be "PAID" or "FAILED"', path: 'data.status' },
+            400
+          );
+        }
+
+        responseData = await paymentService.handlePayOSCallback({ orderCode, status: status as 'PAID' | 'FAILED' });
+        message = (responseData && responseData.message) || 'PayOS callback processed';
         break;
       }
 
-     case 'CREATE_PROPOSAL_TRANSACTION': {
-  const { bookingId, method, userId } = data;
+      case 'CREATE_PROPOSAL_TRANSACTION': {
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for CREATE_PROPOSAL_TRANSACTION', path: 'data' },
+            400
+          );
+        }
 
-  // Validate bookingId
-  if (!bookingId || typeof bookingId !== 'number') {
-    throw new AppError('Error.InvalidBookingId', {
-      message: 'bookingId must be a valid number',
-      path: 'bookingId',
-    }, 422);
-  }
+        const { bookingId, method, userId } = data as {
+          bookingId?: unknown;
+          method?: any;
+          userId?: unknown;
+        };
 
-  // Validate userId
-  if (!userId || typeof userId !== 'number') {
-    throw new AppError('Error.InvalidUserId', {
-      message: 'userId must be a valid number',
-      path: 'userId',
-    }, 422);
-  }
+        // Validate bookingId
+        if (typeof bookingId !== 'number' || !Number.isFinite(bookingId) || bookingId <= 0) {
+          throw new AppError(
+            'Error.InvalidBookingId',
+            { message: 'bookingId must be a valid positive number', path: 'data.bookingId' },
+            422
+          );
+        }
 
-  responseData = await paymentService.createProposalPayment({
-    bookingId,
-    method,
-    userId,
-  });
+        // Validate userId
+        if (typeof userId !== 'number' || !Number.isFinite(userId) || userId <= 0) {
+          throw new AppError(
+            'Error.InvalidUserId',
+            { message: 'userId must be a valid positive number', path: 'data.userId' },
+            422
+          );
+        }
 
-  message = 'Proposal transaction created successfully';
-  break;
-}
+        responseData = await paymentService.createProposalPayment({
+          bookingId,
+          method,
+          userId,
+        });
 
+        message = 'Proposal transaction created successfully';
+        break;
+      }
 
-      default:
-        throw new AppError('Error.UnknownRequestType', {
-          message: `Unknown request type: ${type}`,
-          path: 'type',
-        }, 400);
+      // ✅ THÊM CASE CÒN THIẾU
+      case 'GET_PAYMENT_STATUS': {
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for GET_PAYMENT_STATUS', path: 'data' },
+            400
+          );
+        }
+        const { orderCode, userId } = data as { orderCode?: unknown; userId?: unknown };
+
+        if (typeof orderCode !== 'string' || !orderCode.trim()) {
+          throw new AppError(
+            'Error.InvalidOrderCode',
+            { message: 'orderCode is required (string)', path: 'data.orderCode' },
+            400
+          );
+        }
+        if (typeof userId !== 'number' || !Number.isFinite(userId) || userId <= 0) {
+          throw new AppError(
+            'Error.InvalidUserId',
+            { message: 'userId must be a positive number', path: 'data.userId' },
+            400
+          );
+        }
+
+        responseData = await paymentService.getPaymentStatus(orderCode, userId);
+        message = 'Payment status retrieved';
+        break;
+      }
+
+      default: {
+        throw new AppError(
+          'Error.UnknownRequestType',
+          { message: `Unknown request type: ${type}`, path: 'type' },
+          400
+        );
+      }
     }
 
     const result: TCPResponseSuccess<any> = {
@@ -103,18 +194,34 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
       statusCode,
       timestamp: new Date().toISOString(),
     };
-    console.log('✅ handleTCPRequest result:', result);
+    console.log('✅ handleTCPRequest result (summary):', {
+      success: result.success,
+      code: result.code,
+      message: result.message,
+      statusCode: result.statusCode,
+      ts: result.timestamp,
+    });
 
     return result;
-
   } catch (err: any) {
-    console.error('❌ handleTCPRequest ERROR:', err);
+    // Log lỗi gọn, không lộ dữ liệu nhạy cảm
+    console.error('❌ handleTCPRequest ERROR:', {
+      name: err?.name,
+      code: err?.code,
+      statusCode: err?.statusCode,
+      message: err?.message,
+      ts: new Date().toISOString(),
+    });
 
     if (err instanceof AppError) {
+      const serialized = typeof err.toJSON === 'function' ? err.toJSON() : null;
+      const errorStr = serialized?.error ?? err.code ?? 'AppError';
+      const details = serialized?.message ?? [{ message: err.message }];
+
       const result: TCPResponseError = {
-        message: err.details,
-        error: err.toJSON().error,
-        statusCode: err.statusCode,
+        message: details,
+        error: errorStr,
+        statusCode: err.statusCode ?? 400,
       };
       return result;
     }

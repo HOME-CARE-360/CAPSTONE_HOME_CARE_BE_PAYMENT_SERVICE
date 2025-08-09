@@ -5,15 +5,16 @@ import {
   PaymentTransactionStatus,
   Transaction,
   ProposalStatus,
-  Wallet, // Import Wallet model
+  Wallet,
 } from "../generated/prisma";
 import { AppError } from "../handlers/error";
 
 const prisma = new PrismaClient();
 
 /**
- * Internal helper function to create or update a booking transaction atomically.
- * Ensures only one active transaction exists per bookingId.
+ * Internal helper: upsert Transaction theo bookingId (unique).
+ * - Nếu đã PAID → chặn.
+ * - Nếu PENDING/FAILED → xóa cũ, tạo mới (đảm bảo chỉ 1 transaction/booking).
  */
 const _upsertBookingTransaction = async ({
   bookingId,
@@ -29,24 +30,26 @@ const _upsertBookingTransaction = async ({
   createdById?: number;
 }): Promise<Transaction> => {
   return prisma.$transaction(async (tx) => {
-    const existing = await tx.transaction.findUnique({
-      where: { bookingId },
-    });
+    const existing = await tx.transaction.findUnique({ where: { bookingId } });
 
     if (existing) {
       if (existing.status === PaymentStatus.PAID) {
-        throw new AppError("Error.TransactionAlreadyPaid", {
-          message: `Booking ${bookingId} has already been paid.`,
-        }, 409);
+        throw new AppError(
+          "Error.TransactionAlreadyPaid",
+          { message: `Booking ${bookingId} has already been paid.` },
+          409
+        );
       }
 
-      if (existing.status === PaymentStatus.PENDING || existing.status === PaymentStatus.FAILED) {
-        // Delete existing transaction to create a new one for this bookingId
+      if (
+        existing.status === PaymentStatus.PENDING ||
+        existing.status === PaymentStatus.FAILED
+      ) {
+        // Có thể cân nhắc update thay vì delete để giữ audit. Ở đây giữ nguyên logic của bạn.
         await tx.transaction.delete({ where: { bookingId } });
       }
     }
 
-    // Create a new transaction record
     return tx.transaction.create({
       data: {
         bookingId,
@@ -61,9 +64,7 @@ const _upsertBookingTransaction = async ({
 };
 
 /**
- * Create a new transaction record in the database for a booking.
- * If bookingId is unique, ensure only one transaction exists per booking.
- * This function now uses the internal _upsertBookingTransaction helper.
+ * Tạo transaction cho booking (bảng Transaction)
  */
 export const createTransaction = async ({
   bookingId,
@@ -78,16 +79,20 @@ export const createTransaction = async ({
   orderCode: string;
   createdById?: number;
 }): Promise<Transaction> => {
-  return _upsertBookingTransaction({ bookingId, amount, method, orderCode, createdById });
+  return _upsertBookingTransaction({
+    bookingId,
+    amount,
+    method,
+    orderCode,
+    createdById,
+  });
 };
 
 /**
- * Increase wallet balance
+ * Tăng số dư ví (top-up)
  */
 export const topUpWallet = async (userId: number, amount: number): Promise<void> => {
   try {
-    // This operation is generally atomic at the DB level with increment,
-    // but can be part of a larger transaction if needed.
     await prisma.wallet.update({
       where: { userId },
       data: {
@@ -97,66 +102,66 @@ export const topUpWallet = async (userId: number, amount: number): Promise<void>
     });
   } catch (err: any) {
     console.error("❌ Error updating wallet:", err);
-    throw new AppError("Error.WalletTopUpFailed", {
-      message: "Failed to top up wallet",
-      error: err?.message || err,
-    }, 500);
+    throw new AppError(
+      "Error.WalletTopUpFailed",
+      { message: "Failed to top up wallet", error: err?.message || err },
+      500
+    );
   }
 };
 
 /**
- * Find wallet by userId
+ * Tìm ví theo userId
  */
 export const findWalletByUserId = async (userId: number): Promise<Wallet | null> => {
   return prisma.wallet.findUnique({ where: { userId } });
 };
 
 /**
- * Find transaction by orderCode
+ * Tìm Transaction theo orderCode
  */
 export const findTransactionByOrderCode = async (orderCode: string) => {
   return prisma.transaction.findUnique({ where: { orderCode } });
 };
 
 /**
- * Mark a transaction as paid
+ * Đánh dấu Transaction (booking) là PAID
  */
 export const markTransactionAsPaid = async (orderCode: string) => {
   return prisma.transaction.update({
     where: { orderCode },
-    data: {
-      status: PaymentStatus.PAID,
-      paidAt: new Date(),
-    },
+    data: { status: PaymentStatus.PAID, paidAt: new Date() },
   });
 };
 
 /**
- * Mark a transaction as failed
+ * Đánh dấu Transaction (booking) là FAILED
  */
 export const markTransactionAsFailed = async (orderCode: string) => {
   return prisma.transaction.update({
     where: { orderCode },
-    data: {
-      status: PaymentStatus.FAILED,
-    },
+    data: { status: PaymentStatus.FAILED },
   });
 };
 
 /**
- * Create a PaymentTransaction for top-up
+ * Tạo PaymentTransaction cho top-up (bảng PaymentTransaction)
+ * ❶ Theo schema: dùng referenceNumber để lưu orderCode từ PayOS
+ * ❷ amountIn là số tiền nạp vào ví (Int)
  */
 export const createPaymentTransaction = async ({
   userId,
-  amount,
-  orderCode,
+  referenceNumber,   // FIX: đồng bộ với service & schema
+  amountIn,          // FIX: đồng bộ với service & schema
+  amountOut = 0,
   gateway,
   status,
 }: {
   userId: number;
-  amount: number;
-  orderCode: string;
-  gateway: string;
+  referenceNumber: string; // PayOS orderCode (string)
+  amountIn: number;        // số tiền vào ví
+  amountOut?: number;      // mặc định 0 cho top-up
+  gateway: string;         // "PAYOS"
   status: PaymentTransactionStatus;
 }) => {
   try {
@@ -165,10 +170,10 @@ export const createPaymentTransaction = async ({
         gateway,
         accountNumber: null,
         subAccount: null,
-        amountIn: amount,
-        amountOut: 0,
+        amountIn,              // FIX
+        amountOut,             // FIX
         accumulated: 0,
-        referenceNumber: orderCode,
+        referenceNumber,       // FIX
         transactionContent: `Top-up for user #${userId}`,
         body: null,
         serviceRequestId: null,
@@ -178,15 +183,16 @@ export const createPaymentTransaction = async ({
     });
   } catch (err: any) {
     console.error("❌ Error creating paymentTransaction:", err);
-    throw new AppError("Error.PaymentTransactionCreateFailed", {
-      message: "Failed to create payment transaction",
-      error: err?.message || err,
-    }, 500);
+    throw new AppError(
+      "Error.PaymentTransactionCreateFailed",
+      { message: "Failed to create payment transaction", error: err?.message || err },
+      500
+    );
   }
 };
 
 /**
- * Find payment transaction by reference number
+ * Tìm PaymentTransaction theo referenceNumber (orderCode PayOS)
  */
 export const findPaymentTransactionByReference = async (orderCode: string) => {
   return prisma.paymentTransaction.findFirst({
@@ -195,11 +201,9 @@ export const findPaymentTransactionByReference = async (orderCode: string) => {
 };
 
 /**
- * Mark top-up transaction as paid
- * BUSINESS RULES:
- * - BR1: Only update if current status is PENDING or PROCESSING
- * - BR2: Cannot mark as SUCCESS if already marked as SUCCESS, FAILED, or CANCELLED
- * - BR3: Accumulated balance must match amountIn
+ * Đánh dấu top-up PaymentTransaction là SUCCESS
+ * - Chỉ khi đang PENDING/PROCESSING
+ * - (Tuỳ nghiệp vụ) accumulated = amountIn
  */
 export const markPaymentTransactionAsPaid = async (orderCode: string) => {
   const paymentTx = await prisma.paymentTransaction.findFirst({
@@ -207,34 +211,36 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
   });
 
   if (!paymentTx) {
-    throw new AppError("Error.PaymentTransactionNotFound", {
-      message: `Top-up transaction with orderCode ${orderCode} not found.`,
-    }, 404);
+    throw new AppError(
+      "Error.PaymentTransactionNotFound",
+      { message: `Top-up transaction with orderCode ${orderCode} not found.` },
+      404
+    );
   }
 
   if (
     paymentTx.status !== PaymentTransactionStatus.PENDING &&
     paymentTx.status !== PaymentTransactionStatus.PROCESSING
   ) {
-    throw new AppError("Error.InvalidStatusForSuccess", {
-      message: `Cannot mark transaction as SUCCESS from status ${paymentTx.status}.`,
-    }, 400);
+    throw new AppError(
+      "Error.InvalidStatusForSuccess",
+      { message: `Cannot mark transaction as SUCCESS from status ${paymentTx.status}.` },
+      400
+    );
   }
 
   return prisma.paymentTransaction.update({
     where: { id: paymentTx.id },
     data: {
       status: PaymentTransactionStatus.SUCCESS,
-      accumulated: paymentTx.amountIn,
+      accumulated: paymentTx.amountIn, // có thể bỏ nếu không cần
     },
   });
 };
 
 /**
- * Mark top-up transaction as failed
- * BUSINESS RULES:
- * - BR1: Only update if current status is PENDING or PROCESSING
- * - BR2: Cannot mark as FAILED if already marked as SUCCESS or CANCELLED
+ * Đánh dấu top-up PaymentTransaction là FAILED
+ * - Chỉ khi đang PENDING/PROCESSING
  */
 export const markPaymentTransactionAsFailed = async (orderCode: string) => {
   const paymentTx = await prisma.paymentTransaction.findFirst({
@@ -242,31 +248,32 @@ export const markPaymentTransactionAsFailed = async (orderCode: string) => {
   });
 
   if (!paymentTx) {
-    throw new AppError("Error.PaymentTransactionNotFound", {
-      message: `Top-up transaction with orderCode ${orderCode} not found.`,
-    }, 404);
+    throw new AppError(
+      "Error.PaymentTransactionNotFound",
+      { message: `Top-up transaction with orderCode ${orderCode} not found.` },
+      404
+    );
   }
 
   if (
     paymentTx.status !== PaymentTransactionStatus.PENDING &&
     paymentTx.status !== PaymentTransactionStatus.PROCESSING
   ) {
-    throw new AppError("Error.InvalidStatusForFailure", {
-      message: `Cannot mark transaction as FAILED from status ${paymentTx.status}.`,
-    }, 400);
+    throw new AppError(
+      "Error.InvalidStatusForFailure",
+      { message: `Cannot mark transaction as FAILED from status ${paymentTx.status}.` },
+      400
+    );
   }
 
   return prisma.paymentTransaction.update({
     where: { id: paymentTx.id },
-    data: {
-      status: PaymentTransactionStatus.FAILED,
-    },
+    data: { status: PaymentTransactionStatus.FAILED },
   });
 };
 
 /**
- * Pay for a proposal by bookingId.
- * This function now uses the internal _upsertBookingTransaction helper.
+ * Tạo/đổi Transaction khi thanh toán Proposal theo bookingId
  */
 export const payProposalByBookingId = async ({
   bookingId,
@@ -287,12 +294,13 @@ export const payProposalByBookingId = async ({
   });
 
   if (!proposal) {
-    throw new AppError('Error.ProposalNotFound', {
-      message: `No proposal found for bookingId ${bookingId}`,
-    }, 404);
+    throw new AppError(
+      "Error.ProposalNotFound",
+      { message: `No proposal found for bookingId ${bookingId}` },
+      404
+    );
   }
 
-  // Use the shared helper to handle transaction creation/update
   return _upsertBookingTransaction({
     bookingId,
     amount,
@@ -303,7 +311,10 @@ export const payProposalByBookingId = async ({
 };
 
 /**
- * Atomically handles wallet deduction and transaction creation for proposal payment.
+ * Thanh toán proposal bằng ví: atomic
+ * - Kiểm tra và trừ ví (không để âm)
+ * - Tạo Transaction & đánh dấu PAID
+ * - Cập nhật Proposal → ACCEPTED
  */
 export const payProposalWithWalletAtomic = async (
   userId: number,
@@ -311,21 +322,32 @@ export const payProposalWithWalletAtomic = async (
   amount: number
 ): Promise<Transaction> => {
   return prisma.$transaction(async (tx) => {
-    // Deduct from wallet
+    // Đọc ví và kiểm tra số dư ngay trong transaction để an toàn
+    const wallet = await tx.wallet.findUnique({ where: { userId } });
+    if (!wallet) {
+      throw new AppError("Error.WalletNotFound", { message: "Wallet not found for user" }, 404);
+    }
+    if (wallet.balance < amount) {
+      throw new AppError(
+        "Error.InsufficientBalance",
+        { message: "Số dư ví không đủ để thanh toán proposal", currentBalance: wallet.balance, requiredAmount: amount },
+        400
+      );
+    }
+
+    // Trừ ví
     await tx.wallet.update({
       where: { userId },
-      data: {
-        balance: { decrement: amount },
-        updatedAt: new Date(),
-      },
+      data: { balance: { decrement: amount }, updatedAt: new Date() },
     });
 
-    // Create a new transaction for the booking, marking it as paid immediately
+    // Tạo Transaction → PAID ngay (vì ví nội bộ)
     const newTransaction = await tx.transaction.create({
       data: {
         bookingId,
         amount,
-        method: PaymentMethod.CASH, // Corrected to WALLET for wallet payments
+        // Schema PaymentMethod hiện không có WALLET → tạm dùng CASH như đã thảo luận
+        method: PaymentMethod.CASH, // FIX: tạm map ví = CASH (nên thêm WALLET vào enum nếu muốn rõ ràng)
         orderCode: `WALLET-${bookingId}-${Date.now()}`,
         status: PaymentStatus.PAID,
         paidAt: new Date(),
@@ -333,7 +355,6 @@ export const payProposalWithWalletAtomic = async (
       },
     });
 
-    // Update the proposal status to ACCEPTED
     await tx.proposal.update({
       where: { bookingId },
       data: { status: ProposalStatus.ACCEPTED },
@@ -343,11 +364,8 @@ export const payProposalWithWalletAtomic = async (
   });
 };
 
-
 export const findProposalByBookingId = async (bookingId: number) => {
-  return prisma.proposal.findUnique({
-    where: { bookingId },
-  });
+  return prisma.proposal.findUnique({ where: { bookingId } });
 };
 
 export const findProposalByBookingIdWithItems = async (bookingId: number) => {
@@ -356,13 +374,66 @@ export const findProposalByBookingIdWithItems = async (bookingId: number) => {
     include: {
       ProposalItem: {
         include: {
-          Service: {
-            select: {
-              virtualPrice: true,
-            },
-          },
+          Service: { select: { virtualPrice: true } },
         },
       },
     },
   });
 };
+export async function getBookingTxWithOwner(orderCode: string) {
+  return prisma.transaction.findUnique({
+    where: { orderCode },
+    include: {
+      Booking: { select: { id: true, customerId: true } },
+    },
+  });
+}
+
+/** Lấy PaymentTransaction (top-up | SR deposit) theo referenceNumber */
+export async function getPaymentTxByReference(orderCode: string) {
+  return prisma.paymentTransaction.findFirst({
+    where: { referenceNumber: orderCode },
+    select: {
+      id: true,
+      userId: true,
+      amountIn: true,
+      status: true,
+      transactionDate: true,
+      serviceRequestId: true,
+    },
+  });
+}
+
+/** Map PaymentStatus -> unified status */
+export function mapBookingTxStatus(
+  s: PaymentStatus,
+): 'PENDING' | 'PAID' | 'FAILED' {
+  switch (s) {
+    case 'PAID':
+      return 'PAID';
+    case 'FAILED':
+      return 'FAILED';
+    case 'PENDING':
+    default:
+      return 'PENDING';
+  }
+}
+
+export function mapPaymentTxStatus(
+  s: PaymentTransactionStatus,
+): 'PENDING' | 'PAID' | 'FAILED' {
+  switch (s) {
+    case 'SUCCESS':
+      return 'PAID';
+    case 'FAILED':
+    case 'CANCELLED':
+    case 'REFUNDED':
+    case 'EXPIRED':
+      return 'FAILED';
+    case 'PENDING':
+    case 'PROCESSING':
+    case 'MANUAL_REVIEW':
+    default:
+      return 'PENDING';
+  }
+}

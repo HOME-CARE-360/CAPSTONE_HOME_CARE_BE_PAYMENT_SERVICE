@@ -129,7 +129,8 @@ exports.Prisma.BookingScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   staffId: 'staffId',
-  serviceRequestId: 'serviceRequestId'
+  serviceRequestId: 'serviceRequestId',
+  completedAt: 'completedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -398,7 +399,9 @@ exports.Prisma.WorkLogScalarFieldEnum = {
   checkOut: 'checkOut',
   note: 'note',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  checkInImages: 'checkInImages',
+  checkOutImages: 'checkOutImages'
 };
 
 exports.Prisma.InspectionReportScalarFieldEnum = {
@@ -547,6 +550,7 @@ exports.Prisma.QueryMode = {
 exports.BookingStatus = exports.$Enums.BookingStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
+  IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 };

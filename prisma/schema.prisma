@@ -19,6 +19,7 @@ model Booking {
   updatedAt                    DateTime
   staffId                      Int?
   serviceRequestId             Int?              @unique
+  completedAt                  DateTime?         @db.Timestamptz(6)
   CustomerProfile              CustomerProfile   @relation(fields: [customerId], references: [id], onDelete: Cascade)
   ServiceProvider              ServiceProvider   @relation(fields: [providerId], references: [id], onDelete: Cascade)
   ServiceRequest               ServiceRequest?   @relation(fields: [serviceRequestId], references: [id])
@@ -411,16 +412,18 @@ model VerificationCode {
 }
 
 model WorkLog {
-  id        Int       @id @default(autoincrement())
-  staffId   Int
-  bookingId Int
-  checkIn   DateTime?
-  checkOut  DateTime?
-  note      String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime
-  Booking   Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  Staff     Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  id             Int       @id @default(autoincrement())
+  staffId        Int
+  bookingId      Int
+  checkIn        DateTime?
+  checkOut       DateTime?
+  note           String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime
+  checkInImages  String[]  @default([])
+  checkOutImages String[]  @default([])
+  Booking        Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  Staff          Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
 }
 
 model InspectionReport {
@@ -602,6 +605,7 @@ model Message {
 enum BookingStatus {
   PENDING
   CONFIRMED
+  IN_PROGRESS
   COMPLETED
   CANCELLED
 }
