@@ -337,7 +337,7 @@ export const createProposalPayment = async ({
 
   // CASE 2: PayOS / Other gateway (Bank Transfer)
   const orderCode = Number(`${bookingId}${Date.now().toString().slice(-6)}`);
-  const description = `Thanh toán proposal cho đơn #${bookingId}`;
+  const description = `Thanh toán proposal ${bookingId}`;
   const responseData = await requestPayOS(orderCode, amount, description);
 
   // Gọi hàm từ repository để tạo transaction

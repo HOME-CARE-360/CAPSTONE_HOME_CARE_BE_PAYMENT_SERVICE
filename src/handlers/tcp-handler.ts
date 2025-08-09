@@ -58,28 +58,35 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         break;
       }
 
-      case 'CREATE_PROPOSAL_TRANSACTION': {
-        const { bookingId, method, userId } = data;
+     case 'CREATE_PROPOSAL_TRANSACTION': {
+  const { bookingId, method, userId } = data;
 
-        // Validate required fields for proposal transaction
-        if (!bookingId || typeof bookingId !== 'number') {
-          throw new AppError('Error.InvalidBookingId', {
-            message: 'bookingId must be a valid number',
-            path: 'bookingId',
-          }, 422);
-        }
+  // Validate bookingId
+  if (!bookingId || typeof bookingId !== 'number') {
+    throw new AppError('Error.InvalidBookingId', {
+      message: 'bookingId must be a valid number',
+      path: 'bookingId',
+    }, 422);
+  }
 
-        if (!userId || typeof userId !== 'number') {
-          throw new AppError('Error.InvalidUserId', {
-            message: 'userId must be a valid number',
-            path: 'userId',
-          }, 422);
-        }
+  // Validate userId
+  if (!userId || typeof userId !== 'number') {
+    throw new AppError('Error.InvalidUserId', {
+      message: 'userId must be a valid number',
+      path: 'userId',
+    }, 422);
+  }
 
-        responseData = await paymentService.createProposalPayment({ bookingId, method, userId });
-        message = 'Proposal transaction created successfully';
-        break;
-      }
+  responseData = await paymentService.createProposalPayment({
+    bookingId,
+    method,
+    userId,
+  });
+
+  message = 'Proposal transaction created successfully';
+  break;
+}
+
 
       default:
         throw new AppError('Error.UnknownRequestType', {
