@@ -52,9 +52,9 @@ export async function testCreateTopUp() {
   const payload = {
     type: "CREATE_TOPUP",
     data: {
-      amount: 100000,
-      userId: 12,
-      clientType: "native", // ✅ Required for correct behavior
+      amount: 2000,
+      userId: 2,
+      clientType: "native",
     },
   };
 
@@ -72,8 +72,8 @@ export async function testHandlePayOSCallback() {
   const payload = {
     type: "HANDLE_PAYOS_CALLBACK",
     data: {
-      orderCode: "1754380780670",  // ✅ Replace with a real order code if testing against real data
-      status: "PAID",            // or "FAILED"
+      orderCode: "1754846680166",  
+      status: "PAID",
     },
   };
 
@@ -90,6 +90,6 @@ export async function testHandlePayOSCallback() {
 // ✅ Run test cases
 (async () => {
   // await testCreateTransaction();
-//   await testCreateTopUp();
-  await testHandlePayOSCallback();
+  await testCreateTopUp();
+  // await testHandlePayOSCallback();
 })();

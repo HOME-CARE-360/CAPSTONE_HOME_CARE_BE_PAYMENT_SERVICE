@@ -177,6 +177,52 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         break;
       }
 
+            case 'HANDLE_PAYOS_SUCCESS_MANUAL': {
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for HANDLE_PAYOS_SUCCESS_MANUAL', path: 'data' },
+            400
+          );
+        }
+        const { orderCode } = data as { orderCode?: unknown };
+
+        if (typeof orderCode !== 'string' || !orderCode.trim()) {
+          throw new AppError(
+            'Error.InvalidOrderCode',
+            { message: 'orderCode is required (string)', path: 'data.orderCode' },
+            400
+          );
+        }
+
+        responseData = await paymentService.handlePayOSSuccessManual(orderCode);
+        message = (responseData && responseData.message) || 'Manual PayOS success handled';
+        break;
+      }
+
+      case 'HANDLE_PAYOS_FAILED_MANUAL': {
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for HANDLE_PAYOS_FAILED_MANUAL', path: 'data' },
+            400
+          );
+        }
+        const { orderCode } = data as { orderCode?: unknown };
+
+        if (typeof orderCode !== 'string' || !orderCode.trim()) {
+          throw new AppError(
+            'Error.InvalidOrderCode',
+            { message: 'orderCode is required (string)', path: 'data.orderCode' },
+            400
+          );
+        }
+
+        responseData = await paymentService.handlePayOSFailedManual(orderCode);
+        message = (responseData && responseData.message) || 'Manual PayOS failed handled';
+        break;
+      }
+
       default: {
         throw new AppError(
           'Error.UnknownRequestType',

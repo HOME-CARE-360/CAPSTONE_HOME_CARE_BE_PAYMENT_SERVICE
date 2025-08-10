@@ -62,9 +62,8 @@ async function requestPayOS(
     );
   }
 
-  // FIX: gắn orderCode vào cả cancel & success để trace thuận tiện
-  const cancelUrl = `${clientUrl}/payment/cancel?orderCode=${orderCode}`;
-  const returnUrl = `${clientUrl}/payment/success?orderCode=${orderCode}`;
+  const cancelUrl = `${clientUrl}/payment/failed?orderCode=${orderCode}`;
+  const returnUrl = `${clientUrl}/payments/success?orderCode=${orderCode}`;
 
   const payload = { orderCode, amount, description, cancelUrl, returnUrl };
   console.log("📦 Sending to PayOS:", payload);
@@ -448,3 +447,102 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
   };
 }
 
+/**
+ * Xử lý thủ công khi payment thành công (trường hợp webhook PayOS lỗi)
+ */
+export async function handlePayOSSuccessManual(orderCode: string) {
+  return prisma.$transaction(async (tx) => {
+    // 1) Booking transaction
+    const transaction = await tx.transaction.findUnique({ where: { orderCode } });
+    if (transaction) {
+      if (transaction.status !== PaymentStatus.PENDING) {
+        return { message: "Booking transaction already handled" };
+      }
+
+      await tx.transaction.update({
+        where: { orderCode },
+        data: { status: PaymentStatus.PAID, paidAt: new Date() },
+      });
+
+      if (transaction.bookingId) {
+        await tx.proposal.update({
+          where: { bookingId: transaction.bookingId },
+          data: { status: ProposalStatus.ACCEPTED },
+        });
+      }
+
+      return { message: "Booking payment success handled manually" };
+    }
+
+    // 2) Wallet top-up
+    const paymentTransaction = await tx.paymentTransaction.findFirst({
+      where: { referenceNumber: orderCode },
+    });
+    if (!paymentTransaction) {
+      throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
+    }
+    if (
+      paymentTransaction.status !== PaymentTransactionStatus.PENDING &&
+      paymentTransaction.status !== PaymentTransactionStatus.PROCESSING
+    ) {
+      return { message: "Wallet top-up already handled" };
+    }
+
+    await tx.paymentTransaction.update({
+      where: { id: paymentTransaction.id },
+      data: { status: PaymentTransactionStatus.SUCCESS },
+    });
+
+    if (paymentTransaction.userId) {
+      await tx.wallet.update({
+        where: { userId: paymentTransaction.userId },
+        data: { balance: { increment: paymentTransaction.amountIn } },
+      });
+    }
+
+    return { message: "Wallet top-up success handled manually" };
+  });
+}
+
+/**
+ * Xử lý thủ công khi payment thất bại (trường hợp webhook PayOS lỗi)
+ */
+export async function handlePayOSFailedManual(orderCode: string) {
+  return prisma.$transaction(async (tx) => {
+    // 1) Booking transaction
+    const transaction = await tx.transaction.findUnique({ where: { orderCode } });
+    if (transaction) {
+      if (transaction.status !== PaymentStatus.PENDING) {
+        return { message: "Booking transaction already handled" };
+      }
+
+      await tx.transaction.update({
+        where: { orderCode },
+        data: { status: PaymentStatus.FAILED },
+      });
+
+      return { message: "Booking payment failure handled manually" };
+    }
+
+    // 2) Wallet top-up
+    const paymentTransaction = await tx.paymentTransaction.findFirst({
+      where: { referenceNumber: orderCode },
+    });
+    if (!paymentTransaction) {
+      throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
+    }
+    if (
+      paymentTransaction.status !== PaymentTransactionStatus.PENDING &&
+      paymentTransaction.status !== PaymentTransactionStatus.PROCESSING
+    ) {
+      return { message: "Wallet top-up already handled" };
+    }
+
+    await tx.paymentTransaction.update({
+      where: { id: paymentTransaction.id },
+      data: { status: PaymentTransactionStatus.FAILED },
+    });
+
+    return { message: "Wallet top-up failure handled manually" };
+  });
+}
