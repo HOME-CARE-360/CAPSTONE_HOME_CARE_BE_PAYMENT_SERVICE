@@ -62,7 +62,7 @@ async function requestPayOS(
     );
   }
 
-  const cancelUrl = `${clientUrl}/payment/failed?orderCode=${orderCode}`;
+  const cancelUrl = `${clientUrl}/payments/failed?orderCode=${orderCode}`;
   const returnUrl = `${clientUrl}/payments/success?orderCode=${orderCode}`;
 
   const payload = { orderCode, amount, description, cancelUrl, returnUrl };
