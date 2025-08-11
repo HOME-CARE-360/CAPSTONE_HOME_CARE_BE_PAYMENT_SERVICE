@@ -52,8 +52,7 @@ async function requestPayOS(
   amount: number,
   description: string
 ): Promise<CheckoutResponseDataType> {
-  // FIX: Không dùng PAYOS_CLIENT_ID làm base URL cho client; tách CLIENT_BASE_URL riêng
-  const clientUrl = process.env.CLIENT_BASE_URL;
+  const clientUrl = "http://localhost:3000";
   if (!clientUrl) {
     throw new AppError(
       "Error.MissingEnv",
