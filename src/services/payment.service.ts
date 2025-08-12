@@ -470,7 +470,7 @@ export async function handlePayOSSuccessManual(orderCode: string) {
         });
       }
 
-      return { message: "Booking payment success handled manually" };
+      return { message: "Booking payment success" };
     }
 
     // 2) Wallet top-up
@@ -499,7 +499,7 @@ export async function handlePayOSSuccessManual(orderCode: string) {
       });
     }
 
-    return { message: "Wallet top-up success handled manually" };
+    return { message: "Wallet top-up success" };
   });
 }
 
@@ -520,7 +520,7 @@ export async function handlePayOSFailedManual(orderCode: string) {
         data: { status: PaymentStatus.FAILED },
       });
 
-      return { message: "Booking payment failure handled manually" };
+      return { message: "Booking payment failed" };
     }
 
     // 2) Wallet top-up
@@ -542,6 +542,6 @@ export async function handlePayOSFailedManual(orderCode: string) {
       data: { status: PaymentTransactionStatus.FAILED },
     });
 
-    return { message: "Wallet top-up failure handled manually" };
+    return { message: "Wallet top-up failed" };
   });
 }
