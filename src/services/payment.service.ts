@@ -52,7 +52,7 @@ async function requestPayOS(
   amount: number,
   description: string
 ): Promise<CheckoutResponseDataType> {
-  const clientUrl = "http://localhost:3000";
+  const clientUrl = "https://api.homecare360.space";
   if (!clientUrl) {
     throw new AppError(
       "Error.MissingEnv",
@@ -451,7 +451,7 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
  */
 export async function handlePayOSSuccessManual(orderCode: string) {
   return prisma.$transaction(async (tx) => {
-    // 1) Booking transaction
+    // 1) Booking transaction 
     const transaction = await tx.transaction.findUnique({ where: { orderCode } });
     if (transaction) {
       if (transaction.status !== PaymentStatus.PENDING) {
