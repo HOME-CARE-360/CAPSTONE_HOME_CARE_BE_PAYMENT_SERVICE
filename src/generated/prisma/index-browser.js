@@ -261,7 +261,6 @@ exports.Prisma.RefreshTokenScalarFieldEnum = {
 exports.Prisma.ReviewScalarFieldEnum = {
   id: 'id',
   customerId: 'customerId',
-  staffId: 'staffId',
   serviceId: 'serviceId',
   rating: 'rating',
   comment: 'comment',
@@ -533,6 +532,17 @@ exports.Prisma.MessageScalarFieldEnum = {
   sentAt: 'sentAt'
 };
 
+exports.Prisma.Suggested_services_configScalarFieldEnum = {
+  id: 'id',
+  category_id: 'category_id',
+  display_name: 'display_name',
+  suggested_interval_months: 'suggested_interval_months',
+  notification_template: 'notification_template',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -619,6 +629,7 @@ exports.PaymentMethod = exports.$Enums.PaymentMethod = {
   CASH: 'CASH',
   CREDIT_CARD: 'CREDIT_CARD',
   BANK_TRANSFER: 'BANK_TRANSFER',
+  WALLET: 'WALLET',
   MOMO: 'MOMO',
   ZALOPAY: 'ZALOPAY'
 };
@@ -705,7 +716,8 @@ exports.Prisma.ModelName = {
   WithdrawalRequest: 'WithdrawalRequest',
   Conversation: 'Conversation',
   FavoriteService: 'FavoriteService',
-  Message: 'Message'
+  Message: 'Message',
+  suggested_services_config: 'suggested_services_config'
 };
 
 /**

@@ -296,9 +296,10 @@ export const createProposalPayment = async ({
   }
 
   const amount = proposal.ProposalItem.reduce(
-    (sum, item) => sum + item.quantity * item.Service.virtualPrice,
-    0
-  );
+  (sum, item) => sum + item.quantity * item.Service.virtualPrice,
+  0
+) - 100000;
+
 
   if (amount <= 0) {
     throw new AppError("Error.InvalidAmount", { message: "Invalid proposal amount" }, 400);
@@ -306,8 +307,7 @@ export const createProposalPayment = async ({
 
   const paymentMethod = method || PaymentMethod.BANK_TRANSFER;
 
-  // FIX: tạm coi ví nội bộ = CASH (vì enum chưa có WALLET)
-  const isWallet = paymentMethod === PaymentMethod.CASH;
+  const isWallet = paymentMethod === PaymentMethod.WALLET;
 
   if (isWallet) {
     const wallet = await paymentRepo.findWalletByUserId(userId);
