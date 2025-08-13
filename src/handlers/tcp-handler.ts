@@ -157,7 +157,6 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         break;
       }
 
-      // ✅ THÊM CASE CÒN THIẾU
       case 'GET_PAYMENT_STATUS': {
         if (!data) {
           throw new AppError(
@@ -166,7 +165,7 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
             400
           );
         }
-        const { orderCode, userId } = data as { orderCode?: unknown; userId?: unknown };
+        const { orderCode } = data as { orderCode?: unknown };
 
         if (typeof orderCode !== 'string' || !orderCode.trim()) {
           throw new AppError(
@@ -175,15 +174,8 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
             400
           );
         }
-        if (typeof userId !== 'number' || !Number.isFinite(userId) || userId <= 0) {
-          throw new AppError(
-            'Error.InvalidUserId',
-            { message: 'userId must be a positive number', path: 'data.userId' },
-            400
-          );
-        }
 
-        responseData = await paymentService.getPaymentStatus(orderCode, userId);
+        responseData = await paymentService.getPaymentStatus(orderCode);
         message = 'Payment status retrieved';
         break;
       }

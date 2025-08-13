@@ -9,6 +9,7 @@ import {
   PaymentTransactionStatus,
   ProposalStatus,
   PrismaClient,
+  BookingStatus,
 } from "../generated/prisma";
 import * as paymentRepo from "../repositories/payment.repository";
 import { CheckoutResponseDataType } from "@payos/node/lib/type";
@@ -139,21 +140,24 @@ export const createWalletTopUpUsingPaymentTransaction = async (data: WalletTopUp
   return { responseData };
 };
 
-/**
- * Callback PayOS (PAID | FAILED)
- * - Nếu là booking payment → bảng Transaction
- * - Nếu là nạp ví → bảng PaymentTransaction (tra theo referenceNumber)
- */
 export const handlePayOSCallback = async (payload: { orderCode: string; status: "PAID" | "FAILED" }) => {
   const { orderCode, status } = payload;
 
   return prisma.$transaction(async (tx) => {
-    // 1) Booking transaction (Transaction.orderCode)
-    const transaction = await tx.transaction.findUnique({ where: { orderCode } });
+    const transaction = await tx.transaction.findUnique({
+      where: { orderCode },
+      select: {
+        id: true,
+        orderCode: true,
+        status: true,
+        type: true,
+        bookingId: true,
+      },
+    });
 
     if (transaction) {
       if (transaction.status !== PaymentStatus.PENDING) {
-        return { message: "Booking transaction already handled" };
+        return { message: "Transaction already handled" };
       }
 
       if (status === "PAID") {
@@ -162,15 +166,38 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
           data: { status: PaymentStatus.PAID, paidAt: new Date() },
         });
 
-        if (transaction.bookingId) {
-          // tuỳ nghiệp vụ, bạn đang set Proposal → ACCEPTED
-          await tx.proposal.update({
+        if (!transaction.bookingId) {
+          throw new AppError("Error.InvalidBookingId", { orderCode }, 400);
+        }
+
+        // Cập nhật trạng thái Booking thành PENDING
+        await tx.booking.update({
+          where: { id: transaction.bookingId },
+          data: { status: BookingStatus.PENDING },
+        });
+
+        // Nếu là thanh toán proposal thì set Proposal.ACCEPTED
+        if (transaction.type === "PROPOSAL_PAYMENT") {
+          const proposal = await tx.proposal.findUnique({
             where: { bookingId: transaction.bookingId },
+            select: { id: true },
+          });
+
+          if (!proposal) {
+            throw new AppError(
+              "Error.ProposalNotFound",
+              { orderCode, bookingId: transaction.bookingId },
+              404
+            );
+          }
+
+          await tx.proposal.update({
+            where: { id: proposal.id },
             data: { status: ProposalStatus.ACCEPTED },
           });
         }
 
-        return { message: "Booking payment success handled" };
+        return { message: `${transaction.type} payment success handled` };
       }
 
       if (status === "FAILED") {
@@ -178,14 +205,13 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
           where: { orderCode },
           data: { status: PaymentStatus.FAILED },
         });
-        return { message: "Booking payment failure handled" };
+        return { message: `${transaction.type ?? "UNKNOWN"} payment failure handled` };
       }
 
       throw new AppError("Error.InvalidStatus", { status }, 400);
     }
 
-    // 2) Wallet top-up (PaymentTransaction.referenceNumber)
-    // FIX: tra theo referenceNumber (không phải orderCode)
+    // Wallet top-up
     const paymentTransaction = await tx.paymentTransaction.findFirst({
       where: { referenceNumber: orderCode },
     });
@@ -204,14 +230,10 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
     if (status === "PAID") {
       await tx.paymentTransaction.update({
         where: { id: paymentTransaction.id },
-        data: {
-          status: PaymentTransactionStatus.SUCCESS,
-          // accumulated: paymentTransaction.amountIn, // nếu bạn dùng accumulated cho báo cáo, có thể set
-        },
+        data: { status: PaymentTransactionStatus.SUCCESS },
       });
 
       if (paymentTransaction.userId) {
-        // FIX: cộng ví theo amountIn (Int) → Wallet.balance (Float)
         await tx.wallet.update({
           where: { userId: paymentTransaction.userId },
           data: { balance: { increment: paymentTransaction.amountIn } },
@@ -361,19 +383,12 @@ export const createProposalPayment = async ({
 }
 
 
-export async function getPaymentStatus(orderCode: string, userId: number) {
+export async function getPaymentStatus(orderCode: string) {
   // Validate input
   if (!orderCode || typeof orderCode !== 'string') {
     throw new AppError(
       'Error.InvalidOrderCode',
       [{ path: ['orderCode'], message: 'orderCode is required (string)' }],
-      400
-    );
-  }
-  if (!Number.isFinite(userId) || userId <= 0) {
-    throw new AppError(
-      'Error.InvalidUserId',
-      [{ path: ['userId'], message: 'userId must be a positive number' }],
       400
     );
   }
@@ -388,14 +403,6 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
         404
       );
     }
-
-    if (booking.CustomerProfile?.userId !== userId) {
-  throw new AppError(
-    'Error.Forbidden',
-    [{ path: ['userId'], message: 'Not allowed to view this transaction' }],
-    403
-  );
-}
 
     return {
       ok: true,
@@ -418,14 +425,6 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
     );
   }
 
-  if (payTx.userId && payTx.userId !== userId) {
-    throw new AppError(
-      'Error.Forbidden',
-      [{ path: ['userId'], message: 'Not allowed to view this transaction' }],
-      403
-    );
-  }
-
   const unifiedStatus = paymentRepo.mapPaymentTxStatus(payTx.status);
   const kind = payTx.serviceRequestId ? ('service_request_deposit' as const) : ('topup' as const);
 
@@ -436,7 +435,6 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
       status: unifiedStatus,                
       amount: payTx.amountIn,
       serviceRequestId: payTx.serviceRequestId ?? undefined,
-      userId: payTx.userId ?? undefined,
       updatedAt: payTx.transactionDate.toISOString(),
     },
   };
