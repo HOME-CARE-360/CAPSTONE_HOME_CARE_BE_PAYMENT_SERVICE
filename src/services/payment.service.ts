@@ -61,8 +61,8 @@ async function requestPayOS(
     );
   }
 
-  const cancelUrl = `${clientUrl}/payments/failed?orderCode=${orderCode}`;
-  const returnUrl = `${clientUrl}/payments/success?orderCode=${orderCode}`;
+  const cancelUrl = `${clientUrl}/payments/status?orderCode=${orderCode}`;
+  const returnUrl = `${clientUrl}/payments/status?orderCode=${orderCode}`;
 
   const payload = { orderCode, amount, description, cancelUrl, returnUrl };
   console.log("📦 Sending to PayOS:", payload);
