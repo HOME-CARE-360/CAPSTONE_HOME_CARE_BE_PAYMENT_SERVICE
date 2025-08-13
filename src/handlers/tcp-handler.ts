@@ -95,13 +95,13 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
   }
 
   // Map PayOS code thành status hợp lệ
-  let normalizedStatus: 'PAID' | 'FAILED';
-  if (status === 'PAID' || status === 'FAILED') {
-    normalizedStatus = status as 'PAID' | 'FAILED';
+  let normalizedStatus: 'PAID' | 'CANCELLED';
+  if (status === 'PAID' || status === 'CANCELLED') {
+    normalizedStatus = status as 'PAID' | 'CANCELLED';
   } else if (status === '00') {
     normalizedStatus = 'PAID';
   } else {
-    normalizedStatus = 'FAILED';
+    normalizedStatus = 'CANCELLED';
   }
 
   responseData = await paymentService.handlePayOSCallback({

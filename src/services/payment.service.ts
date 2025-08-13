@@ -140,7 +140,7 @@ export const createWalletTopUpUsingPaymentTransaction = async (data: WalletTopUp
   return { responseData };
 };
 
-export const handlePayOSCallback = async (payload: { orderCode: string; status: "PAID" | "FAILED" }) => {
+export const handlePayOSCallback = async (payload: { orderCode: string; status: "PAID" | "CANCELLED" }) => {
   const { orderCode, status } = payload;
 
   return prisma.$transaction(async (tx) => {
@@ -200,7 +200,7 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
         return { message: `${transaction.type} payment success handled` };
       }
 
-      if (status === "FAILED") {
+      if (status === "CANCELLED") {
         await tx.transaction.update({
           where: { orderCode },
           data: { status: PaymentStatus.FAILED },
@@ -243,7 +243,7 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
       return { message: "Wallet top-up success handled" };
     }
 
-    if (status === "FAILED") {
+    if (status === "CANCELLED") {
       await tx.paymentTransaction.update({
         where: { id: paymentTransaction.id },
         data: { status: PaymentTransactionStatus.FAILED },
