@@ -73,35 +73,46 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         break;
       }
 
-      case 'HANDLE_PAYOS_CALLBACK': {
-        if (!data) {
-          throw new AppError(
-            'Error.MissingData',
-            { message: 'Missing data for HANDLE_PAYOS_CALLBACK', path: 'data' },
-            400
-          );
-        }
-        const { orderCode, status } = data as { orderCode?: unknown; status?: unknown };
+     case 'HANDLE_PAYOS_CALLBACK': {
+  if (!data) {
+    throw new AppError(
+      'Error.MissingData',
+      { message: 'Missing data for HANDLE_PAYOS_CALLBACK', path: 'data' },
+      400
+    );
+  }
 
-        if (typeof orderCode !== 'string') {
-          throw new AppError(
-            'Error.InvalidCallbackPayload',
-            { message: 'orderCode must be a string', path: 'data.orderCode' },
-            400
-          );
-        }
-        if (typeof status !== 'string' || !['PAID', 'FAILED'].includes(status)) {
-          throw new AppError(
-            'Error.InvalidCallbackPayload',
-            { message: 'status must be "PAID" or "FAILED"', path: 'data.status' },
-            400
-          );
-        }
+  const { orderCode, status } = data as { orderCode?: unknown; status?: unknown };
 
-        responseData = await paymentService.handlePayOSCallback({ orderCode, status: status as 'PAID' | 'FAILED' });
-        message = (responseData && responseData.message) || 'PayOS callback processed';
-        break;
-      }
+  // Ép orderCode sang string để tránh fail khi nhận number
+  const orderCodeStr = String(orderCode ?? '').trim();
+  if (!orderCodeStr) {
+    throw new AppError(
+      'Error.InvalidCallbackPayload',
+      { message: 'orderCode must be a non-empty string', path: 'data.orderCode' },
+      400
+    );
+  }
+
+  // Map PayOS code thành status hợp lệ
+  let normalizedStatus: 'PAID' | 'FAILED';
+  if (status === 'PAID' || status === 'FAILED') {
+    normalizedStatus = status as 'PAID' | 'FAILED';
+  } else if (status === '00') {
+    normalizedStatus = 'PAID';
+  } else {
+    normalizedStatus = 'FAILED';
+  }
+
+  responseData = await paymentService.handlePayOSCallback({
+    orderCode: orderCodeStr,
+    status: normalizedStatus,
+  });
+
+  message = (responseData && responseData.message) || 'PayOS callback processed';
+  break;
+}
+
 
       case 'CREATE_PROPOSAL_TRANSACTION': {
         if (!data) {
