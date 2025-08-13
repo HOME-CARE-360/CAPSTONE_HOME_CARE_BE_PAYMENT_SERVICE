@@ -384,12 +384,11 @@ export async function getBookingTxWithOwner(orderCode: string) {
   return prisma.transaction.findUnique({
     where: { orderCode },
     include: {
-      Booking: { select: { id: true, customerId: true } },
+      Booking: { select: { id: true, CustomerProfile: { select: { userId: true } } } },
     },
   });
 }
 
-/** Lấy PaymentTransaction (top-up | SR deposit) theo referenceNumber */
 export async function getPaymentTxByReference(orderCode: string) {
   return prisma.paymentTransaction.findFirst({
     where: { referenceNumber: orderCode },

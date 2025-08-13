@@ -378,7 +378,6 @@ export async function getPaymentStatus(orderCode: string, userId: number) {
     );
   }
 
-  // 1) Booking/Proposal: Transaction.orderCode
 const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
   if (bookingTx) {
     const booking = bookingTx.Booking;
@@ -390,20 +389,19 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
       );
     }
 
-    // Authorize: tuỳ mô hình. Ở đây giả định userId === customerId
-    if (booking.customerId !== userId) {
-      throw new AppError(
-        'Error.Forbidden',
-        [{ path: ['userId'], message: 'Not allowed to view this transaction' }],
-        403
-      );
-    }
+    if (booking.CustomerProfile?.userId !== userId) {
+  throw new AppError(
+    'Error.Forbidden',
+    [{ path: ['userId'], message: 'Not allowed to view this transaction' }],
+    403
+  );
+}
 
     return {
       ok: true,
       data: {
         kind: 'booking' as const,
-        status: paymentRepo.mapBookingTxStatus(bookingTx.status), // 'PENDING' | 'PAID' | 'FAILED'
+        status: paymentRepo.mapBookingTxStatus(bookingTx.status),
         amount: bookingTx.amount,
         bookingId: bookingTx.bookingId,
         updatedAt: (bookingTx.paidAt ?? bookingTx.createdAt).toISOString(),
@@ -411,7 +409,6 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
     };
   }
 
-  // 2) Top-up / Service Request deposit: PaymentTransaction.referenceNumber
   const payTx = await paymentRepo.getPaymentTxByReference(orderCode);
   if (!payTx) {
     throw new AppError(
@@ -421,7 +418,6 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
     );
   }
 
-  // Authorize: nếu có userId trên paymentTransaction thì phải trùng
   if (payTx.userId && payTx.userId !== userId) {
     throw new AppError(
       'Error.Forbidden',
@@ -437,7 +433,7 @@ const bookingTx = await paymentRepo.getBookingTxWithOwner(orderCode);
     ok: true,
     data: {
       kind,
-      status: unifiedStatus,                 // 'PENDING' | 'PAID' | 'FAILED'
+      status: unifiedStatus,                
       amount: payTx.amountIn,
       serviceRequestId: payTx.serviceRequestId ?? undefined,
       userId: payTx.userId ?? undefined,
