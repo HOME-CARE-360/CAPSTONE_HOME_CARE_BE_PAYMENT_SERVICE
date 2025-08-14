@@ -200,14 +200,12 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
   const { orderCode, status } = payload;
 
   return prisma.$transaction(async (tx) => {
-    // 1) TH 1: Thanh toán proposal ở bảng Transaction (không dùng type nữa)
     const txn = await tx.transaction.findUnique({
       where: { orderCode },
       select: { id: true, orderCode: true, status: true, bookingId: true },
     });
 
     if (txn) {
-      // Đã xử lý?
       if (txn.status !== PaymentStatus.PENDING) {
         return { message: "Transaction already handled" };
       }
@@ -352,33 +350,74 @@ export const payProposalWithWallet = async ({
   userId: number;
 }) => {
   const proposal = await paymentRepo.findProposalByBookingIdWithItems(bookingId);
-  if (!proposal || proposal.status !== ProposalStatus.ACCEPTED) {
+  if (!proposal) {
     throw new AppError(
-      "Error.ProposalNotAccepted",
-      { message: `Proposal for booking #${bookingId} is not accepted or doesn't exist.` },
-      400
+      "Error.ProposalNotFound",
+      { message: `No proposal for booking #${bookingId}` },
+      404
     );
   }
 
-  const total = proposal.ProposalItem.reduce(
-    (sum, item) => sum + item.quantity * item.Service.virtualPrice,
-    0
-  );
+  // Tính số tiền (áp dụng ưu đãi -100000 như luồng khác), ép về int VND
+  const raw =
+    proposal.ProposalItem.reduce(
+      (sum, item) => sum + item.quantity * item.Service.virtualPrice,
+      0
+    ) - 100000;
 
+  const amountVnd = Math.trunc(Number(raw));
+  if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
+    throw new AppError("Error.InvalidAmount", { message: "Invalid proposal amount" }, 400);
+  }
+
+  // Kiểm tra ví theo amountVnd
   const wallet = await paymentRepo.findWalletByUserId(userId);
-  if (!wallet || wallet.balance < total) {
+  if (!wallet) {
+    throw new AppError("Error.WalletNotFound", { message: "Wallet not found for user" }, 404);
+  }
+  if (wallet.balance < amountVnd) {
     throw new AppError(
       "Error.InsufficientWalletBalance",
-      { message: "Not enough balance to pay for proposal." },
+      {
+        message: "Not enough balance to pay for proposal.",
+        currentBalance: wallet.balance,
+        requiredAmount: amountVnd,
+      },
       400
     );
   }
 
-  await paymentRepo.payProposalWithWalletAtomic(userId, bookingId, total);
+  return prisma.$transaction(async (tx) => {
+    // Thanh toán ví (atomic): tạo PaymentTransaction SUCCESS + trừ ví
+    const paymentTx = await paymentRepo.payProposalWithWalletAtomic(
+      userId,
+      bookingId,
+      amountVnd,
+    );
 
-  return { message: "Proposal paid successfully via wallet." };
+    // Sau khi thanh toán → update proposal + booking
+    await tx.proposal.update({
+      where: { id: proposal.id },
+      data: { status: ProposalStatus.ACCEPTED },
+    });
+
+    await tx.booking.update({
+      where: { id: bookingId },
+      data: { status: BookingStatus.CONFIRMED },
+    });
+
+    return {
+      message: "Proposal paid successfully via wallet.",
+      paymentTransactionId: paymentTx.id,
+      referenceNumber: paymentTx.referenceNumber,
+      status: paymentTx.status,       // SUCCESS
+      amountOut: paymentTx.amountOut, // = amountVnd
+      gateway: paymentTx.gateway,     // INTERNAL_WALLET
+      transactionDate: paymentTx.transactionDate,
+      bookingId,
+    };
+  });
 };
-
 export const createProposalPayment = async ({
   bookingId,
   method,
@@ -394,14 +433,6 @@ export const createProposalPayment = async ({
       "Error.ProposalNotFound",
       { message: `No proposal for booking #${bookingId}` },
       404
-    );
-  }
-
-  if (proposal.status !== ProposalStatus.ACCEPTED) {
-    throw new AppError(
-      "Error.ProposalNotAccepted",
-      { message: `Proposal #${bookingId} is not accepted` },
-      400
     );
   }
 
@@ -424,6 +455,12 @@ export const createProposalPayment = async ({
       bookingId,
       amountVnd
     );
+
+      await prisma.proposal.update({
+    where: { bookingId },
+    data: { status: ProposalStatus.ACCEPTED },
+  });
+
 
     return {
       message: "Proposal paid via wallet",
