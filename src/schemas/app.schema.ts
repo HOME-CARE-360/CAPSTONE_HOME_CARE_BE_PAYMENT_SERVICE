@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { PaymentMethod, PaymentStatus } from '../generated/prisma';
 
 export const CreateTransactionSchema = z.object({
-    bookingId: z.number(),
+    serviceRequestId: z.number(),
     amount: z.number().positive(),
     method: z.nativeEnum(PaymentMethod),
     userId: z.number()

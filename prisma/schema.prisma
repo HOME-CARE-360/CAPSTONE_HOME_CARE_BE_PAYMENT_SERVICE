@@ -704,6 +704,7 @@ enum RequestStatus {
   IN_PROGRESS
   ESTIMATED
   CANCELLED
+  WAIT_FOR_PAYMENT
 }
 
 enum ProposalStatus {

@@ -10,6 +10,7 @@ import {
   ProposalStatus,
   PrismaClient,
   BookingStatus,
+  RequestStatus,
 } from "../generated/prisma";
 import * as paymentRepo from "../repositories/payment.repository";
 import { CheckoutResponseDataType } from "@payos/node/lib/type";
@@ -82,38 +83,59 @@ async function requestPayOS(
   }
 }
 
-/**
- * Tạo giao dịch thanh toán booking (bảng Transaction) + tạo link PayOS
- */
 export const createTransaction = async (data: CreateTransactionDto) => {
   validateOrThrow(CreateTransactionSchema, data);
 
-  // orderCode numeric, không quá dài (gộp bookingId + 6 số cuối timestamp)
-  const orderCode = Number(`${data.bookingId}${Date.now().toString().slice(-6)}`);
-  const description = `Thanh toán đơn hàng #${data.bookingId}`;
+  try {
+    const orderCode = Number(
+      `${data.serviceRequestId}${Date.now().toString().slice(-6)}`
+    );
 
-  const responseData = await requestPayOS(orderCode, data.amount, description);
+    const amountVnd = Math.trunc(Number(data.amount));
+    if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
+      throw new AppError("Error.InvalidAmount", { message: "Invalid amount" }, 400);
+    }
 
-  // Lưu Transaction – theo schema Transaction có orderCode (String? @unique)
-  const transaction = await paymentRepo.createTransaction({
-    bookingId: data.bookingId,
-    amount: data.amount,
-    method: data.method || PaymentMethod.BANK_TRANSFER,
-    orderCode: orderCode.toString(),
-    createdById: data.userId,
-  });
+    const description = `Thanh toán deposit #${data.serviceRequestId}`;
+    const responseData = await requestPayOS(orderCode, amountVnd, description);
+    const paymentTx = await paymentRepo.createPaymentTransaction({
+      kind: "DEPOSIT",
+      referenceNumber: String(orderCode),
+      gateway: "PAYOS",
+      status: PaymentTransactionStatus.PENDING,
+      userId: data.userId,
+      serviceRequestId: data.serviceRequestId,
+      amount: amountVnd,
+      description,
+      body: JSON.stringify({
+        method: data.method || PaymentMethod.BANK_TRANSFER,
+        serviceRequestId: data.serviceRequestId,
+        createdById: data.userId,
+      }),
+    });
 
-  return {
-    message: "Transaction created",
-    transactionId: transaction.id,
-    bookingId: transaction.bookingId,
-    amount: transaction.amount,
-    method: transaction.method,
-    status: transaction.status,
-    createdAt: transaction.createdAt,
-    createdById: transaction.createdById,
-    responseData,
-  };
+    return {
+      message: "Payment transaction created",
+      paymentTransactionId: paymentTx.id,
+      referenceNumber: paymentTx.referenceNumber,
+      status: paymentTx.status,           // PENDING
+      amountOut: paymentTx.amountOut,     // = amountVnd
+      gateway: paymentTx.gateway,         // PAYOS
+      transactionDate: paymentTx.transactionDate,
+      userId: paymentTx.userId,
+      serviceRequestId: data.serviceRequestId,
+      responseData,
+      checkoutUrl:
+        responseData?.checkoutUrl
+    };
+  } catch (error) {
+    console.error("🚨 Error creating transaction:", error);
+    throw new AppError(
+      "Error.TransactionCreationFailed",
+      { message: "Failed to create transaction", error },
+      500
+    );
+  }
 };
 
 /**
@@ -122,41 +144,71 @@ export const createTransaction = async (data: CreateTransactionDto) => {
 export const createWalletTopUpUsingPaymentTransaction = async (data: WalletTopUpDto) => {
   validateOrThrow(WalletTopUpSchema, data);
 
-  const orderCode = Date.now(); // unique numeric
-  const description = `Nạp tiền vào ví #${data.userId}`;
-  const responseData = await requestPayOS(orderCode, data.amount, description);
+  try {
+    // orderCode numeric: dùng timestamp cho tính duy nhất
+    const orderCode = Date.now();
 
-  // FIX: Schema PaymentTransaction dùng referenceNumber, amountIn (không có orderCode/amount)
-  await paymentRepo.createPaymentTransaction({
-    userId: data.userId,
-    gateway: "PAYOS",                    // gateway là String – OK
-    referenceNumber: orderCode.toString(), // lưu mã PayOS vào referenceNumber
-    amountIn: data.amount,               // số tiền nạp vào ví
-    amountOut: 0,
-    status: PaymentTransactionStatus.PENDING,
-    // serviceRequestId: null // nếu repo yêu cầu, bổ sung cho đúng chữ ký
-  });
+    // VND là số nguyên
+    const amountVnd = Math.trunc(Number(data.amount));
+    if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
+      throw new AppError("Error.InvalidAmount", { message: "Invalid amount" }, 400);
+    }
 
-  return { responseData };
+    const description = `Nạp tiền vào ví #${data.userId}`;
+
+    // 1) Tạo phiên thanh toán PayOS
+    const responseData = await requestPayOS(orderCode, amountVnd, description);
+
+    // 2) Ghi sổ PaymentTransaction: TOPUP => amountIn = amount, amountOut = 0
+    const paymentTx = await paymentRepo.createPaymentTransaction({
+      kind: "TOPUP",
+      referenceNumber: String(orderCode),       // map orderCode -> referenceNumber
+      gateway: "PAYOS",
+      status: PaymentTransactionStatus.PENDING, // chờ callback
+      userId: data.userId,
+      amount: amountVnd,
+      body: JSON.stringify({
+        action: "WALLET_TOPUP",
+        userId: data.userId,
+      }),
+    });
+
+    return {
+      message: "Top-up payment transaction created",
+      paymentTransactionId: paymentTx.id,
+      referenceNumber: paymentTx.referenceNumber,
+      status: paymentTx.status,            // PENDING
+      amountIn: paymentTx.amountIn,        // = amountVnd
+      gateway: paymentTx.gateway,          // PAYOS
+      transactionDate: paymentTx.transactionDate,
+      userId: paymentTx.userId,
+      responseData,
+      checkoutUrl:
+        responseData?.checkoutUrl
+    };
+  } catch (error) {
+    console.error("🚨 Error creating wallet top-up:", error);
+    throw new AppError(
+      "Error.WalletTopUpCreateFailed",
+      { message: "Failed to create wallet top-up", error },
+      500
+    );
+  }
 };
 
 export const handlePayOSCallback = async (payload: { orderCode: string; status: "PAID" | "CANCELLED" }) => {
   const { orderCode, status } = payload;
 
   return prisma.$transaction(async (tx) => {
-    const transaction = await tx.transaction.findUnique({
+    // 1) TH 1: Thanh toán proposal ở bảng Transaction (không dùng type nữa)
+    const txn = await tx.transaction.findUnique({
       where: { orderCode },
-      select: {
-        id: true,
-        orderCode: true,
-        status: true,
-        type: true,
-        bookingId: true,
-      },
+      select: { id: true, orderCode: true, status: true, bookingId: true },
     });
 
-    if (transaction) {
-      if (transaction.status !== PaymentStatus.PENDING) {
+    if (txn) {
+      // Đã xử lý?
+      if (txn.status !== PaymentStatus.PENDING) {
         return { message: "Transaction already handled" };
       }
 
@@ -166,38 +218,29 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
           data: { status: PaymentStatus.PAID, paidAt: new Date() },
         });
 
-        if (!transaction.bookingId) {
+        if (!txn.bookingId) {
           throw new AppError("Error.InvalidBookingId", { orderCode }, 400);
         }
 
-        // Cập nhật trạng thái Booking thành PENDING
-        await tx.booking.update({
-          where: { id: transaction.bookingId },
-          data: { status: BookingStatus.PENDING },
+        // Proposal payment: chấp nhận proposal của booking này
+        const proposal = await tx.proposal.findUnique({
+          where: { bookingId: txn.bookingId },
+          select: { id: true },
         });
-
-        // Nếu là thanh toán proposal thì set Proposal.ACCEPTED
-        if (transaction.type === "PROPOSAL_PAYMENT") {
-          const proposal = await tx.proposal.findUnique({
-            where: { bookingId: transaction.bookingId },
-            select: { id: true },
-          });
-
-          if (!proposal) {
-            throw new AppError(
-              "Error.ProposalNotFound",
-              { orderCode, bookingId: transaction.bookingId },
-              404
-            );
-          }
-
-          await tx.proposal.update({
-            where: { id: proposal.id },
-            data: { status: ProposalStatus.ACCEPTED },
-          });
+        if (!proposal) {
+          throw new AppError(
+            "Error.ProposalNotFound",
+            { orderCode, bookingId: txn.bookingId },
+            404
+          );
         }
 
-        return { message: `${transaction.type} payment success handled` };
+        await tx.proposal.update({
+          where: { id: proposal.id },
+          data: { status: ProposalStatus.ACCEPTED },
+        });
+
+        return { message: "Proposal payment success handled" };
       }
 
       if (status === "CANCELLED") {
@@ -205,50 +248,88 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
           where: { orderCode },
           data: { status: PaymentStatus.FAILED },
         });
-        return { message: `${transaction.type ?? "UNKNOWN"} payment failure handled` };
+        return { message: "Proposal payment failure handled" };
       }
 
       throw new AppError("Error.InvalidStatus", { status }, 400);
     }
 
-    // Wallet top-up
-    const paymentTransaction = await tx.paymentTransaction.findFirst({
+    // 2) TH 2: Deposit/Top-up ở bảng PaymentTransaction (referenceNumber = orderCode)
+    const paymentTx = await tx.paymentTransaction.findFirst({
       where: { referenceNumber: orderCode },
+      select: {
+        id: true,
+        status: true,
+        userId: true,
+        amountIn: true,
+        serviceRequestId: true,
+      },
     });
 
-    if (!paymentTransaction) {
+    if (!paymentTx) {
       throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
     }
 
+    // Đã xử lý?
     if (
-      paymentTransaction.status !== PaymentTransactionStatus.PENDING &&
-      paymentTransaction.status !== PaymentTransactionStatus.PROCESSING
+      paymentTx.status !== PaymentTransactionStatus.PENDING &&
+      paymentTx.status !== PaymentTransactionStatus.PROCESSING
     ) {
-      return { message: "Wallet top-up already handled or in an unchangeable state" };
+      return { message: "Payment transaction already handled or in an unchangeable state" };
     }
 
     if (status === "PAID") {
+      // Đánh dấu SUCCESS trước
       await tx.paymentTransaction.update({
-        where: { id: paymentTransaction.id },
+        where: { id: paymentTx.id },
         data: { status: PaymentTransactionStatus.SUCCESS },
       });
 
-      if (paymentTransaction.userId) {
-        await tx.wallet.update({
-          where: { userId: paymentTransaction.userId },
-          data: { balance: { increment: paymentTransaction.amountIn } },
+      // Phân nhánh theo TOPUP / DEPOSIT
+      if (paymentTx.serviceRequestId == null) {
+        // TOPUP: cộng ví
+        if (paymentTx.userId) {
+          await tx.wallet.update({
+            where: { userId: paymentTx.userId },
+            data: { balance: { increment: paymentTx.amountIn } },
+          });
+        }
+        return { message: "Wallet top-up success handled" };
+      } else {
+        // DEPOSIT: cập nhật SR & Booking về PENDING
+        // Cập nhật ServiceRequest
+        await tx.serviceRequest.update({
+          where: { id: paymentTx.serviceRequestId },
+          data: { status: RequestStatus.PENDING }, 
         });
-      }
 
-      return { message: "Wallet top-up success handled" };
+        // Tìm booking gắn với serviceRequestId (1-1 theo schema)
+        const booking = await tx.booking.findUnique({
+          where: { serviceRequestId: paymentTx.serviceRequestId },
+          select: { id: true },
+        });
+
+        if (booking?.id) {
+          await tx.booking.update({
+            where: { id: booking.id },
+            data: { status: BookingStatus.PENDING },
+          });
+        }
+
+        return { message: "Deposit payment success handled" };
+      }
     }
 
     if (status === "CANCELLED") {
       await tx.paymentTransaction.update({
-        where: { id: paymentTransaction.id },
+        where: { id: paymentTx.id },
         data: { status: PaymentTransactionStatus.FAILED },
       });
-      return { message: "Wallet top-up failure handled" };
+      return {
+        message: paymentTx.serviceRequestId == null
+          ? "Wallet top-up failure handled"
+          : "Deposit payment failure handled",
+      };
     }
 
     throw new AppError("Error.InvalidStatus", { status }, 400);
@@ -293,11 +374,6 @@ export const payProposalWithWallet = async ({
   return { message: "Proposal paid successfully via wallet." };
 };
 
-/**
- * Tạo thanh toán proposal (ví nội bộ tạm map = CASH; gateway khác → PayOS)
- * Lưu ý: enum PaymentMethod hiện chưa có WALLET trong schema của bạn.
- * Nếu muốn rõ ràng, hãy thêm WALLET vào enum và migrate DB.
- */
 export const createProposalPayment = async ({
   bookingId,
   method,
@@ -308,80 +384,79 @@ export const createProposalPayment = async ({
   userId: number;
 }) => {
   const proposal = await paymentRepo.findProposalByBookingIdWithItems(bookingId);
-
   if (!proposal) {
-    throw new AppError("Error.ProposalNotFound", { message: `No proposal found for booking #${bookingId}` }, 404);
+    throw new AppError(
+      "Error.ProposalNotFound",
+      { message: `No proposal for booking #${bookingId}` },
+      404
+    );
   }
 
   if (proposal.status !== ProposalStatus.ACCEPTED) {
-    throw new AppError("Error.ProposalNotAccepted", { message: `Proposal for booking #${bookingId} is not accepted` }, 400);
+    throw new AppError(
+      "Error.ProposalNotAccepted",
+      { message: `Proposal #${bookingId} is not accepted` },
+      400
+    );
   }
 
-  const amount = proposal.ProposalItem.reduce(
-  (sum, item) => sum + item.quantity * item.Service.virtualPrice,
-  0
-) - 100000;
+  const rawAmount =
+    proposal.ProposalItem.reduce(
+      (sum, item) => sum + item.quantity * item.Service.virtualPrice,
+      0
+    ) - 100000;
 
-
-  if (amount <= 0) {
+  const amountVnd = Math.trunc(Number(rawAmount));
+  if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
     throw new AppError("Error.InvalidAmount", { message: "Invalid proposal amount" }, 400);
   }
 
-  const paymentMethod = method || PaymentMethod.BANK_TRANSFER;
+  const paymentMethod = method;
 
-  const isWallet = paymentMethod === PaymentMethod.WALLET;
-
-  if (isWallet) {
-    const wallet = await paymentRepo.findWalletByUserId(userId);
-    if (!wallet) {
-      throw new AppError("Error.WalletNotFound", { message: "Wallet not found for user" }, 404);
-    }
-    if (wallet.balance < amount) {
-      throw new AppError(
-        "Error.InsufficientBalance",
-        { message: "Số dư ví không đủ để thanh toán proposal", currentBalance: wallet.balance, requiredAmount: amount },
-        400
-      );
-    }
-
-    const transaction = await paymentRepo.payProposalWithWalletAtomic(userId, bookingId, amount);
+  if (paymentMethod === PaymentMethod.WALLET) {
+    const paymentTx = await paymentRepo.payProposalWithWalletAtomic(
+      userId,
+      bookingId,
+      amountVnd
+    );
 
     return {
-      message: "Proposal paid using wallet successfully",
-      transactionId: transaction.id,
-      bookingId: transaction.bookingId,
-      amount: transaction.amount,
-      method: transaction.method,
-      status: PaymentStatus.PAID,
-      createdAt: transaction.createdAt,
+      message: "Proposal paid via wallet",
+      paymentTransactionId: paymentTx.id,
+      referenceNumber: paymentTx.referenceNumber,
+      status: paymentTx.status,
+      amountOut: paymentTx.amountOut,
+      gateway: paymentTx.gateway,
+      transactionDate: paymentTx.transactionDate,
+      bookingId,
     };
   }
 
-  // Pay qua PayOS (BANK_TRANSFER / v.v…)
   const orderCode = Number(`${bookingId}${Date.now().toString().slice(-6)}`);
-  const description = `Thanh toán proposal ${bookingId}`;
-  const responseData = await requestPayOS(orderCode, amount, description);
+  const description = `Thanh toán proposal #${bookingId}`;
+  const responseData = await requestPayOS(orderCode, amountVnd, description);
 
-  const transaction = await paymentRepo.createTransaction({
+  const tx = await paymentRepo.upsertBookingTransaction({
     bookingId,
-    amount,
-    method: paymentMethod,
-    orderCode: orderCode.toString(),
+    amount: amountVnd,
+    method: PaymentMethod.BANK_TRANSFER,
+    orderCode: String(orderCode),
     createdById: userId,
   });
 
   return {
     message: "Proposal payment initiated",
-    transactionId: transaction.id,
-    bookingId: transaction.bookingId,
-    amount: transaction.amount,
-    method: transaction.method,
-    status: transaction.status,
-    createdAt: transaction.createdAt,
+    transactionId: tx.id,
+    bookingId: tx.bookingId,
+    amount: tx.amount,
+    method: tx.method,
+    status: tx.status as PaymentStatus, // PENDING
+    createdAt: tx.createdAt,
+    orderCode: String(orderCode),
     responseData,
+    checkoutUrl: responseData?.checkoutUrl,
   };
-}
-
+};
 
 export async function getPaymentStatus(orderCode: string) {
   // Validate input

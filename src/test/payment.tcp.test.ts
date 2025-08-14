@@ -28,9 +28,9 @@ export async function testCreateTransaction() {
   const payload = {
     type: "CREATE_TRANSACTION",
     data: {
-      bookingId: 46,
-      amount: 2000,
-      userId: 12,
+      serviceRequestId: 8,
+      amount: 100000,
+      userId: 21,
       method: "BANK_TRANSFER",
     },
   };
@@ -89,7 +89,7 @@ export async function testHandlePayOSCallback() {
 
 // ✅ Run test cases
 (async () => {
-  // await testCreateTransaction();
-  await testCreateTopUp();
+  await testCreateTransaction();
+  // await testCreateTopUp();
   // await testHandlePayOSCallback();
 })();
