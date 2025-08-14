@@ -240,6 +240,11 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
           data: { status: ProposalStatus.ACCEPTED },
         });
 
+        await tx.booking.update({
+          where: { id: txn.bookingId },
+          data: { status: BookingStatus.CONFIRMED },
+        });
+
         return { message: "Proposal payment success handled" };
       }
 
