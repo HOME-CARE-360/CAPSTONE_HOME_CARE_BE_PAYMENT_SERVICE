@@ -84,7 +84,6 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
 
   const { orderCode, status } = data as { orderCode?: unknown; status?: unknown };
 
-  // Ép orderCode sang string để tránh fail khi nhận number
   const orderCodeStr = String(orderCode ?? '').trim();
   if (!orderCodeStr) {
     throw new AppError(
@@ -94,7 +93,6 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
     );
   }
 
-  // Map PayOS code thành status hợp lệ
   let normalizedStatus: 'PAID' | 'CANCELLED';
   if (status === 'PAID' || status === 'CANCELLED') {
     normalizedStatus = status as 'PAID' | 'CANCELLED';

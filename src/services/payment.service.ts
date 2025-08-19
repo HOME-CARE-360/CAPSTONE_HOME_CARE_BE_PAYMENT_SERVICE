@@ -87,47 +87,25 @@ export const createTransaction = async (data: CreateTransactionDto) => {
   validateOrThrow(CreateTransactionSchema, data);
 
   try {
-    const orderCode = Number(
-      `${data.serviceRequestId}${Date.now().toString().slice(-6)}`
-    );
-
     const amountVnd = Math.trunc(Number(data.amount));
     if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
       throw new AppError("Error.InvalidAmount", { message: "Invalid amount" }, 400);
     }
 
-    const description = `Thanh toán deposit #${data.serviceRequestId}`;
-    const responseData = await requestPayOS(orderCode, amountVnd, description);
-    const paymentTx = await paymentRepo.createPaymentTransaction({
-      kind: "DEPOSIT",
-      referenceNumber: String(orderCode),
-      gateway: "PAYOS",
-      status: PaymentTransactionStatus.PENDING,
-      userId: data.userId,
-      serviceRequestId: data.serviceRequestId,
-      amount: amountVnd,
-      description,
-      body: JSON.stringify({
-        method: data.method || PaymentMethod.BANK_TRANSFER,
-        serviceRequestId: data.serviceRequestId,
-        createdById: data.userId,
-      }),
-    });
+    const paymentMethod = data.method || PaymentMethod.BANK_TRANSFER;
 
-    return {
-      message: "Payment transaction created",
-      paymentTransactionId: paymentTx.id,
-      referenceNumber: paymentTx.referenceNumber,
-      status: paymentTx.status,           // PENDING
-      amountOut: paymentTx.amountOut,     // = amountVnd
-      gateway: paymentTx.gateway,         // PAYOS
-      transactionDate: paymentTx.transactionDate,
-      userId: paymentTx.userId,
-      serviceRequestId: data.serviceRequestId,
-      responseData,
-      checkoutUrl:
-        responseData?.checkoutUrl
-    };
+    // Kiểm tra method và xử lý tương ứng
+    if (paymentMethod === PaymentMethod.WALLET) {
+      return await handleWalletTransaction(data, amountVnd);
+    } else if (paymentMethod === PaymentMethod.BANK_TRANSFER) {
+      return await handleBankTransferTransaction(data, amountVnd);
+    } else {
+      throw new AppError(
+        "Error.UnsupportedPaymentMethod", 
+        { message: "Payment method not supported", method: paymentMethod }, 
+        400
+      );
+    }
   } catch (error) {
     console.error("🚨 Error creating transaction:", error);
     throw new AppError(
@@ -137,6 +115,137 @@ export const createTransaction = async (data: CreateTransactionDto) => {
     );
   }
 };
+
+/**
+ * Xử lý giao dịch qua ví nội bộ
+ */
+async function handleWalletTransaction(data: CreateTransactionDto, amountVnd: number) {
+  // Kiểm tra ví của user
+  const wallet = await paymentRepo.findWalletByUserId(data.userId);
+  if (!wallet) {
+    throw new AppError("Error.WalletNotFound", { message: "Wallet not found for user" }, 404);
+  }
+
+  if (wallet.balance < amountVnd) {
+    throw new AppError(
+      "Error.InsufficientWalletBalance",
+      {
+        message: "Not enough balance to pay deposit.",
+        currentBalance: wallet.balance,
+        requiredAmount: amountVnd,
+      },
+      400
+    );
+  }
+
+  const description = `Thanh toán deposit #${data.serviceRequestId}`;
+  
+  return prisma.$transaction(async (tx) => {
+    // Tạo PaymentTransaction với trạng thái SUCCESS (vì thanh toán ví là tức thì)
+    const paymentTx = await paymentRepo.createPaymentTransaction({
+      kind: "DEPOSIT",
+      referenceNumber: `WALLET_${data.serviceRequestId}_${Date.now()}`,
+      gateway: "WALLET",
+      status: PaymentTransactionStatus.SUCCESS,
+      userId: data.userId,
+      serviceRequestId: data.serviceRequestId,
+      amount: amountVnd,
+      description,
+      body: JSON.stringify({
+        method: PaymentMethod.WALLET,
+        serviceRequestId: data.serviceRequestId,
+        createdById: data.userId,
+        paidViaWallet: true,
+      }),
+    });
+
+    // Trừ tiền từ ví
+    await tx.wallet.update({
+      where: { userId: data.userId },
+      data: { balance: { decrement: amountVnd } },
+    });
+
+    // Cập nhật ServiceRequest về PENDING (đã thanh toán deposit)
+    await tx.serviceRequest.update({
+      where: { id: data.serviceRequestId },
+      data: { status: RequestStatus.PENDING },
+    });
+
+    // Tìm và cập nhật booking nếu có
+    const booking = await tx.booking.findUnique({
+      where: { serviceRequestId: data.serviceRequestId },
+      select: { id: true },
+    });
+
+    if (booking?.id) {
+      await tx.booking.update({
+        where: { id: booking.id },
+        data: { status: BookingStatus.PENDING },
+      });
+    }
+
+    return {
+      message: "Deposit payment completed via wallet",
+      paymentTransactionId: paymentTx.id,
+      referenceNumber: paymentTx.referenceNumber,
+      status: paymentTx.status,           // SUCCESS
+      amountOut: paymentTx.amountOut,     // = amountVnd
+      gateway: paymentTx.gateway,         // INTERNAL_WALLET
+      transactionDate: paymentTx.transactionDate,
+      userId: paymentTx.userId,
+      serviceRequestId: data.serviceRequestId,
+      paidViaWallet: true,
+      walletBalanceAfter: wallet.balance - amountVnd,
+    };
+  });
+}
+
+/**
+ * Xử lý giao dịch qua chuyển khoản ngân hàng (PayOS)
+ */
+async function handleBankTransferTransaction(data: CreateTransactionDto, amountVnd: number) {
+  const orderCode = Number(
+    `${data.serviceRequestId}${Date.now().toString().slice(-6)}`
+  );
+
+  const description = `Thanh toán deposit #${data.serviceRequestId}`;
+  
+  // Tạo payment link qua PayOS
+  const responseData = await requestPayOS(orderCode, amountVnd, description);
+
+  // Tạo PaymentTransaction với trạng thái PENDING
+  const paymentTx = await paymentRepo.createPaymentTransaction({
+    kind: "DEPOSIT",
+    referenceNumber: String(orderCode),
+    gateway: "PAYOS",
+    status: PaymentTransactionStatus.PENDING,
+    userId: data.userId,
+    serviceRequestId: data.serviceRequestId,
+    amount: amountVnd,
+    description,
+    body: JSON.stringify({
+      method: PaymentMethod.BANK_TRANSFER,
+      serviceRequestId: data.serviceRequestId,
+      createdById: data.userId,
+      orderCode: orderCode,
+    }),
+  });
+
+  return {
+    message: "Payment transaction created",
+    paymentTransactionId: paymentTx.id,
+    referenceNumber: paymentTx.referenceNumber,
+    status: paymentTx.status,           // PENDING
+    amountOut: paymentTx.amountOut,     // = amountVnd
+    gateway: paymentTx.gateway,         // PAYOS
+    transactionDate: paymentTx.transactionDate,
+    userId: paymentTx.userId,
+    serviceRequestId: data.serviceRequestId,
+    responseData,
+    checkoutUrl: responseData?.checkoutUrl,
+    requiresPayment: true, // Cần thanh toán qua link
+  };
+}
 
 /**
  * Tạo giao dịch nạp ví (bảng PaymentTransaction) + tạo link PayOS
