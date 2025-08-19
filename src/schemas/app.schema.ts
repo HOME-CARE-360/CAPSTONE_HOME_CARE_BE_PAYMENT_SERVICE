@@ -4,7 +4,7 @@ import { PaymentMethod, PaymentStatus } from '../generated/prisma';
 export const CreateTransactionSchema = z.object({
     serviceRequestId: z.number(),
     amount: z.number().positive(),
-    method: z.nativeEnum(PaymentMethod),
+    paymentMethod: z.nativeEnum(PaymentMethod),
     userId: z.number()
 });
 

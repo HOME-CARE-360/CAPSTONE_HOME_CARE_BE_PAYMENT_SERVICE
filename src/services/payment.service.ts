@@ -92,9 +92,8 @@ export const createTransaction = async (data: CreateTransactionDto) => {
       throw new AppError("Error.InvalidAmount", { message: "Invalid amount" }, 400);
     }
 
-    const paymentMethod = data.method || PaymentMethod.BANK_TRANSFER;
-
-    // Kiểm tra method và xử lý tương ứng
+    const paymentMethod = data.paymentMethod || PaymentMethod.BANK_TRANSFER;
+    console.log("💳 Creating transaction with method:", paymentMethod);
     if (paymentMethod === PaymentMethod.WALLET) {
       return await handleWalletTransaction(data, amountVnd);
     } else if (paymentMethod === PaymentMethod.BANK_TRANSFER) {
@@ -125,7 +124,6 @@ async function handleWalletTransaction(data: CreateTransactionDto, amountVnd: nu
   if (!wallet) {
     throw new AppError("Error.WalletNotFound", { message: "Wallet not found for user" }, 404);
   }
-
   if (wallet.balance < amountVnd) {
     throw new AppError(
       "Error.InsufficientWalletBalance",
@@ -139,13 +137,13 @@ async function handleWalletTransaction(data: CreateTransactionDto, amountVnd: nu
   }
 
   const description = `Thanh toán deposit #${data.serviceRequestId}`;
-  
+
   return prisma.$transaction(async (tx) => {
-    // Tạo PaymentTransaction với trạng thái SUCCESS (vì thanh toán ví là tức thì)
+    // 1. Tạo PaymentTransaction (SUCCESS vì ví thanh toán tức thì)
     const paymentTx = await paymentRepo.createPaymentTransaction({
       kind: "DEPOSIT",
       referenceNumber: `WALLET_${data.serviceRequestId}_${Date.now()}`,
-      gateway: "WALLET",
+      gateway: "INTERNAL_WALLET",
       status: PaymentTransactionStatus.SUCCESS,
       userId: data.userId,
       serviceRequestId: data.serviceRequestId,
@@ -159,31 +157,25 @@ async function handleWalletTransaction(data: CreateTransactionDto, amountVnd: nu
       }),
     });
 
-    // Trừ tiền từ ví
+    // 2. Trừ tiền trong ví
     await tx.wallet.update({
       where: { userId: data.userId },
       data: { balance: { decrement: amountVnd } },
     });
 
-    // Cập nhật ServiceRequest về PENDING (đã thanh toán deposit)
+    // 3. Cập nhật ServiceRequest thành PENDING
     await tx.serviceRequest.update({
       where: { id: data.serviceRequestId },
       data: { status: RequestStatus.PENDING },
     });
 
-    // Tìm và cập nhật booking nếu có
+    // 4. Nếu có Booking liên kết thì cập nhật luôn Booking → PENDING
     const booking = await tx.booking.findUnique({
       where: { serviceRequestId: data.serviceRequestId },
       select: { id: true },
     });
 
-    if (booking?.id) {
-      await tx.booking.update({
-        where: { id: booking.id },
-        data: { status: BookingStatus.PENDING },
-      });
-    }
-
+    // 5. Trả về kết quả
     return {
       message: "Deposit payment completed via wallet",
       paymentTransactionId: paymentTx.id,
@@ -408,25 +400,11 @@ export const handlePayOSCallback = async (payload: { orderCode: string; status: 
         }
         return { message: "Wallet top-up success handled" };
       } else {
-        // DEPOSIT: cập nhật SR & Booking về PENDING
-        // Cập nhật ServiceRequest
+
         await tx.serviceRequest.update({
           where: { id: paymentTx.serviceRequestId },
           data: { status: RequestStatus.PENDING }, 
         });
-
-        // Tìm booking gắn với serviceRequestId (1-1 theo schema)
-        const booking = await tx.booking.findUnique({
-          where: { serviceRequestId: paymentTx.serviceRequestId },
-          select: { id: true },
-        });
-
-        if (booking?.id) {
-          await tx.booking.update({
-            where: { id: booking.id },
-            data: { status: BookingStatus.PENDING },
-          });
-        }
 
         return { message: "Deposit payment success handled" };
       }

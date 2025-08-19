@@ -52,6 +52,7 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
           );
         }
         const input: CreateTransactionDto = data as CreateTransactionDto;
+        console.log('📥 [CREATE_TRANSACTION] Input:', input);
         console.log('📥 [CREATE_TRANSACTION]');
         responseData = await paymentService.createTransaction(input);
         message = 'Transaction created successfully';
