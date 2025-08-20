@@ -198,6 +198,11 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
  * 
  */
 export type suggested_services_config = $Result.DefaultSelection<Prisma.$suggested_services_configPayload>
+/**
+ * Model CustomerAsset
+ * 
+ */
+export type CustomerAsset = $Result.DefaultSelection<Prisma.$CustomerAssetPayload>
 
 /**
  * Enums
@@ -331,7 +336,8 @@ export const RequestStatus: {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
   ESTIMATED: 'ESTIMATED',
-  CANCELLED: 'CANCELLED'
+  CANCELLED: 'CANCELLED',
+  WAIT_FOR_PAYMENT: 'WAIT_FOR_PAYMENT'
 };
 
 export type RequestStatus = (typeof RequestStatus)[keyof typeof RequestStatus]
@@ -995,6 +1001,16 @@ export class PrismaClient<
     * ```
     */
   get suggested_services_config(): Prisma.suggested_services_configDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.customerAsset`: Exposes CRUD operations for the **CustomerAsset** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CustomerAssets
+    * const customerAssets = await prisma.customerAsset.findMany()
+    * ```
+    */
+  get customerAsset(): Prisma.CustomerAssetDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1471,7 +1487,8 @@ export namespace Prisma {
     Conversation: 'Conversation',
     FavoriteService: 'FavoriteService',
     Message: 'Message',
-    suggested_services_config: 'suggested_services_config'
+    suggested_services_config: 'suggested_services_config',
+    CustomerAsset: 'CustomerAsset'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1490,7 +1507,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "booking" | "category" | "categoryTranslation" | "chatMessage" | "customerProfile" | "device" | "notification" | "packageRecommendation" | "paymentTransaction" | "permission" | "recurringBooking" | "refreshToken" | "review" | "rewardPoint" | "role" | "service" | "serviceProvider" | "serviceProviderTranslation" | "staff" | "staffCategory" | "transaction" | "user" | "verificationCode" | "workLog" | "inspectionReport" | "serviceItem" | "serviceRequest" | "proposal" | "proposalItem" | "service_ServiceItems" | "wallet" | "providerReport" | "withdrawalRequest" | "conversation" | "favoriteService" | "message" | "suggested_services_config"
+      modelProps: "booking" | "category" | "categoryTranslation" | "chatMessage" | "customerProfile" | "device" | "notification" | "packageRecommendation" | "paymentTransaction" | "permission" | "recurringBooking" | "refreshToken" | "review" | "rewardPoint" | "role" | "service" | "serviceProvider" | "serviceProviderTranslation" | "staff" | "staffCategory" | "transaction" | "user" | "verificationCode" | "workLog" | "inspectionReport" | "serviceItem" | "serviceRequest" | "proposal" | "proposalItem" | "service_ServiceItems" | "wallet" | "providerReport" | "withdrawalRequest" | "conversation" | "favoriteService" | "message" | "suggested_services_config" | "customerAsset"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4232,6 +4249,80 @@ export namespace Prisma {
           }
         }
       }
+      CustomerAsset: {
+        payload: Prisma.$CustomerAssetPayload<ExtArgs>
+        fields: Prisma.CustomerAssetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CustomerAssetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CustomerAssetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>
+          }
+          findFirst: {
+            args: Prisma.CustomerAssetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CustomerAssetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>
+          }
+          findMany: {
+            args: Prisma.CustomerAssetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>[]
+          }
+          create: {
+            args: Prisma.CustomerAssetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>
+          }
+          createMany: {
+            args: Prisma.CustomerAssetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CustomerAssetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>[]
+          }
+          delete: {
+            args: Prisma.CustomerAssetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>
+          }
+          update: {
+            args: Prisma.CustomerAssetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>
+          }
+          deleteMany: {
+            args: Prisma.CustomerAssetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CustomerAssetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CustomerAssetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>[]
+          }
+          upsert: {
+            args: Prisma.CustomerAssetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerAssetPayload>
+          }
+          aggregate: {
+            args: Prisma.CustomerAssetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCustomerAsset>
+          }
+          groupBy: {
+            args: Prisma.CustomerAssetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CustomerAssetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CustomerAssetCountArgs<ExtArgs>
+            result: $Utils.Optional<CustomerAssetCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4353,6 +4444,7 @@ export namespace Prisma {
     favoriteService?: FavoriteServiceOmit
     message?: MessageOmit
     suggested_services_config?: suggested_services_configOmit
+    customerAsset?: CustomerAssetOmit
   }
 
   /* Types for Logging */
@@ -4489,6 +4581,7 @@ export namespace Prisma {
   export type CategoryCountOutputType = {
     other_Category: number
     CategoryTranslation: number
+    CustomerAsset: number
     Service: number
     ServiceRequest: number
     StaffCategory: number
@@ -4498,6 +4591,7 @@ export namespace Prisma {
   export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     other_Category?: boolean | CategoryCountOutputTypeCountOther_CategoryArgs
     CategoryTranslation?: boolean | CategoryCountOutputTypeCountCategoryTranslationArgs
+    CustomerAsset?: boolean | CategoryCountOutputTypeCountCustomerAssetArgs
     Service?: boolean | CategoryCountOutputTypeCountServiceArgs
     ServiceRequest?: boolean | CategoryCountOutputTypeCountServiceRequestArgs
     StaffCategory?: boolean | CategoryCountOutputTypeCountStaffCategoryArgs
@@ -4527,6 +4621,13 @@ export namespace Prisma {
    */
   export type CategoryCountOutputTypeCountCategoryTranslationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CategoryTranslationWhereInput
+  }
+
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeCountCustomerAssetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerAssetWhereInput
   }
 
   /**
@@ -4566,6 +4667,7 @@ export namespace Prisma {
     Booking: number
     ChatMessage: number
     Conversation: number
+    CustomerAsset: number
     FavoriteService: number
     PackageRecommendation: number
     ProviderReport: number
@@ -4579,6 +4681,7 @@ export namespace Prisma {
     Booking?: boolean | CustomerProfileCountOutputTypeCountBookingArgs
     ChatMessage?: boolean | CustomerProfileCountOutputTypeCountChatMessageArgs
     Conversation?: boolean | CustomerProfileCountOutputTypeCountConversationArgs
+    CustomerAsset?: boolean | CustomerProfileCountOutputTypeCountCustomerAssetArgs
     FavoriteService?: boolean | CustomerProfileCountOutputTypeCountFavoriteServiceArgs
     PackageRecommendation?: boolean | CustomerProfileCountOutputTypeCountPackageRecommendationArgs
     ProviderReport?: boolean | CustomerProfileCountOutputTypeCountProviderReportArgs
@@ -4618,6 +4721,13 @@ export namespace Prisma {
    */
   export type CustomerProfileCountOutputTypeCountConversationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ConversationWhereInput
+  }
+
+  /**
+   * CustomerProfileCountOutputType without action
+   */
+  export type CustomerProfileCountOutputTypeCountCustomerAssetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerAssetWhereInput
   }
 
   /**
@@ -4780,6 +4890,7 @@ export namespace Prisma {
     FavoriteService: number
     ProposalItem: number
     RecurringBooking: number
+    Review: number
     Service_ServiceItems: number
   }
 
@@ -4787,6 +4898,7 @@ export namespace Prisma {
     FavoriteService?: boolean | ServiceCountOutputTypeCountFavoriteServiceArgs
     ProposalItem?: boolean | ServiceCountOutputTypeCountProposalItemArgs
     RecurringBooking?: boolean | ServiceCountOutputTypeCountRecurringBookingArgs
+    Review?: boolean | ServiceCountOutputTypeCountReviewArgs
     Service_ServiceItems?: boolean | ServiceCountOutputTypeCountService_ServiceItemsArgs
   }
 
@@ -4825,6 +4937,13 @@ export namespace Prisma {
   /**
    * ServiceCountOutputType without action
    */
+  export type ServiceCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * ServiceCountOutputType without action
+   */
   export type ServiceCountOutputTypeCountService_ServiceItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Service_ServiceItemsWhereInput
   }
@@ -4838,24 +4957,24 @@ export namespace Prisma {
     Booking: number
     Conversation: number
     ProviderReport: number
+    Review: number
     Service: number
     ServiceItem: number
     ServiceProviderTranslation: number
     ServiceRequest: number
     Staff: number
-    WithdrawalRequest: number
   }
 
   export type ServiceProviderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Booking?: boolean | ServiceProviderCountOutputTypeCountBookingArgs
     Conversation?: boolean | ServiceProviderCountOutputTypeCountConversationArgs
     ProviderReport?: boolean | ServiceProviderCountOutputTypeCountProviderReportArgs
+    Review?: boolean | ServiceProviderCountOutputTypeCountReviewArgs
     Service?: boolean | ServiceProviderCountOutputTypeCountServiceArgs
     ServiceItem?: boolean | ServiceProviderCountOutputTypeCountServiceItemArgs
     ServiceProviderTranslation?: boolean | ServiceProviderCountOutputTypeCountServiceProviderTranslationArgs
     ServiceRequest?: boolean | ServiceProviderCountOutputTypeCountServiceRequestArgs
     Staff?: boolean | ServiceProviderCountOutputTypeCountStaffArgs
-    WithdrawalRequest?: boolean | ServiceProviderCountOutputTypeCountWithdrawalRequestArgs
   }
 
   // Custom InputTypes
@@ -4893,6 +5012,13 @@ export namespace Prisma {
   /**
    * ServiceProviderCountOutputType without action
    */
+  export type ServiceProviderCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * ServiceProviderCountOutputType without action
+   */
   export type ServiceProviderCountOutputTypeCountServiceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ServiceWhereInput
   }
@@ -4923,13 +5049,6 @@ export namespace Prisma {
    */
   export type ServiceProviderCountOutputTypeCountStaffArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StaffWhereInput
-  }
-
-  /**
-   * ServiceProviderCountOutputType without action
-   */
-  export type ServiceProviderCountOutputTypeCountWithdrawalRequestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WithdrawalRequestWhereInput
   }
 
 
@@ -5017,6 +5136,7 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser: number
     other_User_User_updatedByIdToUser: number
     WithdrawalRequest: number
+    WithdrawalRequest_WithdrawalRequest_userIdToUser: number
     Role_UserRoles: number
   }
 
@@ -5042,6 +5162,7 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser?: boolean | UserCountOutputTypeCountOther_User_User_deletedByIdToUserArgs
     other_User_User_updatedByIdToUser?: boolean | UserCountOutputTypeCountOther_User_User_updatedByIdToUserArgs
     WithdrawalRequest?: boolean | UserCountOutputTypeCountWithdrawalRequestArgs
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: boolean | UserCountOutputTypeCountWithdrawalRequest_WithdrawalRequest_userIdToUserArgs
     Role_UserRoles?: boolean | UserCountOutputTypeCountRole_UserRolesArgs
   }
 
@@ -5206,8 +5327,46 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountWithdrawalRequest_WithdrawalRequest_userIdToUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WithdrawalRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountRole_UserRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RoleWhereInput
+  }
+
+
+  /**
+   * Count Type InspectionReportCountOutputType
+   */
+
+  export type InspectionReportCountOutputType = {
+    CustomerAsset: number
+  }
+
+  export type InspectionReportCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    CustomerAsset?: boolean | InspectionReportCountOutputTypeCountCustomerAssetArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * InspectionReportCountOutputType without action
+   */
+  export type InspectionReportCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionReportCountOutputType
+     */
+    select?: InspectionReportCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * InspectionReportCountOutputType without action
+   */
+  export type InspectionReportCountOutputTypeCountCustomerAssetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerAssetWhereInput
   }
 
 
@@ -5301,6 +5460,37 @@ export namespace Prisma {
    */
   export type ConversationCountOutputTypeCountMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
+  }
+
+
+  /**
+   * Count Type CustomerAssetCountOutputType
+   */
+
+  export type CustomerAssetCountOutputType = {
+    InspectionReport: number
+  }
+
+  export type CustomerAssetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    InspectionReport?: boolean | CustomerAssetCountOutputTypeCountInspectionReportArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CustomerAssetCountOutputType without action
+   */
+  export type CustomerAssetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAssetCountOutputType
+     */
+    select?: CustomerAssetCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CustomerAssetCountOutputType without action
+   */
+  export type CustomerAssetCountOutputTypeCountInspectionReportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InspectionReportWhereInput
   }
 
 
@@ -5569,6 +5759,7 @@ export namespace Prisma {
     InspectionReport?: boolean | Booking$InspectionReportArgs<ExtArgs>
     Proposal?: boolean | Booking$ProposalArgs<ExtArgs>
     ProviderReport?: boolean | Booking$ProviderReportArgs<ExtArgs>
+    Review?: boolean | Booking$ReviewArgs<ExtArgs>
     Transaction?: boolean | Booking$TransactionArgs<ExtArgs>
     WorkLog?: boolean | Booking$WorkLogArgs<ExtArgs>
     _count?: boolean | BookingCountOutputTypeDefaultArgs<ExtArgs>
@@ -5630,6 +5821,7 @@ export namespace Prisma {
     InspectionReport?: boolean | Booking$InspectionReportArgs<ExtArgs>
     Proposal?: boolean | Booking$ProposalArgs<ExtArgs>
     ProviderReport?: boolean | Booking$ProviderReportArgs<ExtArgs>
+    Review?: boolean | Booking$ReviewArgs<ExtArgs>
     Transaction?: boolean | Booking$TransactionArgs<ExtArgs>
     WorkLog?: boolean | Booking$WorkLogArgs<ExtArgs>
     _count?: boolean | BookingCountOutputTypeDefaultArgs<ExtArgs>
@@ -5657,6 +5849,7 @@ export namespace Prisma {
       InspectionReport: Prisma.$InspectionReportPayload<ExtArgs> | null
       Proposal: Prisma.$ProposalPayload<ExtArgs> | null
       ProviderReport: Prisma.$ProviderReportPayload<ExtArgs>[]
+      Review: Prisma.$ReviewPayload<ExtArgs> | null
       Transaction: Prisma.$TransactionPayload<ExtArgs> | null
       WorkLog: Prisma.$WorkLogPayload<ExtArgs>[]
     }
@@ -6072,6 +6265,7 @@ export namespace Prisma {
     InspectionReport<T extends Booking$InspectionReportArgs<ExtArgs> = {}>(args?: Subset<T, Booking$InspectionReportArgs<ExtArgs>>): Prisma__InspectionReportClient<$Result.GetResult<Prisma.$InspectionReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Proposal<T extends Booking$ProposalArgs<ExtArgs> = {}>(args?: Subset<T, Booking$ProposalArgs<ExtArgs>>): Prisma__ProposalClient<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ProviderReport<T extends Booking$ProviderReportArgs<ExtArgs> = {}>(args?: Subset<T, Booking$ProviderReportArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProviderReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Review<T extends Booking$ReviewArgs<ExtArgs> = {}>(args?: Subset<T, Booking$ReviewArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Transaction<T extends Booking$TransactionArgs<ExtArgs> = {}>(args?: Subset<T, Booking$TransactionArgs<ExtArgs>>): Prisma__TransactionClient<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     WorkLog<T extends Booking$WorkLogArgs<ExtArgs> = {}>(args?: Subset<T, Booking$WorkLogArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -6609,6 +6803,25 @@ export namespace Prisma {
   }
 
   /**
+   * Booking.Review
+   */
+  export type Booking$ReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+  }
+
+  /**
    * Booking.Transaction
    */
   export type Booking$TransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6930,6 +7143,7 @@ export namespace Prisma {
     other_Category?: boolean | Category$other_CategoryArgs<ExtArgs>
     User_Category_updatedByIdToUser?: boolean | Category$User_Category_updatedByIdToUserArgs<ExtArgs>
     CategoryTranslation?: boolean | Category$CategoryTranslationArgs<ExtArgs>
+    CustomerAsset?: boolean | Category$CustomerAssetArgs<ExtArgs>
     Service?: boolean | Category$ServiceArgs<ExtArgs>
     ServiceRequest?: boolean | Category$ServiceRequestArgs<ExtArgs>
     StaffCategory?: boolean | Category$StaffCategoryArgs<ExtArgs>
@@ -6992,6 +7206,7 @@ export namespace Prisma {
     other_Category?: boolean | Category$other_CategoryArgs<ExtArgs>
     User_Category_updatedByIdToUser?: boolean | Category$User_Category_updatedByIdToUserArgs<ExtArgs>
     CategoryTranslation?: boolean | Category$CategoryTranslationArgs<ExtArgs>
+    CustomerAsset?: boolean | Category$CustomerAssetArgs<ExtArgs>
     Service?: boolean | Category$ServiceArgs<ExtArgs>
     ServiceRequest?: boolean | Category$ServiceRequestArgs<ExtArgs>
     StaffCategory?: boolean | Category$StaffCategoryArgs<ExtArgs>
@@ -7020,6 +7235,7 @@ export namespace Prisma {
       other_Category: Prisma.$CategoryPayload<ExtArgs>[]
       User_Category_updatedByIdToUser: Prisma.$UserPayload<ExtArgs> | null
       CategoryTranslation: Prisma.$CategoryTranslationPayload<ExtArgs>[]
+      CustomerAsset: Prisma.$CustomerAssetPayload<ExtArgs>[]
       Service: Prisma.$ServicePayload<ExtArgs>[]
       ServiceRequest: Prisma.$ServiceRequestPayload<ExtArgs>[]
       StaffCategory: Prisma.$StaffCategoryPayload<ExtArgs>[]
@@ -7436,6 +7652,7 @@ export namespace Prisma {
     other_Category<T extends Category$other_CategoryArgs<ExtArgs> = {}>(args?: Subset<T, Category$other_CategoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     User_Category_updatedByIdToUser<T extends Category$User_Category_updatedByIdToUserArgs<ExtArgs> = {}>(args?: Subset<T, Category$User_Category_updatedByIdToUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     CategoryTranslation<T extends Category$CategoryTranslationArgs<ExtArgs> = {}>(args?: Subset<T, Category$CategoryTranslationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    CustomerAsset<T extends Category$CustomerAssetArgs<ExtArgs> = {}>(args?: Subset<T, Category$CustomerAssetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Service<T extends Category$ServiceArgs<ExtArgs> = {}>(args?: Subset<T, Category$ServiceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ServiceRequest<T extends Category$ServiceRequestArgs<ExtArgs> = {}>(args?: Subset<T, Category$ServiceRequestArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     StaffCategory<T extends Category$StaffCategoryArgs<ExtArgs> = {}>(args?: Subset<T, Category$StaffCategoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7996,6 +8213,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CategoryTranslationScalarFieldEnum | CategoryTranslationScalarFieldEnum[]
+  }
+
+  /**
+   * Category.CustomerAsset
+   */
+  export type Category$CustomerAssetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    where?: CustomerAssetWhereInput
+    orderBy?: CustomerAssetOrderByWithRelationInput | CustomerAssetOrderByWithRelationInput[]
+    cursor?: CustomerAssetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomerAssetScalarFieldEnum | CustomerAssetScalarFieldEnum[]
   }
 
   /**
@@ -10578,6 +10819,7 @@ export namespace Prisma {
     Booking?: boolean | CustomerProfile$BookingArgs<ExtArgs>
     ChatMessage?: boolean | CustomerProfile$ChatMessageArgs<ExtArgs>
     Conversation?: boolean | CustomerProfile$ConversationArgs<ExtArgs>
+    CustomerAsset?: boolean | CustomerProfile$CustomerAssetArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     FavoriteService?: boolean | CustomerProfile$FavoriteServiceArgs<ExtArgs>
     PackageRecommendation?: boolean | CustomerProfile$PackageRecommendationArgs<ExtArgs>
@@ -10626,6 +10868,7 @@ export namespace Prisma {
     Booking?: boolean | CustomerProfile$BookingArgs<ExtArgs>
     ChatMessage?: boolean | CustomerProfile$ChatMessageArgs<ExtArgs>
     Conversation?: boolean | CustomerProfile$ConversationArgs<ExtArgs>
+    CustomerAsset?: boolean | CustomerProfile$CustomerAssetArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     FavoriteService?: boolean | CustomerProfile$FavoriteServiceArgs<ExtArgs>
     PackageRecommendation?: boolean | CustomerProfile$PackageRecommendationArgs<ExtArgs>
@@ -10649,6 +10892,7 @@ export namespace Prisma {
       Booking: Prisma.$BookingPayload<ExtArgs>[]
       ChatMessage: Prisma.$ChatMessagePayload<ExtArgs>[]
       Conversation: Prisma.$ConversationPayload<ExtArgs>[]
+      CustomerAsset: Prisma.$CustomerAssetPayload<ExtArgs>[]
       User: Prisma.$UserPayload<ExtArgs>
       FavoriteService: Prisma.$FavoriteServicePayload<ExtArgs>[]
       PackageRecommendation: Prisma.$PackageRecommendationPayload<ExtArgs>[]
@@ -11063,6 +11307,7 @@ export namespace Prisma {
     Booking<T extends CustomerProfile$BookingArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfile$BookingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ChatMessage<T extends CustomerProfile$ChatMessageArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfile$ChatMessageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Conversation<T extends CustomerProfile$ConversationArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfile$ConversationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    CustomerAsset<T extends CustomerProfile$CustomerAssetArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfile$CustomerAssetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     FavoriteService<T extends CustomerProfile$FavoriteServiceArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfile$FavoriteServiceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoriteServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     PackageRecommendation<T extends CustomerProfile$PackageRecommendationArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfile$PackageRecommendationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackageRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -11572,6 +11817,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerProfile.CustomerAsset
+   */
+  export type CustomerProfile$CustomerAssetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    where?: CustomerAssetWhereInput
+    orderBy?: CustomerAssetOrderByWithRelationInput | CustomerAssetOrderByWithRelationInput[]
+    cursor?: CustomerAssetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomerAssetScalarFieldEnum | CustomerAssetScalarFieldEnum[]
   }
 
   /**
@@ -19992,6 +20261,8 @@ export namespace Prisma {
     customerId: number | null
     rating: number | null
     bookingId: number | null
+    providerId: number | null
+    serviceId: number | null
   }
 
   export type ReviewSumAggregateOutputType = {
@@ -19999,6 +20270,8 @@ export namespace Prisma {
     customerId: number | null
     rating: number | null
     bookingId: number | null
+    providerId: number | null
+    serviceId: number | null
   }
 
   export type ReviewMinAggregateOutputType = {
@@ -20008,6 +20281,11 @@ export namespace Prisma {
     comment: string | null
     createdAt: Date | null
     bookingId: number | null
+    deletedAt: Date | null
+    isEdited: boolean | null
+    providerId: number | null
+    serviceId: number | null
+    updatedAt: Date | null
   }
 
   export type ReviewMaxAggregateOutputType = {
@@ -20017,6 +20295,11 @@ export namespace Prisma {
     comment: string | null
     createdAt: Date | null
     bookingId: number | null
+    deletedAt: Date | null
+    isEdited: boolean | null
+    providerId: number | null
+    serviceId: number | null
+    updatedAt: Date | null
   }
 
   export type ReviewCountAggregateOutputType = {
@@ -20026,6 +20309,12 @@ export namespace Prisma {
     comment: number
     createdAt: number
     bookingId: number
+    deletedAt: number
+    images: number
+    isEdited: number
+    providerId: number
+    serviceId: number
+    updatedAt: number
     _all: number
   }
 
@@ -20035,6 +20324,8 @@ export namespace Prisma {
     customerId?: true
     rating?: true
     bookingId?: true
+    providerId?: true
+    serviceId?: true
   }
 
   export type ReviewSumAggregateInputType = {
@@ -20042,6 +20333,8 @@ export namespace Prisma {
     customerId?: true
     rating?: true
     bookingId?: true
+    providerId?: true
+    serviceId?: true
   }
 
   export type ReviewMinAggregateInputType = {
@@ -20051,6 +20344,11 @@ export namespace Prisma {
     comment?: true
     createdAt?: true
     bookingId?: true
+    deletedAt?: true
+    isEdited?: true
+    providerId?: true
+    serviceId?: true
+    updatedAt?: true
   }
 
   export type ReviewMaxAggregateInputType = {
@@ -20060,6 +20358,11 @@ export namespace Prisma {
     comment?: true
     createdAt?: true
     bookingId?: true
+    deletedAt?: true
+    isEdited?: true
+    providerId?: true
+    serviceId?: true
+    updatedAt?: true
   }
 
   export type ReviewCountAggregateInputType = {
@@ -20069,6 +20372,12 @@ export namespace Prisma {
     comment?: true
     createdAt?: true
     bookingId?: true
+    deletedAt?: true
+    images?: true
+    isEdited?: true
+    providerId?: true
+    serviceId?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -20162,9 +20471,15 @@ export namespace Prisma {
     id: number
     customerId: number
     rating: number
-    comment: string
+    comment: string | null
     createdAt: Date
-    bookingId: number | null
+    bookingId: number
+    deletedAt: Date | null
+    images: string[]
+    isEdited: boolean
+    providerId: number
+    serviceId: number | null
+    updatedAt: Date
     _count: ReviewCountAggregateOutputType | null
     _avg: ReviewAvgAggregateOutputType | null
     _sum: ReviewSumAggregateOutputType | null
@@ -20193,7 +20508,16 @@ export namespace Prisma {
     comment?: boolean
     createdAt?: boolean
     bookingId?: boolean
+    deletedAt?: boolean
+    images?: boolean
+    isEdited?: boolean
+    providerId?: boolean
+    serviceId?: boolean
+    updatedAt?: boolean
+    Booking?: boolean | BookingDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    Service?: boolean | Review$ServiceArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -20203,7 +20527,16 @@ export namespace Prisma {
     comment?: boolean
     createdAt?: boolean
     bookingId?: boolean
+    deletedAt?: boolean
+    images?: boolean
+    isEdited?: boolean
+    providerId?: boolean
+    serviceId?: boolean
+    updatedAt?: boolean
+    Booking?: boolean | BookingDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    Service?: boolean | Review$ServiceArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -20213,7 +20546,16 @@ export namespace Prisma {
     comment?: boolean
     createdAt?: boolean
     bookingId?: boolean
+    deletedAt?: boolean
+    images?: boolean
+    isEdited?: boolean
+    providerId?: boolean
+    serviceId?: boolean
+    updatedAt?: boolean
+    Booking?: boolean | BookingDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    Service?: boolean | Review$ServiceArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectScalar = {
@@ -20223,31 +20565,55 @@ export namespace Prisma {
     comment?: boolean
     createdAt?: boolean
     bookingId?: boolean
+    deletedAt?: boolean
+    images?: boolean
+    isEdited?: boolean
+    providerId?: boolean
+    serviceId?: boolean
+    updatedAt?: boolean
   }
 
-  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerId" | "rating" | "comment" | "createdAt" | "bookingId", ExtArgs["result"]["review"]>
+  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerId" | "rating" | "comment" | "createdAt" | "bookingId" | "deletedAt" | "images" | "isEdited" | "providerId" | "serviceId" | "updatedAt", ExtArgs["result"]["review"]>
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Booking?: boolean | BookingDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    Service?: boolean | Review$ServiceArgs<ExtArgs>
   }
   export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Booking?: boolean | BookingDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    Service?: boolean | Review$ServiceArgs<ExtArgs>
   }
   export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Booking?: boolean | BookingDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    Service?: boolean | Review$ServiceArgs<ExtArgs>
   }
 
   export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Review"
     objects: {
+      Booking: Prisma.$BookingPayload<ExtArgs>
       CustomerProfile: Prisma.$CustomerProfilePayload<ExtArgs>
+      ServiceProvider: Prisma.$ServiceProviderPayload<ExtArgs>
+      Service: Prisma.$ServicePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       customerId: number
       rating: number
-      comment: string
+      comment: string | null
       createdAt: Date
-      bookingId: number | null
+      bookingId: number
+      deletedAt: Date | null
+      images: string[]
+      isEdited: boolean
+      providerId: number
+      serviceId: number | null
+      updatedAt: Date
     }, ExtArgs["result"]["review"]>
     composites: {}
   }
@@ -20642,7 +21008,10 @@ export namespace Prisma {
    */
   export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    Booking<T extends BookingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BookingDefaultArgs<ExtArgs>>): Prisma__BookingClient<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     CustomerProfile<T extends CustomerProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfileDefaultArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    ServiceProvider<T extends ServiceProviderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProviderDefaultArgs<ExtArgs>>): Prisma__ServiceProviderClient<$Result.GetResult<Prisma.$ServiceProviderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Service<T extends Review$ServiceArgs<ExtArgs> = {}>(args?: Subset<T, Review$ServiceArgs<ExtArgs>>): Prisma__ServiceClient<$Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20678,6 +21047,12 @@ export namespace Prisma {
     readonly comment: FieldRef<"Review", 'String'>
     readonly createdAt: FieldRef<"Review", 'DateTime'>
     readonly bookingId: FieldRef<"Review", 'Int'>
+    readonly deletedAt: FieldRef<"Review", 'DateTime'>
+    readonly images: FieldRef<"Review", 'String[]'>
+    readonly isEdited: FieldRef<"Review", 'Boolean'>
+    readonly providerId: FieldRef<"Review", 'Int'>
+    readonly serviceId: FieldRef<"Review", 'Int'>
+    readonly updatedAt: FieldRef<"Review", 'DateTime'>
   }
     
 
@@ -21071,6 +21446,25 @@ export namespace Prisma {
      * Limit how many Reviews to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Review.Service
+   */
+  export type Review$ServiceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Service
+     */
+    select?: ServiceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Service
+     */
+    omit?: ServiceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServiceInclude<ExtArgs> | null
+    where?: ServiceWhereInput
   }
 
   /**
@@ -23799,6 +24193,7 @@ export namespace Prisma {
     FavoriteService?: boolean | Service$FavoriteServiceArgs<ExtArgs>
     ProposalItem?: boolean | Service$ProposalItemArgs<ExtArgs>
     RecurringBooking?: boolean | Service$RecurringBookingArgs<ExtArgs>
+    Review?: boolean | Service$ReviewArgs<ExtArgs>
     Category?: boolean | CategoryDefaultArgs<ExtArgs>
     User_Service_createdByIdToUser?: boolean | Service$User_Service_createdByIdToUserArgs<ExtArgs>
     User_Service_deletedByIdToUser?: boolean | Service$User_Service_deletedByIdToUserArgs<ExtArgs>
@@ -23886,6 +24281,7 @@ export namespace Prisma {
     FavoriteService?: boolean | Service$FavoriteServiceArgs<ExtArgs>
     ProposalItem?: boolean | Service$ProposalItemArgs<ExtArgs>
     RecurringBooking?: boolean | Service$RecurringBookingArgs<ExtArgs>
+    Review?: boolean | Service$ReviewArgs<ExtArgs>
     Category?: boolean | CategoryDefaultArgs<ExtArgs>
     User_Service_createdByIdToUser?: boolean | Service$User_Service_createdByIdToUserArgs<ExtArgs>
     User_Service_deletedByIdToUser?: boolean | Service$User_Service_deletedByIdToUserArgs<ExtArgs>
@@ -23915,6 +24311,7 @@ export namespace Prisma {
       FavoriteService: Prisma.$FavoriteServicePayload<ExtArgs>[]
       ProposalItem: Prisma.$ProposalItemPayload<ExtArgs>[]
       RecurringBooking: Prisma.$RecurringBookingPayload<ExtArgs>[]
+      Review: Prisma.$ReviewPayload<ExtArgs>[]
       Category: Prisma.$CategoryPayload<ExtArgs>
       User_Service_createdByIdToUser: Prisma.$UserPayload<ExtArgs> | null
       User_Service_deletedByIdToUser: Prisma.$UserPayload<ExtArgs> | null
@@ -24338,6 +24735,7 @@ export namespace Prisma {
     FavoriteService<T extends Service$FavoriteServiceArgs<ExtArgs> = {}>(args?: Subset<T, Service$FavoriteServiceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoriteServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ProposalItem<T extends Service$ProposalItemArgs<ExtArgs> = {}>(args?: Subset<T, Service$ProposalItemArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     RecurringBooking<T extends Service$RecurringBookingArgs<ExtArgs> = {}>(args?: Subset<T, Service$RecurringBookingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecurringBookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Review<T extends Service$ReviewArgs<ExtArgs> = {}>(args?: Subset<T, Service$ReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     User_Service_createdByIdToUser<T extends Service$User_Service_createdByIdToUserArgs<ExtArgs> = {}>(args?: Subset<T, Service$User_Service_createdByIdToUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     User_Service_deletedByIdToUser<T extends Service$User_Service_deletedByIdToUserArgs<ExtArgs> = {}>(args?: Subset<T, Service$User_Service_deletedByIdToUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -24859,6 +25257,30 @@ export namespace Prisma {
   }
 
   /**
+   * Service.Review
+   */
+  export type Service$ReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
    * Service.User_Service_createdByIdToUser
    */
   export type Service$User_Service_createdByIdToUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25239,6 +25661,7 @@ export namespace Prisma {
     Booking?: boolean | ServiceProvider$BookingArgs<ExtArgs>
     Conversation?: boolean | ServiceProvider$ConversationArgs<ExtArgs>
     ProviderReport?: boolean | ServiceProvider$ProviderReportArgs<ExtArgs>
+    Review?: boolean | ServiceProvider$ReviewArgs<ExtArgs>
     Service?: boolean | ServiceProvider$ServiceArgs<ExtArgs>
     ServiceItem?: boolean | ServiceProvider$ServiceItemArgs<ExtArgs>
     User_ServiceProvider_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
@@ -25246,7 +25669,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: boolean | ServiceProvider$ServiceProviderTranslationArgs<ExtArgs>
     ServiceRequest?: boolean | ServiceProvider$ServiceRequestArgs<ExtArgs>
     Staff?: boolean | ServiceProvider$StaffArgs<ExtArgs>
-    WithdrawalRequest?: boolean | ServiceProvider$WithdrawalRequestArgs<ExtArgs>
     _count?: boolean | ServiceProviderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["serviceProvider"]>
 
@@ -25310,6 +25732,7 @@ export namespace Prisma {
     Booking?: boolean | ServiceProvider$BookingArgs<ExtArgs>
     Conversation?: boolean | ServiceProvider$ConversationArgs<ExtArgs>
     ProviderReport?: boolean | ServiceProvider$ProviderReportArgs<ExtArgs>
+    Review?: boolean | ServiceProvider$ReviewArgs<ExtArgs>
     Service?: boolean | ServiceProvider$ServiceArgs<ExtArgs>
     ServiceItem?: boolean | ServiceProvider$ServiceItemArgs<ExtArgs>
     User_ServiceProvider_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
@@ -25317,7 +25740,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: boolean | ServiceProvider$ServiceProviderTranslationArgs<ExtArgs>
     ServiceRequest?: boolean | ServiceProvider$ServiceRequestArgs<ExtArgs>
     Staff?: boolean | ServiceProvider$StaffArgs<ExtArgs>
-    WithdrawalRequest?: boolean | ServiceProvider$WithdrawalRequestArgs<ExtArgs>
     _count?: boolean | ServiceProviderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ServiceProviderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25335,6 +25757,7 @@ export namespace Prisma {
       Booking: Prisma.$BookingPayload<ExtArgs>[]
       Conversation: Prisma.$ConversationPayload<ExtArgs>[]
       ProviderReport: Prisma.$ProviderReportPayload<ExtArgs>[]
+      Review: Prisma.$ReviewPayload<ExtArgs>[]
       Service: Prisma.$ServicePayload<ExtArgs>[]
       ServiceItem: Prisma.$ServiceItemPayload<ExtArgs>[]
       User_ServiceProvider_userIdToUser: Prisma.$UserPayload<ExtArgs>
@@ -25342,7 +25765,6 @@ export namespace Prisma {
       ServiceProviderTranslation: Prisma.$ServiceProviderTranslationPayload<ExtArgs>[]
       ServiceRequest: Prisma.$ServiceRequestPayload<ExtArgs>[]
       Staff: Prisma.$StaffPayload<ExtArgs>[]
-      WithdrawalRequest: Prisma.$WithdrawalRequestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -25756,6 +26178,7 @@ export namespace Prisma {
     Booking<T extends ServiceProvider$BookingArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$BookingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Conversation<T extends ServiceProvider$ConversationArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$ConversationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ProviderReport<T extends ServiceProvider$ProviderReportArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$ProviderReportArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProviderReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Review<T extends ServiceProvider$ReviewArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$ReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Service<T extends ServiceProvider$ServiceArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$ServiceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ServiceItem<T extends ServiceProvider$ServiceItemArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$ServiceItemArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServiceItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     User_ServiceProvider_userIdToUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -25763,7 +26186,6 @@ export namespace Prisma {
     ServiceProviderTranslation<T extends ServiceProvider$ServiceProviderTranslationArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$ServiceProviderTranslationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServiceProviderTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ServiceRequest<T extends ServiceProvider$ServiceRequestArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$ServiceRequestArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Staff<T extends ServiceProvider$StaffArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$StaffArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    WithdrawalRequest<T extends ServiceProvider$WithdrawalRequestArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProvider$WithdrawalRequestArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WithdrawalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -26275,6 +26697,30 @@ export namespace Prisma {
   }
 
   /**
+   * ServiceProvider.Review
+   */
+  export type ServiceProvider$ReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
    * ServiceProvider.Service
    */
   export type ServiceProvider$ServiceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -26411,30 +26857,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StaffScalarFieldEnum | StaffScalarFieldEnum[]
-  }
-
-  /**
-   * ServiceProvider.WithdrawalRequest
-   */
-  export type ServiceProvider$WithdrawalRequestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WithdrawalRequest
-     */
-    select?: WithdrawalRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WithdrawalRequest
-     */
-    omit?: WithdrawalRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WithdrawalRequestInclude<ExtArgs> | null
-    where?: WithdrawalRequestWhereInput
-    orderBy?: WithdrawalRequestOrderByWithRelationInput | WithdrawalRequestOrderByWithRelationInput[]
-    cursor?: WithdrawalRequestWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: WithdrawalRequestScalarFieldEnum | WithdrawalRequestScalarFieldEnum[]
   }
 
   /**
@@ -31417,6 +31839,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: boolean | User$other_User_User_updatedByIdToUserArgs<ExtArgs>
     Wallet?: boolean | User$WalletArgs<ExtArgs>
     WithdrawalRequest?: boolean | User$WithdrawalRequestArgs<ExtArgs>
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: boolean | User$WithdrawalRequest_WithdrawalRequest_userIdToUserArgs<ExtArgs>
     Role_UserRoles?: boolean | User$Role_UserRolesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -31508,6 +31931,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: boolean | User$other_User_User_updatedByIdToUserArgs<ExtArgs>
     Wallet?: boolean | User$WalletArgs<ExtArgs>
     WithdrawalRequest?: boolean | User$WithdrawalRequestArgs<ExtArgs>
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: boolean | User$WithdrawalRequest_WithdrawalRequest_userIdToUserArgs<ExtArgs>
     Role_UserRoles?: boolean | User$Role_UserRolesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -31553,6 +31977,7 @@ export namespace Prisma {
       other_User_User_updatedByIdToUser: Prisma.$UserPayload<ExtArgs>[]
       Wallet: Prisma.$WalletPayload<ExtArgs> | null
       WithdrawalRequest: Prisma.$WithdrawalRequestPayload<ExtArgs>[]
+      WithdrawalRequest_WithdrawalRequest_userIdToUser: Prisma.$WithdrawalRequestPayload<ExtArgs>[]
       Role_UserRoles: Prisma.$RolePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -31992,6 +32417,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser<T extends User$other_User_User_updatedByIdToUserArgs<ExtArgs> = {}>(args?: Subset<T, User$other_User_User_updatedByIdToUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Wallet<T extends User$WalletArgs<ExtArgs> = {}>(args?: Subset<T, User$WalletArgs<ExtArgs>>): Prisma__WalletClient<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     WithdrawalRequest<T extends User$WithdrawalRequestArgs<ExtArgs> = {}>(args?: Subset<T, User$WithdrawalRequestArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WithdrawalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    WithdrawalRequest_WithdrawalRequest_userIdToUser<T extends User$WithdrawalRequest_WithdrawalRequest_userIdToUserArgs<ExtArgs> = {}>(args?: Subset<T, User$WithdrawalRequest_WithdrawalRequest_userIdToUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WithdrawalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Role_UserRoles<T extends User$Role_UserRolesArgs<ExtArgs> = {}>(args?: Subset<T, User$Role_UserRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -33048,6 +33474,30 @@ export namespace Prisma {
    * User.WithdrawalRequest
    */
   export type User$WithdrawalRequestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WithdrawalRequest
+     */
+    select?: WithdrawalRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WithdrawalRequest
+     */
+    omit?: WithdrawalRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalRequestInclude<ExtArgs> | null
+    where?: WithdrawalRequestWhereInput
+    orderBy?: WithdrawalRequestOrderByWithRelationInput | WithdrawalRequestOrderByWithRelationInput[]
+    cursor?: WithdrawalRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WithdrawalRequestScalarFieldEnum | WithdrawalRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.WithdrawalRequest_WithdrawalRequest_userIdToUser
+   */
+  export type User$WithdrawalRequest_WithdrawalRequest_userIdToUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the WithdrawalRequest
      */
@@ -35542,6 +35992,8 @@ export namespace Prisma {
     createdAt?: boolean
     Booking?: boolean | BookingDefaultArgs<ExtArgs>
     Staff?: boolean | StaffDefaultArgs<ExtArgs>
+    CustomerAsset?: boolean | InspectionReport$CustomerAssetArgs<ExtArgs>
+    _count?: boolean | InspectionReportCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inspectionReport"]>
 
   export type InspectionReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -35582,6 +36034,8 @@ export namespace Prisma {
   export type InspectionReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Booking?: boolean | BookingDefaultArgs<ExtArgs>
     Staff?: boolean | StaffDefaultArgs<ExtArgs>
+    CustomerAsset?: boolean | InspectionReport$CustomerAssetArgs<ExtArgs>
+    _count?: boolean | InspectionReportCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type InspectionReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Booking?: boolean | BookingDefaultArgs<ExtArgs>
@@ -35597,6 +36051,7 @@ export namespace Prisma {
     objects: {
       Booking: Prisma.$BookingPayload<ExtArgs>
       Staff: Prisma.$StaffPayload<ExtArgs>
+      CustomerAsset: Prisma.$CustomerAssetPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -36002,6 +36457,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Booking<T extends BookingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BookingDefaultArgs<ExtArgs>>): Prisma__BookingClient<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Staff<T extends StaffDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StaffDefaultArgs<ExtArgs>>): Prisma__StaffClient<$Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    CustomerAsset<T extends InspectionReport$CustomerAssetArgs<ExtArgs> = {}>(args?: Subset<T, InspectionReport$CustomerAssetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -36431,6 +36887,30 @@ export namespace Prisma {
      * Limit how many InspectionReports to delete.
      */
     limit?: number
+  }
+
+  /**
+   * InspectionReport.CustomerAsset
+   */
+  export type InspectionReport$CustomerAssetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    where?: CustomerAssetWhereInput
+    orderBy?: CustomerAssetOrderByWithRelationInput | CustomerAssetOrderByWithRelationInput[]
+    cursor?: CustomerAssetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CustomerAssetScalarFieldEnum | CustomerAssetScalarFieldEnum[]
   }
 
   /**
@@ -44645,98 +45125,98 @@ export namespace Prisma {
 
   export type WithdrawalRequestAvgAggregateOutputType = {
     id: number | null
-    providerId: number | null
     amount: number | null
     processedById: number | null
+    userId: number | null
   }
 
   export type WithdrawalRequestSumAggregateOutputType = {
     id: number | null
-    providerId: number | null
     amount: number | null
     processedById: number | null
+    userId: number | null
   }
 
   export type WithdrawalRequestMinAggregateOutputType = {
     id: number | null
-    providerId: number | null
     amount: number | null
     status: $Enums.WithdrawalStatus | null
     createdAt: Date | null
     processedAt: Date | null
     processedById: number | null
     note: string | null
+    userId: number | null
   }
 
   export type WithdrawalRequestMaxAggregateOutputType = {
     id: number | null
-    providerId: number | null
     amount: number | null
     status: $Enums.WithdrawalStatus | null
     createdAt: Date | null
     processedAt: Date | null
     processedById: number | null
     note: string | null
+    userId: number | null
   }
 
   export type WithdrawalRequestCountAggregateOutputType = {
     id: number
-    providerId: number
     amount: number
     status: number
     createdAt: number
     processedAt: number
     processedById: number
     note: number
+    userId: number
     _all: number
   }
 
 
   export type WithdrawalRequestAvgAggregateInputType = {
     id?: true
-    providerId?: true
     amount?: true
     processedById?: true
+    userId?: true
   }
 
   export type WithdrawalRequestSumAggregateInputType = {
     id?: true
-    providerId?: true
     amount?: true
     processedById?: true
+    userId?: true
   }
 
   export type WithdrawalRequestMinAggregateInputType = {
     id?: true
-    providerId?: true
     amount?: true
     status?: true
     createdAt?: true
     processedAt?: true
     processedById?: true
     note?: true
+    userId?: true
   }
 
   export type WithdrawalRequestMaxAggregateInputType = {
     id?: true
-    providerId?: true
     amount?: true
     status?: true
     createdAt?: true
     processedAt?: true
     processedById?: true
     note?: true
+    userId?: true
   }
 
   export type WithdrawalRequestCountAggregateInputType = {
     id?: true
-    providerId?: true
     amount?: true
     status?: true
     createdAt?: true
     processedAt?: true
     processedById?: true
     note?: true
+    userId?: true
     _all?: true
   }
 
@@ -44828,13 +45308,13 @@ export namespace Prisma {
 
   export type WithdrawalRequestGroupByOutputType = {
     id: number
-    providerId: number
     amount: number
     status: $Enums.WithdrawalStatus
     createdAt: Date
     processedAt: Date | null
     processedById: number | null
     note: string | null
+    userId: number
     _count: WithdrawalRequestCountAggregateOutputType | null
     _avg: WithdrawalRequestAvgAggregateOutputType | null
     _sum: WithdrawalRequestSumAggregateOutputType | null
@@ -44858,83 +45338,83 @@ export namespace Prisma {
 
   export type WithdrawalRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    providerId?: boolean
     amount?: boolean
     status?: boolean
     createdAt?: boolean
     processedAt?: boolean
     processedById?: boolean
     note?: boolean
+    userId?: boolean
     User?: boolean | WithdrawalRequest$UserArgs<ExtArgs>
-    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    User_WithdrawalRequest_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["withdrawalRequest"]>
 
   export type WithdrawalRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    providerId?: boolean
     amount?: boolean
     status?: boolean
     createdAt?: boolean
     processedAt?: boolean
     processedById?: boolean
     note?: boolean
+    userId?: boolean
     User?: boolean | WithdrawalRequest$UserArgs<ExtArgs>
-    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    User_WithdrawalRequest_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["withdrawalRequest"]>
 
   export type WithdrawalRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    providerId?: boolean
     amount?: boolean
     status?: boolean
     createdAt?: boolean
     processedAt?: boolean
     processedById?: boolean
     note?: boolean
+    userId?: boolean
     User?: boolean | WithdrawalRequest$UserArgs<ExtArgs>
-    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    User_WithdrawalRequest_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["withdrawalRequest"]>
 
   export type WithdrawalRequestSelectScalar = {
     id?: boolean
-    providerId?: boolean
     amount?: boolean
     status?: boolean
     createdAt?: boolean
     processedAt?: boolean
     processedById?: boolean
     note?: boolean
+    userId?: boolean
   }
 
-  export type WithdrawalRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "providerId" | "amount" | "status" | "createdAt" | "processedAt" | "processedById" | "note", ExtArgs["result"]["withdrawalRequest"]>
+  export type WithdrawalRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "createdAt" | "processedAt" | "processedById" | "note" | "userId", ExtArgs["result"]["withdrawalRequest"]>
   export type WithdrawalRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | WithdrawalRequest$UserArgs<ExtArgs>
-    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    User_WithdrawalRequest_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type WithdrawalRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | WithdrawalRequest$UserArgs<ExtArgs>
-    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    User_WithdrawalRequest_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type WithdrawalRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | WithdrawalRequest$UserArgs<ExtArgs>
-    ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    User_WithdrawalRequest_userIdToUser?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $WithdrawalRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "WithdrawalRequest"
     objects: {
       User: Prisma.$UserPayload<ExtArgs> | null
-      ServiceProvider: Prisma.$ServiceProviderPayload<ExtArgs>
+      User_WithdrawalRequest_userIdToUser: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      providerId: number
       amount: number
       status: $Enums.WithdrawalStatus
       createdAt: Date
       processedAt: Date | null
       processedById: number | null
       note: string | null
+      userId: number
     }, ExtArgs["result"]["withdrawalRequest"]>
     composites: {}
   }
@@ -45330,7 +45810,7 @@ export namespace Prisma {
   export interface Prisma__WithdrawalRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     User<T extends WithdrawalRequest$UserArgs<ExtArgs> = {}>(args?: Subset<T, WithdrawalRequest$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    ServiceProvider<T extends ServiceProviderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProviderDefaultArgs<ExtArgs>>): Prisma__ServiceProviderClient<$Result.GetResult<Prisma.$ServiceProviderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    User_WithdrawalRequest_userIdToUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -45361,13 +45841,13 @@ export namespace Prisma {
    */
   interface WithdrawalRequestFieldRefs {
     readonly id: FieldRef<"WithdrawalRequest", 'Int'>
-    readonly providerId: FieldRef<"WithdrawalRequest", 'Int'>
     readonly amount: FieldRef<"WithdrawalRequest", 'Float'>
     readonly status: FieldRef<"WithdrawalRequest", 'WithdrawalStatus'>
     readonly createdAt: FieldRef<"WithdrawalRequest", 'DateTime'>
     readonly processedAt: FieldRef<"WithdrawalRequest", 'DateTime'>
     readonly processedById: FieldRef<"WithdrawalRequest", 'Int'>
     readonly note: FieldRef<"WithdrawalRequest", 'String'>
+    readonly userId: FieldRef<"WithdrawalRequest", 'Int'>
   }
     
 
@@ -50373,6 +50853,1239 @@ export namespace Prisma {
 
 
   /**
+   * Model CustomerAsset
+   */
+
+  export type AggregateCustomerAsset = {
+    _count: CustomerAssetCountAggregateOutputType | null
+    _avg: CustomerAssetAvgAggregateOutputType | null
+    _sum: CustomerAssetSumAggregateOutputType | null
+    _min: CustomerAssetMinAggregateOutputType | null
+    _max: CustomerAssetMaxAggregateOutputType | null
+  }
+
+  export type CustomerAssetAvgAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    categoryId: number | null
+    totalMaintenanceCount: number | null
+  }
+
+  export type CustomerAssetSumAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    categoryId: number | null
+    totalMaintenanceCount: number | null
+  }
+
+  export type CustomerAssetMinAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    categoryId: number | null
+    brand: string | null
+    model: string | null
+    serial: string | null
+    purchaseDate: Date | null
+    nickname: string | null
+    lastMaintenanceDate: Date | null
+    totalMaintenanceCount: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CustomerAssetMaxAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    categoryId: number | null
+    brand: string | null
+    model: string | null
+    serial: string | null
+    purchaseDate: Date | null
+    nickname: string | null
+    lastMaintenanceDate: Date | null
+    totalMaintenanceCount: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CustomerAssetCountAggregateOutputType = {
+    id: number
+    customerId: number
+    categoryId: number
+    brand: number
+    model: number
+    serial: number
+    purchaseDate: number
+    nickname: number
+    lastMaintenanceDate: number
+    totalMaintenanceCount: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CustomerAssetAvgAggregateInputType = {
+    id?: true
+    customerId?: true
+    categoryId?: true
+    totalMaintenanceCount?: true
+  }
+
+  export type CustomerAssetSumAggregateInputType = {
+    id?: true
+    customerId?: true
+    categoryId?: true
+    totalMaintenanceCount?: true
+  }
+
+  export type CustomerAssetMinAggregateInputType = {
+    id?: true
+    customerId?: true
+    categoryId?: true
+    brand?: true
+    model?: true
+    serial?: true
+    purchaseDate?: true
+    nickname?: true
+    lastMaintenanceDate?: true
+    totalMaintenanceCount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CustomerAssetMaxAggregateInputType = {
+    id?: true
+    customerId?: true
+    categoryId?: true
+    brand?: true
+    model?: true
+    serial?: true
+    purchaseDate?: true
+    nickname?: true
+    lastMaintenanceDate?: true
+    totalMaintenanceCount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CustomerAssetCountAggregateInputType = {
+    id?: true
+    customerId?: true
+    categoryId?: true
+    brand?: true
+    model?: true
+    serial?: true
+    purchaseDate?: true
+    nickname?: true
+    lastMaintenanceDate?: true
+    totalMaintenanceCount?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CustomerAssetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CustomerAsset to aggregate.
+     */
+    where?: CustomerAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerAssets to fetch.
+     */
+    orderBy?: CustomerAssetOrderByWithRelationInput | CustomerAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CustomerAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CustomerAssets
+    **/
+    _count?: true | CustomerAssetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CustomerAssetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CustomerAssetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CustomerAssetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CustomerAssetMaxAggregateInputType
+  }
+
+  export type GetCustomerAssetAggregateType<T extends CustomerAssetAggregateArgs> = {
+        [P in keyof T & keyof AggregateCustomerAsset]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCustomerAsset[P]>
+      : GetScalarType<T[P], AggregateCustomerAsset[P]>
+  }
+
+
+
+
+  export type CustomerAssetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerAssetWhereInput
+    orderBy?: CustomerAssetOrderByWithAggregationInput | CustomerAssetOrderByWithAggregationInput[]
+    by: CustomerAssetScalarFieldEnum[] | CustomerAssetScalarFieldEnum
+    having?: CustomerAssetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CustomerAssetCountAggregateInputType | true
+    _avg?: CustomerAssetAvgAggregateInputType
+    _sum?: CustomerAssetSumAggregateInputType
+    _min?: CustomerAssetMinAggregateInputType
+    _max?: CustomerAssetMaxAggregateInputType
+  }
+
+  export type CustomerAssetGroupByOutputType = {
+    id: number
+    customerId: number
+    categoryId: number
+    brand: string | null
+    model: string | null
+    serial: string | null
+    purchaseDate: Date | null
+    nickname: string | null
+    lastMaintenanceDate: Date | null
+    totalMaintenanceCount: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    _count: CustomerAssetCountAggregateOutputType | null
+    _avg: CustomerAssetAvgAggregateOutputType | null
+    _sum: CustomerAssetSumAggregateOutputType | null
+    _min: CustomerAssetMinAggregateOutputType | null
+    _max: CustomerAssetMaxAggregateOutputType | null
+  }
+
+  type GetCustomerAssetGroupByPayload<T extends CustomerAssetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CustomerAssetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CustomerAssetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CustomerAssetGroupByOutputType[P]>
+            : GetScalarType<T[P], CustomerAssetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CustomerAssetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customerId?: boolean
+    categoryId?: boolean
+    brand?: boolean
+    model?: boolean
+    serial?: boolean
+    purchaseDate?: boolean
+    nickname?: boolean
+    lastMaintenanceDate?: boolean
+    totalMaintenanceCount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Category?: boolean | CategoryDefaultArgs<ExtArgs>
+    CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    InspectionReport?: boolean | CustomerAsset$InspectionReportArgs<ExtArgs>
+    _count?: boolean | CustomerAssetCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customerAsset"]>
+
+  export type CustomerAssetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customerId?: boolean
+    categoryId?: boolean
+    brand?: boolean
+    model?: boolean
+    serial?: boolean
+    purchaseDate?: boolean
+    nickname?: boolean
+    lastMaintenanceDate?: boolean
+    totalMaintenanceCount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Category?: boolean | CategoryDefaultArgs<ExtArgs>
+    CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customerAsset"]>
+
+  export type CustomerAssetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customerId?: boolean
+    categoryId?: boolean
+    brand?: boolean
+    model?: boolean
+    serial?: boolean
+    purchaseDate?: boolean
+    nickname?: boolean
+    lastMaintenanceDate?: boolean
+    totalMaintenanceCount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Category?: boolean | CategoryDefaultArgs<ExtArgs>
+    CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customerAsset"]>
+
+  export type CustomerAssetSelectScalar = {
+    id?: boolean
+    customerId?: boolean
+    categoryId?: boolean
+    brand?: boolean
+    model?: boolean
+    serial?: boolean
+    purchaseDate?: boolean
+    nickname?: boolean
+    lastMaintenanceDate?: boolean
+    totalMaintenanceCount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CustomerAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerId" | "categoryId" | "brand" | "model" | "serial" | "purchaseDate" | "nickname" | "lastMaintenanceDate" | "totalMaintenanceCount" | "createdAt" | "updatedAt", ExtArgs["result"]["customerAsset"]>
+  export type CustomerAssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Category?: boolean | CategoryDefaultArgs<ExtArgs>
+    CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+    InspectionReport?: boolean | CustomerAsset$InspectionReportArgs<ExtArgs>
+    _count?: boolean | CustomerAssetCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CustomerAssetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Category?: boolean | CategoryDefaultArgs<ExtArgs>
+    CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+  }
+  export type CustomerAssetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Category?: boolean | CategoryDefaultArgs<ExtArgs>
+    CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
+  }
+
+  export type $CustomerAssetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CustomerAsset"
+    objects: {
+      Category: Prisma.$CategoryPayload<ExtArgs>
+      CustomerProfile: Prisma.$CustomerProfilePayload<ExtArgs>
+      InspectionReport: Prisma.$InspectionReportPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      customerId: number
+      categoryId: number
+      brand: string | null
+      model: string | null
+      serial: string | null
+      purchaseDate: Date | null
+      nickname: string | null
+      lastMaintenanceDate: Date | null
+      totalMaintenanceCount: number | null
+      createdAt: Date | null
+      updatedAt: Date | null
+    }, ExtArgs["result"]["customerAsset"]>
+    composites: {}
+  }
+
+  type CustomerAssetGetPayload<S extends boolean | null | undefined | CustomerAssetDefaultArgs> = $Result.GetResult<Prisma.$CustomerAssetPayload, S>
+
+  type CustomerAssetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CustomerAssetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CustomerAssetCountAggregateInputType | true
+    }
+
+  export interface CustomerAssetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CustomerAsset'], meta: { name: 'CustomerAsset' } }
+    /**
+     * Find zero or one CustomerAsset that matches the filter.
+     * @param {CustomerAssetFindUniqueArgs} args - Arguments to find a CustomerAsset
+     * @example
+     * // Get one CustomerAsset
+     * const customerAsset = await prisma.customerAsset.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CustomerAssetFindUniqueArgs>(args: SelectSubset<T, CustomerAssetFindUniqueArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CustomerAsset that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CustomerAssetFindUniqueOrThrowArgs} args - Arguments to find a CustomerAsset
+     * @example
+     * // Get one CustomerAsset
+     * const customerAsset = await prisma.customerAsset.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CustomerAssetFindUniqueOrThrowArgs>(args: SelectSubset<T, CustomerAssetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CustomerAsset that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerAssetFindFirstArgs} args - Arguments to find a CustomerAsset
+     * @example
+     * // Get one CustomerAsset
+     * const customerAsset = await prisma.customerAsset.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CustomerAssetFindFirstArgs>(args?: SelectSubset<T, CustomerAssetFindFirstArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CustomerAsset that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerAssetFindFirstOrThrowArgs} args - Arguments to find a CustomerAsset
+     * @example
+     * // Get one CustomerAsset
+     * const customerAsset = await prisma.customerAsset.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CustomerAssetFindFirstOrThrowArgs>(args?: SelectSubset<T, CustomerAssetFindFirstOrThrowArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CustomerAssets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerAssetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CustomerAssets
+     * const customerAssets = await prisma.customerAsset.findMany()
+     * 
+     * // Get first 10 CustomerAssets
+     * const customerAssets = await prisma.customerAsset.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const customerAssetWithIdOnly = await prisma.customerAsset.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CustomerAssetFindManyArgs>(args?: SelectSubset<T, CustomerAssetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CustomerAsset.
+     * @param {CustomerAssetCreateArgs} args - Arguments to create a CustomerAsset.
+     * @example
+     * // Create one CustomerAsset
+     * const CustomerAsset = await prisma.customerAsset.create({
+     *   data: {
+     *     // ... data to create a CustomerAsset
+     *   }
+     * })
+     * 
+     */
+    create<T extends CustomerAssetCreateArgs>(args: SelectSubset<T, CustomerAssetCreateArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CustomerAssets.
+     * @param {CustomerAssetCreateManyArgs} args - Arguments to create many CustomerAssets.
+     * @example
+     * // Create many CustomerAssets
+     * const customerAsset = await prisma.customerAsset.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CustomerAssetCreateManyArgs>(args?: SelectSubset<T, CustomerAssetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CustomerAssets and returns the data saved in the database.
+     * @param {CustomerAssetCreateManyAndReturnArgs} args - Arguments to create many CustomerAssets.
+     * @example
+     * // Create many CustomerAssets
+     * const customerAsset = await prisma.customerAsset.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CustomerAssets and only return the `id`
+     * const customerAssetWithIdOnly = await prisma.customerAsset.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CustomerAssetCreateManyAndReturnArgs>(args?: SelectSubset<T, CustomerAssetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CustomerAsset.
+     * @param {CustomerAssetDeleteArgs} args - Arguments to delete one CustomerAsset.
+     * @example
+     * // Delete one CustomerAsset
+     * const CustomerAsset = await prisma.customerAsset.delete({
+     *   where: {
+     *     // ... filter to delete one CustomerAsset
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CustomerAssetDeleteArgs>(args: SelectSubset<T, CustomerAssetDeleteArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CustomerAsset.
+     * @param {CustomerAssetUpdateArgs} args - Arguments to update one CustomerAsset.
+     * @example
+     * // Update one CustomerAsset
+     * const customerAsset = await prisma.customerAsset.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CustomerAssetUpdateArgs>(args: SelectSubset<T, CustomerAssetUpdateArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CustomerAssets.
+     * @param {CustomerAssetDeleteManyArgs} args - Arguments to filter CustomerAssets to delete.
+     * @example
+     * // Delete a few CustomerAssets
+     * const { count } = await prisma.customerAsset.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CustomerAssetDeleteManyArgs>(args?: SelectSubset<T, CustomerAssetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CustomerAssets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerAssetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CustomerAssets
+     * const customerAsset = await prisma.customerAsset.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CustomerAssetUpdateManyArgs>(args: SelectSubset<T, CustomerAssetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CustomerAssets and returns the data updated in the database.
+     * @param {CustomerAssetUpdateManyAndReturnArgs} args - Arguments to update many CustomerAssets.
+     * @example
+     * // Update many CustomerAssets
+     * const customerAsset = await prisma.customerAsset.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CustomerAssets and only return the `id`
+     * const customerAssetWithIdOnly = await prisma.customerAsset.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CustomerAssetUpdateManyAndReturnArgs>(args: SelectSubset<T, CustomerAssetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CustomerAsset.
+     * @param {CustomerAssetUpsertArgs} args - Arguments to update or create a CustomerAsset.
+     * @example
+     * // Update or create a CustomerAsset
+     * const customerAsset = await prisma.customerAsset.upsert({
+     *   create: {
+     *     // ... data to create a CustomerAsset
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CustomerAsset we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CustomerAssetUpsertArgs>(args: SelectSubset<T, CustomerAssetUpsertArgs<ExtArgs>>): Prisma__CustomerAssetClient<$Result.GetResult<Prisma.$CustomerAssetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CustomerAssets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerAssetCountArgs} args - Arguments to filter CustomerAssets to count.
+     * @example
+     * // Count the number of CustomerAssets
+     * const count = await prisma.customerAsset.count({
+     *   where: {
+     *     // ... the filter for the CustomerAssets we want to count
+     *   }
+     * })
+    **/
+    count<T extends CustomerAssetCountArgs>(
+      args?: Subset<T, CustomerAssetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CustomerAssetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CustomerAsset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerAssetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CustomerAssetAggregateArgs>(args: Subset<T, CustomerAssetAggregateArgs>): Prisma.PrismaPromise<GetCustomerAssetAggregateType<T>>
+
+    /**
+     * Group by CustomerAsset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CustomerAssetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CustomerAssetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CustomerAssetGroupByArgs['orderBy'] }
+        : { orderBy?: CustomerAssetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CustomerAssetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCustomerAssetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CustomerAsset model
+   */
+  readonly fields: CustomerAssetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CustomerAsset.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CustomerAssetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    CustomerProfile<T extends CustomerProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfileDefaultArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    InspectionReport<T extends CustomerAsset$InspectionReportArgs<ExtArgs> = {}>(args?: Subset<T, CustomerAsset$InspectionReportArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CustomerAsset model
+   */
+  interface CustomerAssetFieldRefs {
+    readonly id: FieldRef<"CustomerAsset", 'Int'>
+    readonly customerId: FieldRef<"CustomerAsset", 'Int'>
+    readonly categoryId: FieldRef<"CustomerAsset", 'Int'>
+    readonly brand: FieldRef<"CustomerAsset", 'String'>
+    readonly model: FieldRef<"CustomerAsset", 'String'>
+    readonly serial: FieldRef<"CustomerAsset", 'String'>
+    readonly purchaseDate: FieldRef<"CustomerAsset", 'DateTime'>
+    readonly nickname: FieldRef<"CustomerAsset", 'String'>
+    readonly lastMaintenanceDate: FieldRef<"CustomerAsset", 'DateTime'>
+    readonly totalMaintenanceCount: FieldRef<"CustomerAsset", 'Int'>
+    readonly createdAt: FieldRef<"CustomerAsset", 'DateTime'>
+    readonly updatedAt: FieldRef<"CustomerAsset", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CustomerAsset findUnique
+   */
+  export type CustomerAssetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerAsset to fetch.
+     */
+    where: CustomerAssetWhereUniqueInput
+  }
+
+  /**
+   * CustomerAsset findUniqueOrThrow
+   */
+  export type CustomerAssetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerAsset to fetch.
+     */
+    where: CustomerAssetWhereUniqueInput
+  }
+
+  /**
+   * CustomerAsset findFirst
+   */
+  export type CustomerAssetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerAsset to fetch.
+     */
+    where?: CustomerAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerAssets to fetch.
+     */
+    orderBy?: CustomerAssetOrderByWithRelationInput | CustomerAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CustomerAssets.
+     */
+    cursor?: CustomerAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CustomerAssets.
+     */
+    distinct?: CustomerAssetScalarFieldEnum | CustomerAssetScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerAsset findFirstOrThrow
+   */
+  export type CustomerAssetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerAsset to fetch.
+     */
+    where?: CustomerAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerAssets to fetch.
+     */
+    orderBy?: CustomerAssetOrderByWithRelationInput | CustomerAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CustomerAssets.
+     */
+    cursor?: CustomerAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CustomerAssets.
+     */
+    distinct?: CustomerAssetScalarFieldEnum | CustomerAssetScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerAsset findMany
+   */
+  export type CustomerAssetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which CustomerAssets to fetch.
+     */
+    where?: CustomerAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CustomerAssets to fetch.
+     */
+    orderBy?: CustomerAssetOrderByWithRelationInput | CustomerAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CustomerAssets.
+     */
+    cursor?: CustomerAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CustomerAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CustomerAssets.
+     */
+    skip?: number
+    distinct?: CustomerAssetScalarFieldEnum | CustomerAssetScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerAsset create
+   */
+  export type CustomerAssetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CustomerAsset.
+     */
+    data: XOR<CustomerAssetCreateInput, CustomerAssetUncheckedCreateInput>
+  }
+
+  /**
+   * CustomerAsset createMany
+   */
+  export type CustomerAssetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CustomerAssets.
+     */
+    data: CustomerAssetCreateManyInput | CustomerAssetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CustomerAsset createManyAndReturn
+   */
+  export type CustomerAssetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * The data used to create many CustomerAssets.
+     */
+    data: CustomerAssetCreateManyInput | CustomerAssetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CustomerAsset update
+   */
+  export type CustomerAssetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CustomerAsset.
+     */
+    data: XOR<CustomerAssetUpdateInput, CustomerAssetUncheckedUpdateInput>
+    /**
+     * Choose, which CustomerAsset to update.
+     */
+    where: CustomerAssetWhereUniqueInput
+  }
+
+  /**
+   * CustomerAsset updateMany
+   */
+  export type CustomerAssetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CustomerAssets.
+     */
+    data: XOR<CustomerAssetUpdateManyMutationInput, CustomerAssetUncheckedUpdateManyInput>
+    /**
+     * Filter which CustomerAssets to update
+     */
+    where?: CustomerAssetWhereInput
+    /**
+     * Limit how many CustomerAssets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CustomerAsset updateManyAndReturn
+   */
+  export type CustomerAssetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * The data used to update CustomerAssets.
+     */
+    data: XOR<CustomerAssetUpdateManyMutationInput, CustomerAssetUncheckedUpdateManyInput>
+    /**
+     * Filter which CustomerAssets to update
+     */
+    where?: CustomerAssetWhereInput
+    /**
+     * Limit how many CustomerAssets to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CustomerAsset upsert
+   */
+  export type CustomerAssetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CustomerAsset to update in case it exists.
+     */
+    where: CustomerAssetWhereUniqueInput
+    /**
+     * In case the CustomerAsset found by the `where` argument doesn't exist, create a new CustomerAsset with this data.
+     */
+    create: XOR<CustomerAssetCreateInput, CustomerAssetUncheckedCreateInput>
+    /**
+     * In case the CustomerAsset was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CustomerAssetUpdateInput, CustomerAssetUncheckedUpdateInput>
+  }
+
+  /**
+   * CustomerAsset delete
+   */
+  export type CustomerAssetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+    /**
+     * Filter which CustomerAsset to delete.
+     */
+    where: CustomerAssetWhereUniqueInput
+  }
+
+  /**
+   * CustomerAsset deleteMany
+   */
+  export type CustomerAssetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CustomerAssets to delete
+     */
+    where?: CustomerAssetWhereInput
+    /**
+     * Limit how many CustomerAssets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CustomerAsset.InspectionReport
+   */
+  export type CustomerAsset$InspectionReportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionReport
+     */
+    select?: InspectionReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionReport
+     */
+    omit?: InspectionReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionReportInclude<ExtArgs> | null
+    where?: InspectionReportWhereInput
+    orderBy?: InspectionReportOrderByWithRelationInput | InspectionReportOrderByWithRelationInput[]
+    cursor?: InspectionReportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InspectionReportScalarFieldEnum | InspectionReportScalarFieldEnum[]
+  }
+
+  /**
+   * CustomerAsset without action
+   */
+  export type CustomerAssetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerAsset
+     */
+    select?: CustomerAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CustomerAsset
+     */
+    omit?: CustomerAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerAssetInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -50566,7 +52279,13 @@ export namespace Prisma {
     rating: 'rating',
     comment: 'comment',
     createdAt: 'createdAt',
-    bookingId: 'bookingId'
+    bookingId: 'bookingId',
+    deletedAt: 'deletedAt',
+    images: 'images',
+    isEdited: 'isEdited',
+    providerId: 'providerId',
+    serviceId: 'serviceId',
+    updatedAt: 'updatedAt'
   };
 
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
@@ -50856,13 +52575,13 @@ export namespace Prisma {
 
   export const WithdrawalRequestScalarFieldEnum: {
     id: 'id',
-    providerId: 'providerId',
     amount: 'amount',
     status: 'status',
     createdAt: 'createdAt',
     processedAt: 'processedAt',
     processedById: 'processedById',
-    note: 'note'
+    note: 'note',
+    userId: 'userId'
   };
 
   export type WithdrawalRequestScalarFieldEnum = (typeof WithdrawalRequestScalarFieldEnum)[keyof typeof WithdrawalRequestScalarFieldEnum]
@@ -50919,6 +52638,24 @@ export namespace Prisma {
   };
 
   export type Suggested_services_configScalarFieldEnum = (typeof Suggested_services_configScalarFieldEnum)[keyof typeof Suggested_services_configScalarFieldEnum]
+
+
+  export const CustomerAssetScalarFieldEnum: {
+    id: 'id',
+    customerId: 'customerId',
+    categoryId: 'categoryId',
+    brand: 'brand',
+    model: 'model',
+    serial: 'serial',
+    purchaseDate: 'purchaseDate',
+    nickname: 'nickname',
+    lastMaintenanceDate: 'lastMaintenanceDate',
+    totalMaintenanceCount: 'totalMaintenanceCount',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CustomerAssetScalarFieldEnum = (typeof CustomerAssetScalarFieldEnum)[keyof typeof CustomerAssetScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -51289,6 +53026,7 @@ export namespace Prisma {
     InspectionReport?: XOR<InspectionReportNullableScalarRelationFilter, InspectionReportWhereInput> | null
     Proposal?: XOR<ProposalNullableScalarRelationFilter, ProposalWhereInput> | null
     ProviderReport?: ProviderReportListRelationFilter
+    Review?: XOR<ReviewNullableScalarRelationFilter, ReviewWhereInput> | null
     Transaction?: XOR<TransactionNullableScalarRelationFilter, TransactionWhereInput> | null
     WorkLog?: WorkLogListRelationFilter
   }
@@ -51311,6 +53049,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportOrderByWithRelationInput
     Proposal?: ProposalOrderByWithRelationInput
     ProviderReport?: ProviderReportOrderByRelationAggregateInput
+    Review?: ReviewOrderByWithRelationInput
     Transaction?: TransactionOrderByWithRelationInput
     WorkLog?: WorkLogOrderByRelationAggregateInput
   }
@@ -51336,6 +53075,7 @@ export namespace Prisma {
     InspectionReport?: XOR<InspectionReportNullableScalarRelationFilter, InspectionReportWhereInput> | null
     Proposal?: XOR<ProposalNullableScalarRelationFilter, ProposalWhereInput> | null
     ProviderReport?: ProviderReportListRelationFilter
+    Review?: XOR<ReviewNullableScalarRelationFilter, ReviewWhereInput> | null
     Transaction?: XOR<TransactionNullableScalarRelationFilter, TransactionWhereInput> | null
     WorkLog?: WorkLogListRelationFilter
   }, "id" | "serviceRequestId">
@@ -51394,6 +53134,7 @@ export namespace Prisma {
     other_Category?: CategoryListRelationFilter
     User_Category_updatedByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     CategoryTranslation?: CategoryTranslationListRelationFilter
+    CustomerAsset?: CustomerAssetListRelationFilter
     Service?: ServiceListRelationFilter
     ServiceRequest?: ServiceRequestListRelationFilter
     StaffCategory?: StaffCategoryListRelationFilter
@@ -51417,6 +53158,7 @@ export namespace Prisma {
     other_Category?: CategoryOrderByRelationAggregateInput
     User_Category_updatedByIdToUser?: UserOrderByWithRelationInput
     CategoryTranslation?: CategoryTranslationOrderByRelationAggregateInput
+    CustomerAsset?: CustomerAssetOrderByRelationAggregateInput
     Service?: ServiceOrderByRelationAggregateInput
     ServiceRequest?: ServiceRequestOrderByRelationAggregateInput
     StaffCategory?: StaffCategoryOrderByRelationAggregateInput
@@ -51443,6 +53185,7 @@ export namespace Prisma {
     other_Category?: CategoryListRelationFilter
     User_Category_updatedByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     CategoryTranslation?: CategoryTranslationListRelationFilter
+    CustomerAsset?: CustomerAssetListRelationFilter
     Service?: ServiceListRelationFilter
     ServiceRequest?: ServiceRequestListRelationFilter
     StaffCategory?: StaffCategoryListRelationFilter
@@ -51631,6 +53374,7 @@ export namespace Prisma {
     Booking?: BookingListRelationFilter
     ChatMessage?: ChatMessageListRelationFilter
     Conversation?: ConversationListRelationFilter
+    CustomerAsset?: CustomerAssetListRelationFilter
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     FavoriteService?: FavoriteServiceListRelationFilter
     PackageRecommendation?: PackageRecommendationListRelationFilter
@@ -51652,6 +53396,7 @@ export namespace Prisma {
     Booking?: BookingOrderByRelationAggregateInput
     ChatMessage?: ChatMessageOrderByRelationAggregateInput
     Conversation?: ConversationOrderByRelationAggregateInput
+    CustomerAsset?: CustomerAssetOrderByRelationAggregateInput
     User?: UserOrderByWithRelationInput
     FavoriteService?: FavoriteServiceOrderByRelationAggregateInput
     PackageRecommendation?: PackageRecommendationOrderByRelationAggregateInput
@@ -51676,6 +53421,7 @@ export namespace Prisma {
     Booking?: BookingListRelationFilter
     ChatMessage?: ChatMessageListRelationFilter
     Conversation?: ConversationListRelationFilter
+    CustomerAsset?: CustomerAssetListRelationFilter
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     FavoriteService?: FavoriteServiceListRelationFilter
     PackageRecommendation?: PackageRecommendationListRelationFilter
@@ -52268,42 +54014,75 @@ export namespace Prisma {
     id?: IntFilter<"Review"> | number
     customerId?: IntFilter<"Review"> | number
     rating?: IntFilter<"Review"> | number
-    comment?: StringFilter<"Review"> | string
+    comment?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
-    bookingId?: IntNullableFilter<"Review"> | number | null
+    bookingId?: IntFilter<"Review"> | number
+    deletedAt?: DateTimeNullableFilter<"Review"> | Date | string | null
+    images?: StringNullableListFilter<"Review">
+    isEdited?: BoolFilter<"Review"> | boolean
+    providerId?: IntFilter<"Review"> | number
+    serviceId?: IntNullableFilter<"Review"> | number | null
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
+    Booking?: XOR<BookingScalarRelationFilter, BookingWhereInput>
     CustomerProfile?: XOR<CustomerProfileScalarRelationFilter, CustomerProfileWhereInput>
+    ServiceProvider?: XOR<ServiceProviderScalarRelationFilter, ServiceProviderWhereInput>
+    Service?: XOR<ServiceNullableScalarRelationFilter, ServiceWhereInput> | null
   }
 
   export type ReviewOrderByWithRelationInput = {
     id?: SortOrder
     customerId?: SortOrder
     rating?: SortOrder
-    comment?: SortOrder
+    comment?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    bookingId?: SortOrderInput | SortOrder
+    bookingId?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    images?: SortOrder
+    isEdited?: SortOrder
+    providerId?: SortOrder
+    serviceId?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    Booking?: BookingOrderByWithRelationInput
     CustomerProfile?: CustomerProfileOrderByWithRelationInput
+    ServiceProvider?: ServiceProviderOrderByWithRelationInput
+    Service?: ServiceOrderByWithRelationInput
   }
 
   export type ReviewWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    bookingId?: number
     AND?: ReviewWhereInput | ReviewWhereInput[]
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     customerId?: IntFilter<"Review"> | number
     rating?: IntFilter<"Review"> | number
-    comment?: StringFilter<"Review"> | string
+    comment?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
-    bookingId?: IntNullableFilter<"Review"> | number | null
+    deletedAt?: DateTimeNullableFilter<"Review"> | Date | string | null
+    images?: StringNullableListFilter<"Review">
+    isEdited?: BoolFilter<"Review"> | boolean
+    providerId?: IntFilter<"Review"> | number
+    serviceId?: IntNullableFilter<"Review"> | number | null
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
+    Booking?: XOR<BookingScalarRelationFilter, BookingWhereInput>
     CustomerProfile?: XOR<CustomerProfileScalarRelationFilter, CustomerProfileWhereInput>
-  }, "id">
+    ServiceProvider?: XOR<ServiceProviderScalarRelationFilter, ServiceProviderWhereInput>
+    Service?: XOR<ServiceNullableScalarRelationFilter, ServiceWhereInput> | null
+  }, "id" | "bookingId">
 
   export type ReviewOrderByWithAggregationInput = {
     id?: SortOrder
     customerId?: SortOrder
     rating?: SortOrder
-    comment?: SortOrder
+    comment?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    bookingId?: SortOrderInput | SortOrder
+    bookingId?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    images?: SortOrder
+    isEdited?: SortOrder
+    providerId?: SortOrder
+    serviceId?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
     _count?: ReviewCountOrderByAggregateInput
     _avg?: ReviewAvgOrderByAggregateInput
     _max?: ReviewMaxOrderByAggregateInput
@@ -52318,9 +54097,15 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Review"> | number
     customerId?: IntWithAggregatesFilter<"Review"> | number
     rating?: IntWithAggregatesFilter<"Review"> | number
-    comment?: StringWithAggregatesFilter<"Review"> | string
+    comment?: StringNullableWithAggregatesFilter<"Review"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
-    bookingId?: IntNullableWithAggregatesFilter<"Review"> | number | null
+    bookingId?: IntWithAggregatesFilter<"Review"> | number
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"Review"> | Date | string | null
+    images?: StringNullableListFilter<"Review">
+    isEdited?: BoolWithAggregatesFilter<"Review"> | boolean
+    providerId?: IntWithAggregatesFilter<"Review"> | number
+    serviceId?: IntNullableWithAggregatesFilter<"Review"> | number | null
+    updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
 
   export type RewardPointWhereInput = {
@@ -52489,6 +54274,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceListRelationFilter
     ProposalItem?: ProposalItemListRelationFilter
     RecurringBooking?: RecurringBookingListRelationFilter
+    Review?: ReviewListRelationFilter
     Category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     User_Service_createdByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     User_Service_deletedByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -52519,6 +54305,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceOrderByRelationAggregateInput
     ProposalItem?: ProposalItemOrderByRelationAggregateInput
     RecurringBooking?: RecurringBookingOrderByRelationAggregateInput
+    Review?: ReviewOrderByRelationAggregateInput
     Category?: CategoryOrderByWithRelationInput
     User_Service_createdByIdToUser?: UserOrderByWithRelationInput
     User_Service_deletedByIdToUser?: UserOrderByWithRelationInput
@@ -52552,6 +54339,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceListRelationFilter
     ProposalItem?: ProposalItemListRelationFilter
     RecurringBooking?: RecurringBookingListRelationFilter
+    Review?: ReviewListRelationFilter
     Category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     User_Service_createdByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     User_Service_deletedByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -52631,6 +54419,7 @@ export namespace Prisma {
     Booking?: BookingListRelationFilter
     Conversation?: ConversationListRelationFilter
     ProviderReport?: ProviderReportListRelationFilter
+    Review?: ReviewListRelationFilter
     Service?: ServiceListRelationFilter
     ServiceItem?: ServiceItemListRelationFilter
     User_ServiceProvider_userIdToUser?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -52638,7 +54427,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationListRelationFilter
     ServiceRequest?: ServiceRequestListRelationFilter
     Staff?: StaffListRelationFilter
-    WithdrawalRequest?: WithdrawalRequestListRelationFilter
   }
 
   export type ServiceProviderOrderByWithRelationInput = {
@@ -52659,6 +54447,7 @@ export namespace Prisma {
     Booking?: BookingOrderByRelationAggregateInput
     Conversation?: ConversationOrderByRelationAggregateInput
     ProviderReport?: ProviderReportOrderByRelationAggregateInput
+    Review?: ReviewOrderByRelationAggregateInput
     Service?: ServiceOrderByRelationAggregateInput
     ServiceItem?: ServiceItemOrderByRelationAggregateInput
     User_ServiceProvider_userIdToUser?: UserOrderByWithRelationInput
@@ -52666,7 +54455,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationOrderByRelationAggregateInput
     ServiceRequest?: ServiceRequestOrderByRelationAggregateInput
     Staff?: StaffOrderByRelationAggregateInput
-    WithdrawalRequest?: WithdrawalRequestOrderByRelationAggregateInput
   }
 
   export type ServiceProviderWhereUniqueInput = Prisma.AtLeast<{
@@ -52690,6 +54478,7 @@ export namespace Prisma {
     Booking?: BookingListRelationFilter
     Conversation?: ConversationListRelationFilter
     ProviderReport?: ProviderReportListRelationFilter
+    Review?: ReviewListRelationFilter
     Service?: ServiceListRelationFilter
     ServiceItem?: ServiceItemListRelationFilter
     User_ServiceProvider_userIdToUser?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -52697,7 +54486,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationListRelationFilter
     ServiceRequest?: ServiceRequestListRelationFilter
     Staff?: StaffListRelationFilter
-    WithdrawalRequest?: WithdrawalRequestListRelationFilter
   }, "id" | "userId">
 
   export type ServiceProviderOrderByWithAggregationInput = {
@@ -53080,6 +54868,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserListRelationFilter
     Wallet?: XOR<WalletNullableScalarRelationFilter, WalletWhereInput> | null
     WithdrawalRequest?: WithdrawalRequestListRelationFilter
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestListRelationFilter
     Role_UserRoles?: RoleListRelationFilter
   }
 
@@ -53126,6 +54915,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserOrderByRelationAggregateInput
     Wallet?: WalletOrderByWithRelationInput
     WithdrawalRequest?: WithdrawalRequestOrderByRelationAggregateInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestOrderByRelationAggregateInput
     Role_UserRoles?: RoleOrderByRelationAggregateInput
   }
 
@@ -53175,6 +54965,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserListRelationFilter
     Wallet?: XOR<WalletNullableScalarRelationFilter, WalletWhereInput> | null
     WithdrawalRequest?: WithdrawalRequestListRelationFilter
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestListRelationFilter
     Role_UserRoles?: RoleListRelationFilter
   }, "id" | "email">
 
@@ -53378,6 +55169,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"InspectionReport"> | Date | string
     Booking?: XOR<BookingScalarRelationFilter, BookingWhereInput>
     Staff?: XOR<StaffScalarRelationFilter, StaffWhereInput>
+    CustomerAsset?: CustomerAssetListRelationFilter
   }
 
   export type InspectionReportOrderByWithRelationInput = {
@@ -53390,6 +55182,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     Booking?: BookingOrderByWithRelationInput
     Staff?: StaffOrderByWithRelationInput
+    CustomerAsset?: CustomerAssetOrderByRelationAggregateInput
   }
 
   export type InspectionReportWhereUniqueInput = Prisma.AtLeast<{
@@ -53405,6 +55198,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"InspectionReport"> | Date | string
     Booking?: XOR<BookingScalarRelationFilter, BookingWhereInput>
     Staff?: XOR<StaffScalarRelationFilter, StaffWhereInput>
+    CustomerAsset?: CustomerAssetListRelationFilter
   }, "id" | "bookingId">
 
   export type InspectionReportOrderByWithAggregationInput = {
@@ -53983,28 +55777,28 @@ export namespace Prisma {
     OR?: WithdrawalRequestWhereInput[]
     NOT?: WithdrawalRequestWhereInput | WithdrawalRequestWhereInput[]
     id?: IntFilter<"WithdrawalRequest"> | number
-    providerId?: IntFilter<"WithdrawalRequest"> | number
     amount?: FloatFilter<"WithdrawalRequest"> | number
     status?: EnumWithdrawalStatusFilter<"WithdrawalRequest"> | $Enums.WithdrawalStatus
     createdAt?: DateTimeFilter<"WithdrawalRequest"> | Date | string
     processedAt?: DateTimeNullableFilter<"WithdrawalRequest"> | Date | string | null
     processedById?: IntNullableFilter<"WithdrawalRequest"> | number | null
     note?: StringNullableFilter<"WithdrawalRequest"> | string | null
+    userId?: IntFilter<"WithdrawalRequest"> | number
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    ServiceProvider?: XOR<ServiceProviderScalarRelationFilter, ServiceProviderWhereInput>
+    User_WithdrawalRequest_userIdToUser?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type WithdrawalRequestOrderByWithRelationInput = {
     id?: SortOrder
-    providerId?: SortOrder
     amount?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrderInput | SortOrder
     processedById?: SortOrderInput | SortOrder
     note?: SortOrderInput | SortOrder
+    userId?: SortOrder
     User?: UserOrderByWithRelationInput
-    ServiceProvider?: ServiceProviderOrderByWithRelationInput
+    User_WithdrawalRequest_userIdToUser?: UserOrderByWithRelationInput
   }
 
   export type WithdrawalRequestWhereUniqueInput = Prisma.AtLeast<{
@@ -54012,26 +55806,26 @@ export namespace Prisma {
     AND?: WithdrawalRequestWhereInput | WithdrawalRequestWhereInput[]
     OR?: WithdrawalRequestWhereInput[]
     NOT?: WithdrawalRequestWhereInput | WithdrawalRequestWhereInput[]
-    providerId?: IntFilter<"WithdrawalRequest"> | number
     amount?: FloatFilter<"WithdrawalRequest"> | number
     status?: EnumWithdrawalStatusFilter<"WithdrawalRequest"> | $Enums.WithdrawalStatus
     createdAt?: DateTimeFilter<"WithdrawalRequest"> | Date | string
     processedAt?: DateTimeNullableFilter<"WithdrawalRequest"> | Date | string | null
     processedById?: IntNullableFilter<"WithdrawalRequest"> | number | null
     note?: StringNullableFilter<"WithdrawalRequest"> | string | null
+    userId?: IntFilter<"WithdrawalRequest"> | number
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    ServiceProvider?: XOR<ServiceProviderScalarRelationFilter, ServiceProviderWhereInput>
+    User_WithdrawalRequest_userIdToUser?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type WithdrawalRequestOrderByWithAggregationInput = {
     id?: SortOrder
-    providerId?: SortOrder
     amount?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrderInput | SortOrder
     processedById?: SortOrderInput | SortOrder
     note?: SortOrderInput | SortOrder
+    userId?: SortOrder
     _count?: WithdrawalRequestCountOrderByAggregateInput
     _avg?: WithdrawalRequestAvgOrderByAggregateInput
     _max?: WithdrawalRequestMaxOrderByAggregateInput
@@ -54044,13 +55838,13 @@ export namespace Prisma {
     OR?: WithdrawalRequestScalarWhereWithAggregatesInput[]
     NOT?: WithdrawalRequestScalarWhereWithAggregatesInput | WithdrawalRequestScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"WithdrawalRequest"> | number
-    providerId?: IntWithAggregatesFilter<"WithdrawalRequest"> | number
     amount?: FloatWithAggregatesFilter<"WithdrawalRequest"> | number
     status?: EnumWithdrawalStatusWithAggregatesFilter<"WithdrawalRequest"> | $Enums.WithdrawalStatus
     createdAt?: DateTimeWithAggregatesFilter<"WithdrawalRequest"> | Date | string
     processedAt?: DateTimeNullableWithAggregatesFilter<"WithdrawalRequest"> | Date | string | null
     processedById?: IntNullableWithAggregatesFilter<"WithdrawalRequest"> | number | null
     note?: StringNullableWithAggregatesFilter<"WithdrawalRequest"> | string | null
+    userId?: IntWithAggregatesFilter<"WithdrawalRequest"> | number
   }
 
   export type ConversationWhereInput = {
@@ -54337,6 +56131,104 @@ export namespace Prisma {
     updated_at?: DateTimeNullableWithAggregatesFilter<"suggested_services_config"> | Date | string | null
   }
 
+  export type CustomerAssetWhereInput = {
+    AND?: CustomerAssetWhereInput | CustomerAssetWhereInput[]
+    OR?: CustomerAssetWhereInput[]
+    NOT?: CustomerAssetWhereInput | CustomerAssetWhereInput[]
+    id?: IntFilter<"CustomerAsset"> | number
+    customerId?: IntFilter<"CustomerAsset"> | number
+    categoryId?: IntFilter<"CustomerAsset"> | number
+    brand?: StringNullableFilter<"CustomerAsset"> | string | null
+    model?: StringNullableFilter<"CustomerAsset"> | string | null
+    serial?: StringNullableFilter<"CustomerAsset"> | string | null
+    purchaseDate?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    nickname?: StringNullableFilter<"CustomerAsset"> | string | null
+    lastMaintenanceDate?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    totalMaintenanceCount?: IntNullableFilter<"CustomerAsset"> | number | null
+    createdAt?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    Category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    CustomerProfile?: XOR<CustomerProfileScalarRelationFilter, CustomerProfileWhereInput>
+    InspectionReport?: InspectionReportListRelationFilter
+  }
+
+  export type CustomerAssetOrderByWithRelationInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    categoryId?: SortOrder
+    brand?: SortOrderInput | SortOrder
+    model?: SortOrderInput | SortOrder
+    serial?: SortOrderInput | SortOrder
+    purchaseDate?: SortOrderInput | SortOrder
+    nickname?: SortOrderInput | SortOrder
+    lastMaintenanceDate?: SortOrderInput | SortOrder
+    totalMaintenanceCount?: SortOrderInput | SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    Category?: CategoryOrderByWithRelationInput
+    CustomerProfile?: CustomerProfileOrderByWithRelationInput
+    InspectionReport?: InspectionReportOrderByRelationAggregateInput
+  }
+
+  export type CustomerAssetWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CustomerAssetWhereInput | CustomerAssetWhereInput[]
+    OR?: CustomerAssetWhereInput[]
+    NOT?: CustomerAssetWhereInput | CustomerAssetWhereInput[]
+    customerId?: IntFilter<"CustomerAsset"> | number
+    categoryId?: IntFilter<"CustomerAsset"> | number
+    brand?: StringNullableFilter<"CustomerAsset"> | string | null
+    model?: StringNullableFilter<"CustomerAsset"> | string | null
+    serial?: StringNullableFilter<"CustomerAsset"> | string | null
+    purchaseDate?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    nickname?: StringNullableFilter<"CustomerAsset"> | string | null
+    lastMaintenanceDate?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    totalMaintenanceCount?: IntNullableFilter<"CustomerAsset"> | number | null
+    createdAt?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    Category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    CustomerProfile?: XOR<CustomerProfileScalarRelationFilter, CustomerProfileWhereInput>
+    InspectionReport?: InspectionReportListRelationFilter
+  }, "id">
+
+  export type CustomerAssetOrderByWithAggregationInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    categoryId?: SortOrder
+    brand?: SortOrderInput | SortOrder
+    model?: SortOrderInput | SortOrder
+    serial?: SortOrderInput | SortOrder
+    purchaseDate?: SortOrderInput | SortOrder
+    nickname?: SortOrderInput | SortOrder
+    lastMaintenanceDate?: SortOrderInput | SortOrder
+    totalMaintenanceCount?: SortOrderInput | SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    _count?: CustomerAssetCountOrderByAggregateInput
+    _avg?: CustomerAssetAvgOrderByAggregateInput
+    _max?: CustomerAssetMaxOrderByAggregateInput
+    _min?: CustomerAssetMinOrderByAggregateInput
+    _sum?: CustomerAssetSumOrderByAggregateInput
+  }
+
+  export type CustomerAssetScalarWhereWithAggregatesInput = {
+    AND?: CustomerAssetScalarWhereWithAggregatesInput | CustomerAssetScalarWhereWithAggregatesInput[]
+    OR?: CustomerAssetScalarWhereWithAggregatesInput[]
+    NOT?: CustomerAssetScalarWhereWithAggregatesInput | CustomerAssetScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CustomerAsset"> | number
+    customerId?: IntWithAggregatesFilter<"CustomerAsset"> | number
+    categoryId?: IntWithAggregatesFilter<"CustomerAsset"> | number
+    brand?: StringNullableWithAggregatesFilter<"CustomerAsset"> | string | null
+    model?: StringNullableWithAggregatesFilter<"CustomerAsset"> | string | null
+    serial?: StringNullableWithAggregatesFilter<"CustomerAsset"> | string | null
+    purchaseDate?: DateTimeNullableWithAggregatesFilter<"CustomerAsset"> | Date | string | null
+    nickname?: StringNullableWithAggregatesFilter<"CustomerAsset"> | string | null
+    lastMaintenanceDate?: DateTimeNullableWithAggregatesFilter<"CustomerAsset"> | Date | string | null
+    totalMaintenanceCount?: IntNullableWithAggregatesFilter<"CustomerAsset"> | number | null
+    createdAt?: DateTimeNullableWithAggregatesFilter<"CustomerAsset"> | Date | string | null
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"CustomerAsset"> | Date | string | null
+  }
+
   export type BookingCreateInput = {
     status: $Enums.BookingStatus
     deletedAt?: Date | string | null
@@ -54350,6 +56242,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -54368,6 +56261,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -54385,6 +56279,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -54403,6 +56298,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -54453,6 +56349,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -54472,6 +56369,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -54490,6 +56388,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -54509,6 +56408,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
@@ -54690,6 +56590,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -54711,6 +56612,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -54729,6 +56631,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -54750,6 +56653,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -55339,61 +57243,100 @@ export namespace Prisma {
 
   export type ReviewCreateInput = {
     rating: number
-    comment: string
+    comment?: string | null
     createdAt?: Date | string
-    bookingId?: number | null
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    updatedAt: Date | string
+    Booking: BookingCreateNestedOneWithoutReviewInput
     CustomerProfile: CustomerProfileCreateNestedOneWithoutReviewInput
+    ServiceProvider: ServiceProviderCreateNestedOneWithoutReviewInput
+    Service?: ServiceCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateInput = {
     id?: number
     customerId: number
     rating: number
-    comment: string
+    comment?: string | null
     createdAt?: Date | string
-    bookingId?: number | null
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    providerId: number
+    serviceId?: number | null
+    updatedAt: Date | string
   }
 
   export type ReviewUpdateInput = {
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingId?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Booking?: BookingUpdateOneRequiredWithoutReviewNestedInput
     CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutReviewNestedInput
+    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutReviewNestedInput
+    Service?: ServiceUpdateOneWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     customerId?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    providerId?: IntFieldUpdateOperationsInput | number
+    serviceId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewCreateManyInput = {
     id?: number
     customerId: number
     rating: number
-    comment: string
+    comment?: string | null
     createdAt?: Date | string
-    bookingId?: number | null
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    providerId: number
+    serviceId?: number | null
+    updatedAt: Date | string
   }
 
   export type ReviewUpdateManyMutationInput = {
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingId?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     customerId?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    providerId?: IntFieldUpdateOperationsInput | number
+    serviceId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RewardPointCreateInput = {
@@ -55543,6 +57486,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
@@ -55573,6 +57517,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -55592,6 +57537,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
@@ -55622,6 +57568,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -55697,6 +57644,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
@@ -55704,7 +57652,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateInput = {
@@ -55725,12 +57672,12 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUpdateInput = {
@@ -55748,6 +57695,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
@@ -55755,7 +57703,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateInput = {
@@ -55776,12 +57723,12 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderCreateManyInput = {
@@ -56160,6 +58107,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -56203,6 +58151,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -56245,6 +58194,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -56288,6 +58238,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -56491,6 +58442,7 @@ export namespace Prisma {
     createdAt?: Date | string
     Booking: BookingCreateNestedOneWithoutInspectionReportInput
     Staff: StaffCreateNestedOneWithoutInspectionReportInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutInspectionReportInput
   }
 
   export type InspectionReportUncheckedCreateInput = {
@@ -56501,6 +58453,7 @@ export namespace Prisma {
     note?: string | null
     images?: InspectionReportCreateimagesInput | string[]
     createdAt?: Date | string
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutInspectionReportInput
   }
 
   export type InspectionReportUpdateInput = {
@@ -56510,6 +58463,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Booking?: BookingUpdateOneRequiredWithoutInspectionReportNestedInput
     Staff?: StaffUpdateOneRequiredWithoutInspectionReportNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutInspectionReportNestedInput
   }
 
   export type InspectionReportUncheckedUpdateInput = {
@@ -56520,6 +58474,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     images?: InspectionReportUpdateimagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutInspectionReportNestedInput
   }
 
   export type InspectionReportCreateManyInput = {
@@ -57087,18 +59042,18 @@ export namespace Prisma {
     processedAt?: Date | string | null
     note?: string | null
     User?: UserCreateNestedOneWithoutWithdrawalRequestInput
-    ServiceProvider: ServiceProviderCreateNestedOneWithoutWithdrawalRequestInput
+    User_WithdrawalRequest_userIdToUser: UserCreateNestedOneWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput
   }
 
   export type WithdrawalRequestUncheckedCreateInput = {
     id?: number
-    providerId: number
     amount: number
     status?: $Enums.WithdrawalStatus
     createdAt?: Date | string
     processedAt?: Date | string | null
     processedById?: number | null
     note?: string | null
+    userId: number
   }
 
   export type WithdrawalRequestUpdateInput = {
@@ -57108,29 +59063,29 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     User?: UserUpdateOneWithoutWithdrawalRequestNestedInput
-    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutWithdrawalRequestNestedInput
+    User_WithdrawalRequest_userIdToUser?: UserUpdateOneRequiredWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserNestedInput
   }
 
   export type WithdrawalRequestUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    providerId?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     processedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type WithdrawalRequestCreateManyInput = {
     id?: number
-    providerId: number
     amount: number
     status?: $Enums.WithdrawalStatus
     createdAt?: Date | string
     processedAt?: Date | string | null
     processedById?: number | null
     note?: string | null
+    userId: number
   }
 
   export type WithdrawalRequestUpdateManyMutationInput = {
@@ -57143,13 +59098,13 @@ export namespace Prisma {
 
   export type WithdrawalRequestUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    providerId?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     processedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ConversationCreateInput = {
@@ -57425,6 +59380,110 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type CustomerAssetCreateInput = {
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    Category: CategoryCreateNestedOneWithoutCustomerAssetInput
+    CustomerProfile: CustomerProfileCreateNestedOneWithoutCustomerAssetInput
+    InspectionReport?: InspectionReportCreateNestedManyWithoutCustomerAssetInput
+  }
+
+  export type CustomerAssetUncheckedCreateInput = {
+    id?: number
+    customerId: number
+    categoryId: number
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    InspectionReport?: InspectionReportUncheckedCreateNestedManyWithoutCustomerAssetInput
+  }
+
+  export type CustomerAssetUpdateInput = {
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Category?: CategoryUpdateOneRequiredWithoutCustomerAssetNestedInput
+    CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutCustomerAssetNestedInput
+    InspectionReport?: InspectionReportUpdateManyWithoutCustomerAssetNestedInput
+  }
+
+  export type CustomerAssetUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    InspectionReport?: InspectionReportUncheckedUpdateManyWithoutCustomerAssetNestedInput
+  }
+
+  export type CustomerAssetCreateManyInput = {
+    id?: number
+    customerId: number
+    categoryId: number
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+  }
+
+  export type CustomerAssetUpdateManyMutationInput = {
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CustomerAssetUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -57510,6 +59569,11 @@ export namespace Prisma {
     every?: ProviderReportWhereInput
     some?: ProviderReportWhereInput
     none?: ProviderReportWhereInput
+  }
+
+  export type ReviewNullableScalarRelationFilter = {
+    is?: ReviewWhereInput | null
+    isNot?: ReviewWhereInput | null
   }
 
   export type TransactionNullableScalarRelationFilter = {
@@ -57713,6 +59777,12 @@ export namespace Prisma {
     none?: CategoryTranslationWhereInput
   }
 
+  export type CustomerAssetListRelationFilter = {
+    every?: CustomerAssetWhereInput
+    some?: CustomerAssetWhereInput
+    none?: CustomerAssetWhereInput
+  }
+
   export type ServiceListRelationFilter = {
     every?: ServiceWhereInput
     some?: ServiceWhereInput
@@ -57742,6 +59812,10 @@ export namespace Prisma {
   }
 
   export type CategoryTranslationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CustomerAssetOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -58490,6 +60564,24 @@ export namespace Prisma {
     deviceId?: SortOrder
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type BookingScalarRelationFilter = {
+    is?: BookingWhereInput
+    isNot?: BookingWhereInput
+  }
+
+  export type ServiceNullableScalarRelationFilter = {
+    is?: ServiceWhereInput | null
+    isNot?: ServiceWhereInput | null
+  }
+
   export type ReviewCountOrderByAggregateInput = {
     id?: SortOrder
     customerId?: SortOrder
@@ -58497,6 +60589,12 @@ export namespace Prisma {
     comment?: SortOrder
     createdAt?: SortOrder
     bookingId?: SortOrder
+    deletedAt?: SortOrder
+    images?: SortOrder
+    isEdited?: SortOrder
+    providerId?: SortOrder
+    serviceId?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ReviewAvgOrderByAggregateInput = {
@@ -58504,6 +60602,8 @@ export namespace Prisma {
     customerId?: SortOrder
     rating?: SortOrder
     bookingId?: SortOrder
+    providerId?: SortOrder
+    serviceId?: SortOrder
   }
 
   export type ReviewMaxOrderByAggregateInput = {
@@ -58513,6 +60613,11 @@ export namespace Prisma {
     comment?: SortOrder
     createdAt?: SortOrder
     bookingId?: SortOrder
+    deletedAt?: SortOrder
+    isEdited?: SortOrder
+    providerId?: SortOrder
+    serviceId?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ReviewMinOrderByAggregateInput = {
@@ -58522,6 +60627,11 @@ export namespace Prisma {
     comment?: SortOrder
     createdAt?: SortOrder
     bookingId?: SortOrder
+    deletedAt?: SortOrder
+    isEdited?: SortOrder
+    providerId?: SortOrder
+    serviceId?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ReviewSumOrderByAggregateInput = {
@@ -58529,6 +60639,8 @@ export namespace Prisma {
     customerId?: SortOrder
     rating?: SortOrder
     bookingId?: SortOrder
+    providerId?: SortOrder
+    serviceId?: SortOrder
   }
 
   export type RewardPointCountOrderByAggregateInput = {
@@ -58643,14 +60755,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type EnumUnitFilter<$PrismaModel = never> = {
@@ -58840,12 +60944,6 @@ export namespace Prisma {
     none?: StaffWhereInput
   }
 
-  export type WithdrawalRequestListRelationFilter = {
-    every?: WithdrawalRequestWhereInput
-    some?: WithdrawalRequestWhereInput
-    none?: WithdrawalRequestWhereInput
-  }
-
   export type ServiceItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -58855,10 +60953,6 @@ export namespace Prisma {
   }
 
   export type StaffOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type WithdrawalRequestOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -59093,11 +61187,6 @@ export namespace Prisma {
     not?: NestedEnumtransaction_typeNullableFilter<$PrismaModel> | $Enums.transaction_type | null
   }
 
-  export type BookingScalarRelationFilter = {
-    is?: BookingWhereInput
-    isNot?: BookingWhereInput
-  }
-
   export type TransactionCountOrderByAggregateInput = {
     id?: SortOrder
     bookingId?: SortOrder
@@ -59234,6 +61323,12 @@ export namespace Prisma {
     isNot?: WalletWhereInput | null
   }
 
+  export type WithdrawalRequestListRelationFilter = {
+    every?: WithdrawalRequestWhereInput
+    some?: WithdrawalRequestWhereInput
+    none?: WithdrawalRequestWhereInput
+  }
+
   export type DeviceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -59243,6 +61338,10 @@ export namespace Prisma {
   }
 
   export type ServiceProviderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WithdrawalRequestOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -59877,49 +61976,49 @@ export namespace Prisma {
 
   export type WithdrawalRequestCountOrderByAggregateInput = {
     id?: SortOrder
-    providerId?: SortOrder
     amount?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
     processedById?: SortOrder
     note?: SortOrder
+    userId?: SortOrder
   }
 
   export type WithdrawalRequestAvgOrderByAggregateInput = {
     id?: SortOrder
-    providerId?: SortOrder
     amount?: SortOrder
     processedById?: SortOrder
+    userId?: SortOrder
   }
 
   export type WithdrawalRequestMaxOrderByAggregateInput = {
     id?: SortOrder
-    providerId?: SortOrder
     amount?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
     processedById?: SortOrder
     note?: SortOrder
+    userId?: SortOrder
   }
 
   export type WithdrawalRequestMinOrderByAggregateInput = {
     id?: SortOrder
-    providerId?: SortOrder
     amount?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     processedAt?: SortOrder
     processedById?: SortOrder
     note?: SortOrder
+    userId?: SortOrder
   }
 
   export type WithdrawalRequestSumOrderByAggregateInput = {
     id?: SortOrder
-    providerId?: SortOrder
     amount?: SortOrder
     processedById?: SortOrder
+    userId?: SortOrder
   }
 
   export type EnumWithdrawalStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -60162,6 +62261,65 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
+  export type CustomerAssetCountOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    categoryId?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    serial?: SortOrder
+    purchaseDate?: SortOrder
+    nickname?: SortOrder
+    lastMaintenanceDate?: SortOrder
+    totalMaintenanceCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CustomerAssetAvgOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    categoryId?: SortOrder
+    totalMaintenanceCount?: SortOrder
+  }
+
+  export type CustomerAssetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    categoryId?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    serial?: SortOrder
+    purchaseDate?: SortOrder
+    nickname?: SortOrder
+    lastMaintenanceDate?: SortOrder
+    totalMaintenanceCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CustomerAssetMinOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    categoryId?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    serial?: SortOrder
+    purchaseDate?: SortOrder
+    nickname?: SortOrder
+    lastMaintenanceDate?: SortOrder
+    totalMaintenanceCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CustomerAssetSumOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    categoryId?: SortOrder
+    totalMaintenanceCount?: SortOrder
+  }
+
   export type CustomerProfileCreateNestedOneWithoutBookingInput = {
     create?: XOR<CustomerProfileCreateWithoutBookingInput, CustomerProfileUncheckedCreateWithoutBookingInput>
     connectOrCreate?: CustomerProfileCreateOrConnectWithoutBookingInput
@@ -60205,6 +62363,12 @@ export namespace Prisma {
     connect?: ProviderReportWhereUniqueInput | ProviderReportWhereUniqueInput[]
   }
 
+  export type ReviewCreateNestedOneWithoutBookingInput = {
+    create?: XOR<ReviewCreateWithoutBookingInput, ReviewUncheckedCreateWithoutBookingInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutBookingInput
+    connect?: ReviewWhereUniqueInput
+  }
+
   export type TransactionCreateNestedOneWithoutBookingInput = {
     create?: XOR<TransactionCreateWithoutBookingInput, TransactionUncheckedCreateWithoutBookingInput>
     connectOrCreate?: TransactionCreateOrConnectWithoutBookingInput
@@ -60235,6 +62399,12 @@ export namespace Prisma {
     connectOrCreate?: ProviderReportCreateOrConnectWithoutBookingInput | ProviderReportCreateOrConnectWithoutBookingInput[]
     createMany?: ProviderReportCreateManyBookingInputEnvelope
     connect?: ProviderReportWhereUniqueInput | ProviderReportWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedOneWithoutBookingInput = {
+    create?: XOR<ReviewCreateWithoutBookingInput, ReviewUncheckedCreateWithoutBookingInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutBookingInput
+    connect?: ReviewWhereUniqueInput
   }
 
   export type TransactionUncheckedCreateNestedOneWithoutBookingInput = {
@@ -60332,6 +62502,16 @@ export namespace Prisma {
     deleteMany?: ProviderReportScalarWhereInput | ProviderReportScalarWhereInput[]
   }
 
+  export type ReviewUpdateOneWithoutBookingNestedInput = {
+    create?: XOR<ReviewCreateWithoutBookingInput, ReviewUncheckedCreateWithoutBookingInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutBookingInput
+    upsert?: ReviewUpsertWithoutBookingInput
+    disconnect?: ReviewWhereInput | boolean
+    delete?: ReviewWhereInput | boolean
+    connect?: ReviewWhereUniqueInput
+    update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutBookingInput, ReviewUpdateWithoutBookingInput>, ReviewUncheckedUpdateWithoutBookingInput>
+  }
+
   export type TransactionUpdateOneWithoutBookingNestedInput = {
     create?: XOR<TransactionCreateWithoutBookingInput, TransactionUncheckedCreateWithoutBookingInput>
     connectOrCreate?: TransactionCreateOrConnectWithoutBookingInput
@@ -60406,6 +62586,16 @@ export namespace Prisma {
     deleteMany?: ProviderReportScalarWhereInput | ProviderReportScalarWhereInput[]
   }
 
+  export type ReviewUncheckedUpdateOneWithoutBookingNestedInput = {
+    create?: XOR<ReviewCreateWithoutBookingInput, ReviewUncheckedCreateWithoutBookingInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutBookingInput
+    upsert?: ReviewUpsertWithoutBookingInput
+    disconnect?: ReviewWhereInput | boolean
+    delete?: ReviewWhereInput | boolean
+    connect?: ReviewWhereUniqueInput
+    update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutBookingInput, ReviewUpdateWithoutBookingInput>, ReviewUncheckedUpdateWithoutBookingInput>
+  }
+
   export type TransactionUncheckedUpdateOneWithoutBookingNestedInput = {
     create?: XOR<TransactionCreateWithoutBookingInput, TransactionUncheckedCreateWithoutBookingInput>
     connectOrCreate?: TransactionCreateOrConnectWithoutBookingInput
@@ -60468,6 +62658,13 @@ export namespace Prisma {
     connect?: CategoryTranslationWhereUniqueInput | CategoryTranslationWhereUniqueInput[]
   }
 
+  export type CustomerAssetCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<CustomerAssetCreateWithoutCategoryInput, CustomerAssetUncheckedCreateWithoutCategoryInput> | CustomerAssetCreateWithoutCategoryInput[] | CustomerAssetUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCategoryInput | CustomerAssetCreateOrConnectWithoutCategoryInput[]
+    createMany?: CustomerAssetCreateManyCategoryInputEnvelope
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+  }
+
   export type ServiceCreateNestedManyWithoutCategoryInput = {
     create?: XOR<ServiceCreateWithoutCategoryInput, ServiceUncheckedCreateWithoutCategoryInput> | ServiceCreateWithoutCategoryInput[] | ServiceUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: ServiceCreateOrConnectWithoutCategoryInput | ServiceCreateOrConnectWithoutCategoryInput[]
@@ -60508,6 +62705,13 @@ export namespace Prisma {
     connectOrCreate?: CategoryTranslationCreateOrConnectWithoutCategoryInput | CategoryTranslationCreateOrConnectWithoutCategoryInput[]
     createMany?: CategoryTranslationCreateManyCategoryInputEnvelope
     connect?: CategoryTranslationWhereUniqueInput | CategoryTranslationWhereUniqueInput[]
+  }
+
+  export type CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<CustomerAssetCreateWithoutCategoryInput, CustomerAssetUncheckedCreateWithoutCategoryInput> | CustomerAssetCreateWithoutCategoryInput[] | CustomerAssetUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCategoryInput | CustomerAssetCreateOrConnectWithoutCategoryInput[]
+    createMany?: CustomerAssetCreateManyCategoryInputEnvelope
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
   }
 
   export type ServiceUncheckedCreateNestedManyWithoutCategoryInput = {
@@ -60614,6 +62818,20 @@ export namespace Prisma {
     deleteMany?: CategoryTranslationScalarWhereInput | CategoryTranslationScalarWhereInput[]
   }
 
+  export type CustomerAssetUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<CustomerAssetCreateWithoutCategoryInput, CustomerAssetUncheckedCreateWithoutCategoryInput> | CustomerAssetCreateWithoutCategoryInput[] | CustomerAssetUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCategoryInput | CustomerAssetCreateOrConnectWithoutCategoryInput[]
+    upsert?: CustomerAssetUpsertWithWhereUniqueWithoutCategoryInput | CustomerAssetUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: CustomerAssetCreateManyCategoryInputEnvelope
+    set?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    disconnect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    delete?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    update?: CustomerAssetUpdateWithWhereUniqueWithoutCategoryInput | CustomerAssetUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: CustomerAssetUpdateManyWithWhereWithoutCategoryInput | CustomerAssetUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
+  }
+
   export type ServiceUpdateManyWithoutCategoryNestedInput = {
     create?: XOR<ServiceCreateWithoutCategoryInput, ServiceUncheckedCreateWithoutCategoryInput> | ServiceCreateWithoutCategoryInput[] | ServiceUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: ServiceCreateOrConnectWithoutCategoryInput | ServiceCreateOrConnectWithoutCategoryInput[]
@@ -60696,6 +62914,20 @@ export namespace Prisma {
     update?: CategoryTranslationUpdateWithWhereUniqueWithoutCategoryInput | CategoryTranslationUpdateWithWhereUniqueWithoutCategoryInput[]
     updateMany?: CategoryTranslationUpdateManyWithWhereWithoutCategoryInput | CategoryTranslationUpdateManyWithWhereWithoutCategoryInput[]
     deleteMany?: CategoryTranslationScalarWhereInput | CategoryTranslationScalarWhereInput[]
+  }
+
+  export type CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<CustomerAssetCreateWithoutCategoryInput, CustomerAssetUncheckedCreateWithoutCategoryInput> | CustomerAssetCreateWithoutCategoryInput[] | CustomerAssetUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCategoryInput | CustomerAssetCreateOrConnectWithoutCategoryInput[]
+    upsert?: CustomerAssetUpsertWithWhereUniqueWithoutCategoryInput | CustomerAssetUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: CustomerAssetCreateManyCategoryInputEnvelope
+    set?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    disconnect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    delete?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    update?: CustomerAssetUpdateWithWhereUniqueWithoutCategoryInput | CustomerAssetUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: CustomerAssetUpdateManyWithWhereWithoutCategoryInput | CustomerAssetUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
   }
 
   export type ServiceUncheckedUpdateManyWithoutCategoryNestedInput = {
@@ -60807,6 +63039,13 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
+  export type CustomerAssetCreateNestedManyWithoutCustomerProfileInput = {
+    create?: XOR<CustomerAssetCreateWithoutCustomerProfileInput, CustomerAssetUncheckedCreateWithoutCustomerProfileInput> | CustomerAssetCreateWithoutCustomerProfileInput[] | CustomerAssetUncheckedCreateWithoutCustomerProfileInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCustomerProfileInput | CustomerAssetCreateOrConnectWithoutCustomerProfileInput[]
+    createMany?: CustomerAssetCreateManyCustomerProfileInputEnvelope
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+  }
+
   export type UserCreateNestedOneWithoutCustomerProfileInput = {
     create?: XOR<UserCreateWithoutCustomerProfileInput, UserUncheckedCreateWithoutCustomerProfileInput>
     connectOrCreate?: UserCreateOrConnectWithoutCustomerProfileInput
@@ -60881,6 +63120,13 @@ export namespace Prisma {
     connectOrCreate?: ConversationCreateOrConnectWithoutCustomerProfileInput | ConversationCreateOrConnectWithoutCustomerProfileInput[]
     createMany?: ConversationCreateManyCustomerProfileInputEnvelope
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  }
+
+  export type CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput = {
+    create?: XOR<CustomerAssetCreateWithoutCustomerProfileInput, CustomerAssetUncheckedCreateWithoutCustomerProfileInput> | CustomerAssetCreateWithoutCustomerProfileInput[] | CustomerAssetUncheckedCreateWithoutCustomerProfileInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCustomerProfileInput | CustomerAssetCreateOrConnectWithoutCustomerProfileInput[]
+    createMany?: CustomerAssetCreateManyCustomerProfileInputEnvelope
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
   }
 
   export type FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput = {
@@ -60976,6 +63222,20 @@ export namespace Prisma {
     update?: ConversationUpdateWithWhereUniqueWithoutCustomerProfileInput | ConversationUpdateWithWhereUniqueWithoutCustomerProfileInput[]
     updateMany?: ConversationUpdateManyWithWhereWithoutCustomerProfileInput | ConversationUpdateManyWithWhereWithoutCustomerProfileInput[]
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  }
+
+  export type CustomerAssetUpdateManyWithoutCustomerProfileNestedInput = {
+    create?: XOR<CustomerAssetCreateWithoutCustomerProfileInput, CustomerAssetUncheckedCreateWithoutCustomerProfileInput> | CustomerAssetCreateWithoutCustomerProfileInput[] | CustomerAssetUncheckedCreateWithoutCustomerProfileInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCustomerProfileInput | CustomerAssetCreateOrConnectWithoutCustomerProfileInput[]
+    upsert?: CustomerAssetUpsertWithWhereUniqueWithoutCustomerProfileInput | CustomerAssetUpsertWithWhereUniqueWithoutCustomerProfileInput[]
+    createMany?: CustomerAssetCreateManyCustomerProfileInputEnvelope
+    set?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    disconnect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    delete?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    update?: CustomerAssetUpdateWithWhereUniqueWithoutCustomerProfileInput | CustomerAssetUpdateWithWhereUniqueWithoutCustomerProfileInput[]
+    updateMany?: CustomerAssetUpdateManyWithWhereWithoutCustomerProfileInput | CustomerAssetUpdateManyWithWhereWithoutCustomerProfileInput[]
+    deleteMany?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutCustomerProfileNestedInput = {
@@ -61124,6 +63384,20 @@ export namespace Prisma {
     update?: ConversationUpdateWithWhereUniqueWithoutCustomerProfileInput | ConversationUpdateWithWhereUniqueWithoutCustomerProfileInput[]
     updateMany?: ConversationUpdateManyWithWhereWithoutCustomerProfileInput | ConversationUpdateManyWithWhereWithoutCustomerProfileInput[]
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  }
+
+  export type CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput = {
+    create?: XOR<CustomerAssetCreateWithoutCustomerProfileInput, CustomerAssetUncheckedCreateWithoutCustomerProfileInput> | CustomerAssetCreateWithoutCustomerProfileInput[] | CustomerAssetUncheckedCreateWithoutCustomerProfileInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutCustomerProfileInput | CustomerAssetCreateOrConnectWithoutCustomerProfileInput[]
+    upsert?: CustomerAssetUpsertWithWhereUniqueWithoutCustomerProfileInput | CustomerAssetUpsertWithWhereUniqueWithoutCustomerProfileInput[]
+    createMany?: CustomerAssetCreateManyCustomerProfileInputEnvelope
+    set?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    disconnect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    delete?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    update?: CustomerAssetUpdateWithWhereUniqueWithoutCustomerProfileInput | CustomerAssetUpdateWithWhereUniqueWithoutCustomerProfileInput[]
+    updateMany?: CustomerAssetUpdateManyWithWhereWithoutCustomerProfileInput | CustomerAssetUpdateManyWithWhereWithoutCustomerProfileInput[]
+    deleteMany?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
   }
 
   export type FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput = {
@@ -61474,10 +63748,45 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRefreshTokenInput, UserUpdateWithoutRefreshTokenInput>, UserUncheckedUpdateWithoutRefreshTokenInput>
   }
 
+  export type ReviewCreateimagesInput = {
+    set: string[]
+  }
+
+  export type BookingCreateNestedOneWithoutReviewInput = {
+    create?: XOR<BookingCreateWithoutReviewInput, BookingUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: BookingCreateOrConnectWithoutReviewInput
+    connect?: BookingWhereUniqueInput
+  }
+
   export type CustomerProfileCreateNestedOneWithoutReviewInput = {
     create?: XOR<CustomerProfileCreateWithoutReviewInput, CustomerProfileUncheckedCreateWithoutReviewInput>
     connectOrCreate?: CustomerProfileCreateOrConnectWithoutReviewInput
     connect?: CustomerProfileWhereUniqueInput
+  }
+
+  export type ServiceProviderCreateNestedOneWithoutReviewInput = {
+    create?: XOR<ServiceProviderCreateWithoutReviewInput, ServiceProviderUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: ServiceProviderCreateOrConnectWithoutReviewInput
+    connect?: ServiceProviderWhereUniqueInput
+  }
+
+  export type ServiceCreateNestedOneWithoutReviewInput = {
+    create?: XOR<ServiceCreateWithoutReviewInput, ServiceUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: ServiceCreateOrConnectWithoutReviewInput
+    connect?: ServiceWhereUniqueInput
+  }
+
+  export type ReviewUpdateimagesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type BookingUpdateOneRequiredWithoutReviewNestedInput = {
+    create?: XOR<BookingCreateWithoutReviewInput, BookingUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: BookingCreateOrConnectWithoutReviewInput
+    upsert?: BookingUpsertWithoutReviewInput
+    connect?: BookingWhereUniqueInput
+    update?: XOR<XOR<BookingUpdateToOneWithWhereWithoutReviewInput, BookingUpdateWithoutReviewInput>, BookingUncheckedUpdateWithoutReviewInput>
   }
 
   export type CustomerProfileUpdateOneRequiredWithoutReviewNestedInput = {
@@ -61486,6 +63795,24 @@ export namespace Prisma {
     upsert?: CustomerProfileUpsertWithoutReviewInput
     connect?: CustomerProfileWhereUniqueInput
     update?: XOR<XOR<CustomerProfileUpdateToOneWithWhereWithoutReviewInput, CustomerProfileUpdateWithoutReviewInput>, CustomerProfileUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type ServiceProviderUpdateOneRequiredWithoutReviewNestedInput = {
+    create?: XOR<ServiceProviderCreateWithoutReviewInput, ServiceProviderUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: ServiceProviderCreateOrConnectWithoutReviewInput
+    upsert?: ServiceProviderUpsertWithoutReviewInput
+    connect?: ServiceProviderWhereUniqueInput
+    update?: XOR<XOR<ServiceProviderUpdateToOneWithWhereWithoutReviewInput, ServiceProviderUpdateWithoutReviewInput>, ServiceProviderUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type ServiceUpdateOneWithoutReviewNestedInput = {
+    create?: XOR<ServiceCreateWithoutReviewInput, ServiceUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: ServiceCreateOrConnectWithoutReviewInput
+    upsert?: ServiceUpsertWithoutReviewInput
+    disconnect?: ServiceWhereInput | boolean
+    delete?: ServiceWhereInput | boolean
+    connect?: ServiceWhereUniqueInput
+    update?: XOR<XOR<ServiceUpdateToOneWithWhereWithoutReviewInput, ServiceUpdateWithoutReviewInput>, ServiceUncheckedUpdateWithoutReviewInput>
   }
 
   export type CustomerProfileCreateNestedOneWithoutRewardPointInput = {
@@ -61651,6 +63978,13 @@ export namespace Prisma {
     connect?: RecurringBookingWhereUniqueInput | RecurringBookingWhereUniqueInput[]
   }
 
+  export type ReviewCreateNestedManyWithoutServiceInput = {
+    create?: XOR<ReviewCreateWithoutServiceInput, ReviewUncheckedCreateWithoutServiceInput> | ReviewCreateWithoutServiceInput[] | ReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceInput | ReviewCreateOrConnectWithoutServiceInput[]
+    createMany?: ReviewCreateManyServiceInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
   export type CategoryCreateNestedOneWithoutServiceInput = {
     create?: XOR<CategoryCreateWithoutServiceInput, CategoryUncheckedCreateWithoutServiceInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutServiceInput
@@ -61707,6 +64041,13 @@ export namespace Prisma {
     connectOrCreate?: RecurringBookingCreateOrConnectWithoutServiceInput | RecurringBookingCreateOrConnectWithoutServiceInput[]
     createMany?: RecurringBookingCreateManyServiceInputEnvelope
     connect?: RecurringBookingWhereUniqueInput | RecurringBookingWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutServiceInput = {
+    create?: XOR<ReviewCreateWithoutServiceInput, ReviewUncheckedCreateWithoutServiceInput> | ReviewCreateWithoutServiceInput[] | ReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceInput | ReviewCreateOrConnectWithoutServiceInput[]
+    createMany?: ReviewCreateManyServiceInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput = {
@@ -61777,6 +64118,20 @@ export namespace Prisma {
     update?: RecurringBookingUpdateWithWhereUniqueWithoutServiceInput | RecurringBookingUpdateWithWhereUniqueWithoutServiceInput[]
     updateMany?: RecurringBookingUpdateManyWithWhereWithoutServiceInput | RecurringBookingUpdateManyWithWhereWithoutServiceInput[]
     deleteMany?: RecurringBookingScalarWhereInput | RecurringBookingScalarWhereInput[]
+  }
+
+  export type ReviewUpdateManyWithoutServiceNestedInput = {
+    create?: XOR<ReviewCreateWithoutServiceInput, ReviewUncheckedCreateWithoutServiceInput> | ReviewCreateWithoutServiceInput[] | ReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceInput | ReviewCreateOrConnectWithoutServiceInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutServiceInput | ReviewUpsertWithWhereUniqueWithoutServiceInput[]
+    createMany?: ReviewCreateManyServiceInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutServiceInput | ReviewUpdateWithWhereUniqueWithoutServiceInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutServiceInput | ReviewUpdateManyWithWhereWithoutServiceInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type CategoryUpdateOneRequiredWithoutServiceNestedInput = {
@@ -61881,6 +64236,20 @@ export namespace Prisma {
     deleteMany?: RecurringBookingScalarWhereInput | RecurringBookingScalarWhereInput[]
   }
 
+  export type ReviewUncheckedUpdateManyWithoutServiceNestedInput = {
+    create?: XOR<ReviewCreateWithoutServiceInput, ReviewUncheckedCreateWithoutServiceInput> | ReviewCreateWithoutServiceInput[] | ReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceInput | ReviewCreateOrConnectWithoutServiceInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutServiceInput | ReviewUpsertWithWhereUniqueWithoutServiceInput[]
+    createMany?: ReviewCreateManyServiceInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutServiceInput | ReviewUpdateWithWhereUniqueWithoutServiceInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutServiceInput | ReviewUpdateManyWithWhereWithoutServiceInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
   export type Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput = {
     create?: XOR<Service_ServiceItemsCreateWithoutServiceInput, Service_ServiceItemsUncheckedCreateWithoutServiceInput> | Service_ServiceItemsCreateWithoutServiceInput[] | Service_ServiceItemsUncheckedCreateWithoutServiceInput[]
     connectOrCreate?: Service_ServiceItemsCreateOrConnectWithoutServiceInput | Service_ServiceItemsCreateOrConnectWithoutServiceInput[]
@@ -61914,6 +64283,13 @@ export namespace Prisma {
     connectOrCreate?: ProviderReportCreateOrConnectWithoutServiceProviderInput | ProviderReportCreateOrConnectWithoutServiceProviderInput[]
     createMany?: ProviderReportCreateManyServiceProviderInputEnvelope
     connect?: ProviderReportWhereUniqueInput | ProviderReportWhereUniqueInput[]
+  }
+
+  export type ReviewCreateNestedManyWithoutServiceProviderInput = {
+    create?: XOR<ReviewCreateWithoutServiceProviderInput, ReviewUncheckedCreateWithoutServiceProviderInput> | ReviewCreateWithoutServiceProviderInput[] | ReviewUncheckedCreateWithoutServiceProviderInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceProviderInput | ReviewCreateOrConnectWithoutServiceProviderInput[]
+    createMany?: ReviewCreateManyServiceProviderInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type ServiceCreateNestedManyWithoutServiceProviderInput = {
@@ -61963,13 +64339,6 @@ export namespace Prisma {
     connect?: StaffWhereUniqueInput | StaffWhereUniqueInput[]
   }
 
-  export type WithdrawalRequestCreateNestedManyWithoutServiceProviderInput = {
-    create?: XOR<WithdrawalRequestCreateWithoutServiceProviderInput, WithdrawalRequestUncheckedCreateWithoutServiceProviderInput> | WithdrawalRequestCreateWithoutServiceProviderInput[] | WithdrawalRequestUncheckedCreateWithoutServiceProviderInput[]
-    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutServiceProviderInput | WithdrawalRequestCreateOrConnectWithoutServiceProviderInput[]
-    createMany?: WithdrawalRequestCreateManyServiceProviderInputEnvelope
-    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-  }
-
   export type BookingUncheckedCreateNestedManyWithoutServiceProviderInput = {
     create?: XOR<BookingCreateWithoutServiceProviderInput, BookingUncheckedCreateWithoutServiceProviderInput> | BookingCreateWithoutServiceProviderInput[] | BookingUncheckedCreateWithoutServiceProviderInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutServiceProviderInput | BookingCreateOrConnectWithoutServiceProviderInput[]
@@ -61989,6 +64358,13 @@ export namespace Prisma {
     connectOrCreate?: ProviderReportCreateOrConnectWithoutServiceProviderInput | ProviderReportCreateOrConnectWithoutServiceProviderInput[]
     createMany?: ProviderReportCreateManyServiceProviderInputEnvelope
     connect?: ProviderReportWhereUniqueInput | ProviderReportWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutServiceProviderInput = {
+    create?: XOR<ReviewCreateWithoutServiceProviderInput, ReviewUncheckedCreateWithoutServiceProviderInput> | ReviewCreateWithoutServiceProviderInput[] | ReviewUncheckedCreateWithoutServiceProviderInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceProviderInput | ReviewCreateOrConnectWithoutServiceProviderInput[]
+    createMany?: ReviewCreateManyServiceProviderInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type ServiceUncheckedCreateNestedManyWithoutServiceProviderInput = {
@@ -62024,13 +64400,6 @@ export namespace Prisma {
     connectOrCreate?: StaffCreateOrConnectWithoutServiceProviderInput | StaffCreateOrConnectWithoutServiceProviderInput[]
     createMany?: StaffCreateManyServiceProviderInputEnvelope
     connect?: StaffWhereUniqueInput | StaffWhereUniqueInput[]
-  }
-
-  export type WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput = {
-    create?: XOR<WithdrawalRequestCreateWithoutServiceProviderInput, WithdrawalRequestUncheckedCreateWithoutServiceProviderInput> | WithdrawalRequestCreateWithoutServiceProviderInput[] | WithdrawalRequestUncheckedCreateWithoutServiceProviderInput[]
-    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutServiceProviderInput | WithdrawalRequestCreateOrConnectWithoutServiceProviderInput[]
-    createMany?: WithdrawalRequestCreateManyServiceProviderInputEnvelope
-    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
   }
 
   export type EnumCompanyTypeFieldUpdateOperationsInput = {
@@ -62081,6 +64450,20 @@ export namespace Prisma {
     update?: ProviderReportUpdateWithWhereUniqueWithoutServiceProviderInput | ProviderReportUpdateWithWhereUniqueWithoutServiceProviderInput[]
     updateMany?: ProviderReportUpdateManyWithWhereWithoutServiceProviderInput | ProviderReportUpdateManyWithWhereWithoutServiceProviderInput[]
     deleteMany?: ProviderReportScalarWhereInput | ProviderReportScalarWhereInput[]
+  }
+
+  export type ReviewUpdateManyWithoutServiceProviderNestedInput = {
+    create?: XOR<ReviewCreateWithoutServiceProviderInput, ReviewUncheckedCreateWithoutServiceProviderInput> | ReviewCreateWithoutServiceProviderInput[] | ReviewUncheckedCreateWithoutServiceProviderInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceProviderInput | ReviewCreateOrConnectWithoutServiceProviderInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutServiceProviderInput | ReviewUpsertWithWhereUniqueWithoutServiceProviderInput[]
+    createMany?: ReviewCreateManyServiceProviderInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutServiceProviderInput | ReviewUpdateWithWhereUniqueWithoutServiceProviderInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutServiceProviderInput | ReviewUpdateManyWithWhereWithoutServiceProviderInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type ServiceUpdateManyWithoutServiceProviderNestedInput = {
@@ -62171,20 +64554,6 @@ export namespace Prisma {
     deleteMany?: StaffScalarWhereInput | StaffScalarWhereInput[]
   }
 
-  export type WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput = {
-    create?: XOR<WithdrawalRequestCreateWithoutServiceProviderInput, WithdrawalRequestUncheckedCreateWithoutServiceProviderInput> | WithdrawalRequestCreateWithoutServiceProviderInput[] | WithdrawalRequestUncheckedCreateWithoutServiceProviderInput[]
-    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutServiceProviderInput | WithdrawalRequestCreateOrConnectWithoutServiceProviderInput[]
-    upsert?: WithdrawalRequestUpsertWithWhereUniqueWithoutServiceProviderInput | WithdrawalRequestUpsertWithWhereUniqueWithoutServiceProviderInput[]
-    createMany?: WithdrawalRequestCreateManyServiceProviderInputEnvelope
-    set?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    disconnect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    delete?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    update?: WithdrawalRequestUpdateWithWhereUniqueWithoutServiceProviderInput | WithdrawalRequestUpdateWithWhereUniqueWithoutServiceProviderInput[]
-    updateMany?: WithdrawalRequestUpdateManyWithWhereWithoutServiceProviderInput | WithdrawalRequestUpdateManyWithWhereWithoutServiceProviderInput[]
-    deleteMany?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
-  }
-
   export type BookingUncheckedUpdateManyWithoutServiceProviderNestedInput = {
     create?: XOR<BookingCreateWithoutServiceProviderInput, BookingUncheckedCreateWithoutServiceProviderInput> | BookingCreateWithoutServiceProviderInput[] | BookingUncheckedCreateWithoutServiceProviderInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutServiceProviderInput | BookingCreateOrConnectWithoutServiceProviderInput[]
@@ -62225,6 +64594,20 @@ export namespace Prisma {
     update?: ProviderReportUpdateWithWhereUniqueWithoutServiceProviderInput | ProviderReportUpdateWithWhereUniqueWithoutServiceProviderInput[]
     updateMany?: ProviderReportUpdateManyWithWhereWithoutServiceProviderInput | ProviderReportUpdateManyWithWhereWithoutServiceProviderInput[]
     deleteMany?: ProviderReportScalarWhereInput | ProviderReportScalarWhereInput[]
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput = {
+    create?: XOR<ReviewCreateWithoutServiceProviderInput, ReviewUncheckedCreateWithoutServiceProviderInput> | ReviewCreateWithoutServiceProviderInput[] | ReviewUncheckedCreateWithoutServiceProviderInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutServiceProviderInput | ReviewCreateOrConnectWithoutServiceProviderInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutServiceProviderInput | ReviewUpsertWithWhereUniqueWithoutServiceProviderInput[]
+    createMany?: ReviewCreateManyServiceProviderInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutServiceProviderInput | ReviewUpdateWithWhereUniqueWithoutServiceProviderInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutServiceProviderInput | ReviewUpdateManyWithWhereWithoutServiceProviderInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput = {
@@ -62295,20 +64678,6 @@ export namespace Prisma {
     update?: StaffUpdateWithWhereUniqueWithoutServiceProviderInput | StaffUpdateWithWhereUniqueWithoutServiceProviderInput[]
     updateMany?: StaffUpdateManyWithWhereWithoutServiceProviderInput | StaffUpdateManyWithWhereWithoutServiceProviderInput[]
     deleteMany?: StaffScalarWhereInput | StaffScalarWhereInput[]
-  }
-
-  export type WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput = {
-    create?: XOR<WithdrawalRequestCreateWithoutServiceProviderInput, WithdrawalRequestUncheckedCreateWithoutServiceProviderInput> | WithdrawalRequestCreateWithoutServiceProviderInput[] | WithdrawalRequestUncheckedCreateWithoutServiceProviderInput[]
-    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutServiceProviderInput | WithdrawalRequestCreateOrConnectWithoutServiceProviderInput[]
-    upsert?: WithdrawalRequestUpsertWithWhereUniqueWithoutServiceProviderInput | WithdrawalRequestUpsertWithWhereUniqueWithoutServiceProviderInput[]
-    createMany?: WithdrawalRequestCreateManyServiceProviderInputEnvelope
-    set?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    disconnect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    delete?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
-    update?: WithdrawalRequestUpdateWithWhereUniqueWithoutServiceProviderInput | WithdrawalRequestUpdateWithWhereUniqueWithoutServiceProviderInput[]
-    updateMany?: WithdrawalRequestUpdateManyWithWhereWithoutServiceProviderInput | WithdrawalRequestUpdateManyWithWhereWithoutServiceProviderInput[]
-    deleteMany?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
   }
 
   export type ServiceProviderCreateNestedOneWithoutServiceProviderTranslationInput = {
@@ -62764,6 +65133,13 @@ export namespace Prisma {
     connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
   }
 
+  export type WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    create?: XOR<WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput> | WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput[] | WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    createMany?: WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInputEnvelope
+    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+  }
+
   export type RoleCreateNestedManyWithoutUser_UserRolesInput = {
     create?: XOR<RoleCreateWithoutUser_UserRolesInput, RoleUncheckedCreateWithoutUser_UserRolesInput> | RoleCreateWithoutUser_UserRolesInput[] | RoleUncheckedCreateWithoutUser_UserRolesInput[]
     connectOrCreate?: RoleCreateOrConnectWithoutUser_UserRolesInput | RoleCreateOrConnectWithoutUser_UserRolesInput[]
@@ -62938,6 +65314,13 @@ export namespace Prisma {
     create?: XOR<WithdrawalRequestCreateWithoutUserInput, WithdrawalRequestUncheckedCreateWithoutUserInput> | WithdrawalRequestCreateWithoutUserInput[] | WithdrawalRequestUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutUserInput | WithdrawalRequestCreateOrConnectWithoutUserInput[]
     createMany?: WithdrawalRequestCreateManyUserInputEnvelope
+    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+  }
+
+  export type WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    create?: XOR<WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput> | WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput[] | WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    createMany?: WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInputEnvelope
     connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
   }
 
@@ -63315,6 +65698,20 @@ export namespace Prisma {
     deleteMany?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
   }
 
+  export type WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput = {
+    create?: XOR<WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput> | WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput[] | WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    upsert?: WithdrawalRequestUpsertWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestUpsertWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    createMany?: WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInputEnvelope
+    set?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    disconnect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    delete?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    update?: WithdrawalRequestUpdateWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestUpdateWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    updateMany?: WithdrawalRequestUpdateManyWithWhereWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestUpdateManyWithWhereWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    deleteMany?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
+  }
+
   export type RoleUpdateManyWithoutUser_UserRolesNestedInput = {
     create?: XOR<RoleCreateWithoutUser_UserRolesInput, RoleUncheckedCreateWithoutUser_UserRolesInput> | RoleCreateWithoutUser_UserRolesInput[] | RoleUncheckedCreateWithoutUser_UserRolesInput[]
     connectOrCreate?: RoleCreateOrConnectWithoutUser_UserRolesInput | RoleCreateOrConnectWithoutUser_UserRolesInput[]
@@ -63662,6 +66059,20 @@ export namespace Prisma {
     deleteMany?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
   }
 
+  export type WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput = {
+    create?: XOR<WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput> | WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput[] | WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    connectOrCreate?: WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    upsert?: WithdrawalRequestUpsertWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestUpsertWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    createMany?: WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInputEnvelope
+    set?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    disconnect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    delete?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    connect?: WithdrawalRequestWhereUniqueInput | WithdrawalRequestWhereUniqueInput[]
+    update?: WithdrawalRequestUpdateWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestUpdateWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    updateMany?: WithdrawalRequestUpdateManyWithWhereWithoutUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestUpdateManyWithWhereWithoutUser_WithdrawalRequest_userIdToUserInput[]
+    deleteMany?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
+  }
+
   export type RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput = {
     create?: XOR<RoleCreateWithoutUser_UserRolesInput, RoleUncheckedCreateWithoutUser_UserRolesInput> | RoleCreateWithoutUser_UserRolesInput[] | RoleUncheckedCreateWithoutUser_UserRolesInput[]
     connectOrCreate?: RoleCreateOrConnectWithoutUser_UserRolesInput | RoleCreateOrConnectWithoutUser_UserRolesInput[]
@@ -63741,6 +66152,18 @@ export namespace Prisma {
     connect?: StaffWhereUniqueInput
   }
 
+  export type CustomerAssetCreateNestedManyWithoutInspectionReportInput = {
+    create?: XOR<CustomerAssetCreateWithoutInspectionReportInput, CustomerAssetUncheckedCreateWithoutInspectionReportInput> | CustomerAssetCreateWithoutInspectionReportInput[] | CustomerAssetUncheckedCreateWithoutInspectionReportInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutInspectionReportInput | CustomerAssetCreateOrConnectWithoutInspectionReportInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+  }
+
+  export type CustomerAssetUncheckedCreateNestedManyWithoutInspectionReportInput = {
+    create?: XOR<CustomerAssetCreateWithoutInspectionReportInput, CustomerAssetUncheckedCreateWithoutInspectionReportInput> | CustomerAssetCreateWithoutInspectionReportInput[] | CustomerAssetUncheckedCreateWithoutInspectionReportInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutInspectionReportInput | CustomerAssetCreateOrConnectWithoutInspectionReportInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+  }
+
   export type InspectionReportUpdateimagesInput = {
     set?: string[]
     push?: string | string[]
@@ -63760,6 +66183,32 @@ export namespace Prisma {
     upsert?: StaffUpsertWithoutInspectionReportInput
     connect?: StaffWhereUniqueInput
     update?: XOR<XOR<StaffUpdateToOneWithWhereWithoutInspectionReportInput, StaffUpdateWithoutInspectionReportInput>, StaffUncheckedUpdateWithoutInspectionReportInput>
+  }
+
+  export type CustomerAssetUpdateManyWithoutInspectionReportNestedInput = {
+    create?: XOR<CustomerAssetCreateWithoutInspectionReportInput, CustomerAssetUncheckedCreateWithoutInspectionReportInput> | CustomerAssetCreateWithoutInspectionReportInput[] | CustomerAssetUncheckedCreateWithoutInspectionReportInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutInspectionReportInput | CustomerAssetCreateOrConnectWithoutInspectionReportInput[]
+    upsert?: CustomerAssetUpsertWithWhereUniqueWithoutInspectionReportInput | CustomerAssetUpsertWithWhereUniqueWithoutInspectionReportInput[]
+    set?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    disconnect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    delete?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    update?: CustomerAssetUpdateWithWhereUniqueWithoutInspectionReportInput | CustomerAssetUpdateWithWhereUniqueWithoutInspectionReportInput[]
+    updateMany?: CustomerAssetUpdateManyWithWhereWithoutInspectionReportInput | CustomerAssetUpdateManyWithWhereWithoutInspectionReportInput[]
+    deleteMany?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
+  }
+
+  export type CustomerAssetUncheckedUpdateManyWithoutInspectionReportNestedInput = {
+    create?: XOR<CustomerAssetCreateWithoutInspectionReportInput, CustomerAssetUncheckedCreateWithoutInspectionReportInput> | CustomerAssetCreateWithoutInspectionReportInput[] | CustomerAssetUncheckedCreateWithoutInspectionReportInput[]
+    connectOrCreate?: CustomerAssetCreateOrConnectWithoutInspectionReportInput | CustomerAssetCreateOrConnectWithoutInspectionReportInput[]
+    upsert?: CustomerAssetUpsertWithWhereUniqueWithoutInspectionReportInput | CustomerAssetUpsertWithWhereUniqueWithoutInspectionReportInput[]
+    set?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    disconnect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    delete?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    connect?: CustomerAssetWhereUniqueInput | CustomerAssetWhereUniqueInput[]
+    update?: CustomerAssetUpdateWithWhereUniqueWithoutInspectionReportInput | CustomerAssetUpdateWithWhereUniqueWithoutInspectionReportInput[]
+    updateMany?: CustomerAssetUpdateManyWithWhereWithoutInspectionReportInput | CustomerAssetUpdateManyWithWhereWithoutInspectionReportInput[]
+    deleteMany?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
   }
 
   export type ServiceProviderCreateNestedOneWithoutServiceItemInput = {
@@ -64135,10 +66584,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type ServiceProviderCreateNestedOneWithoutWithdrawalRequestInput = {
-    create?: XOR<ServiceProviderCreateWithoutWithdrawalRequestInput, ServiceProviderUncheckedCreateWithoutWithdrawalRequestInput>
-    connectOrCreate?: ServiceProviderCreateOrConnectWithoutWithdrawalRequestInput
-    connect?: ServiceProviderWhereUniqueInput
+  export type UserCreateNestedOneWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
+    create?: XOR<UserCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput, UserUncheckedCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput
+    connect?: UserWhereUniqueInput
   }
 
   export type EnumWithdrawalStatusFieldUpdateOperationsInput = {
@@ -64155,12 +66604,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWithdrawalRequestInput, UserUpdateWithoutWithdrawalRequestInput>, UserUncheckedUpdateWithoutWithdrawalRequestInput>
   }
 
-  export type ServiceProviderUpdateOneRequiredWithoutWithdrawalRequestNestedInput = {
-    create?: XOR<ServiceProviderCreateWithoutWithdrawalRequestInput, ServiceProviderUncheckedCreateWithoutWithdrawalRequestInput>
-    connectOrCreate?: ServiceProviderCreateOrConnectWithoutWithdrawalRequestInput
-    upsert?: ServiceProviderUpsertWithoutWithdrawalRequestInput
-    connect?: ServiceProviderWhereUniqueInput
-    update?: XOR<XOR<ServiceProviderUpdateToOneWithWhereWithoutWithdrawalRequestInput, ServiceProviderUpdateWithoutWithdrawalRequestInput>, ServiceProviderUncheckedUpdateWithoutWithdrawalRequestInput>
+  export type UserUpdateOneRequiredWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserNestedInput = {
+    create?: XOR<UserCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput, UserUncheckedCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput
+    upsert?: UserUpsertWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput, UserUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>, UserUncheckedUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>
   }
 
   export type CustomerProfileCreateNestedOneWithoutConversationInput = {
@@ -64295,6 +66744,72 @@ export namespace Prisma {
     upsert?: CategoryUpsertWithoutSuggested_services_configInput
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutSuggested_services_configInput, CategoryUpdateWithoutSuggested_services_configInput>, CategoryUncheckedUpdateWithoutSuggested_services_configInput>
+  }
+
+  export type CategoryCreateNestedOneWithoutCustomerAssetInput = {
+    create?: XOR<CategoryCreateWithoutCustomerAssetInput, CategoryUncheckedCreateWithoutCustomerAssetInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutCustomerAssetInput
+    connect?: CategoryWhereUniqueInput
+  }
+
+  export type CustomerProfileCreateNestedOneWithoutCustomerAssetInput = {
+    create?: XOR<CustomerProfileCreateWithoutCustomerAssetInput, CustomerProfileUncheckedCreateWithoutCustomerAssetInput>
+    connectOrCreate?: CustomerProfileCreateOrConnectWithoutCustomerAssetInput
+    connect?: CustomerProfileWhereUniqueInput
+  }
+
+  export type InspectionReportCreateNestedManyWithoutCustomerAssetInput = {
+    create?: XOR<InspectionReportCreateWithoutCustomerAssetInput, InspectionReportUncheckedCreateWithoutCustomerAssetInput> | InspectionReportCreateWithoutCustomerAssetInput[] | InspectionReportUncheckedCreateWithoutCustomerAssetInput[]
+    connectOrCreate?: InspectionReportCreateOrConnectWithoutCustomerAssetInput | InspectionReportCreateOrConnectWithoutCustomerAssetInput[]
+    connect?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+  }
+
+  export type InspectionReportUncheckedCreateNestedManyWithoutCustomerAssetInput = {
+    create?: XOR<InspectionReportCreateWithoutCustomerAssetInput, InspectionReportUncheckedCreateWithoutCustomerAssetInput> | InspectionReportCreateWithoutCustomerAssetInput[] | InspectionReportUncheckedCreateWithoutCustomerAssetInput[]
+    connectOrCreate?: InspectionReportCreateOrConnectWithoutCustomerAssetInput | InspectionReportCreateOrConnectWithoutCustomerAssetInput[]
+    connect?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+  }
+
+  export type CategoryUpdateOneRequiredWithoutCustomerAssetNestedInput = {
+    create?: XOR<CategoryCreateWithoutCustomerAssetInput, CategoryUncheckedCreateWithoutCustomerAssetInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutCustomerAssetInput
+    upsert?: CategoryUpsertWithoutCustomerAssetInput
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutCustomerAssetInput, CategoryUpdateWithoutCustomerAssetInput>, CategoryUncheckedUpdateWithoutCustomerAssetInput>
+  }
+
+  export type CustomerProfileUpdateOneRequiredWithoutCustomerAssetNestedInput = {
+    create?: XOR<CustomerProfileCreateWithoutCustomerAssetInput, CustomerProfileUncheckedCreateWithoutCustomerAssetInput>
+    connectOrCreate?: CustomerProfileCreateOrConnectWithoutCustomerAssetInput
+    upsert?: CustomerProfileUpsertWithoutCustomerAssetInput
+    connect?: CustomerProfileWhereUniqueInput
+    update?: XOR<XOR<CustomerProfileUpdateToOneWithWhereWithoutCustomerAssetInput, CustomerProfileUpdateWithoutCustomerAssetInput>, CustomerProfileUncheckedUpdateWithoutCustomerAssetInput>
+  }
+
+  export type InspectionReportUpdateManyWithoutCustomerAssetNestedInput = {
+    create?: XOR<InspectionReportCreateWithoutCustomerAssetInput, InspectionReportUncheckedCreateWithoutCustomerAssetInput> | InspectionReportCreateWithoutCustomerAssetInput[] | InspectionReportUncheckedCreateWithoutCustomerAssetInput[]
+    connectOrCreate?: InspectionReportCreateOrConnectWithoutCustomerAssetInput | InspectionReportCreateOrConnectWithoutCustomerAssetInput[]
+    upsert?: InspectionReportUpsertWithWhereUniqueWithoutCustomerAssetInput | InspectionReportUpsertWithWhereUniqueWithoutCustomerAssetInput[]
+    set?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    disconnect?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    delete?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    connect?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    update?: InspectionReportUpdateWithWhereUniqueWithoutCustomerAssetInput | InspectionReportUpdateWithWhereUniqueWithoutCustomerAssetInput[]
+    updateMany?: InspectionReportUpdateManyWithWhereWithoutCustomerAssetInput | InspectionReportUpdateManyWithWhereWithoutCustomerAssetInput[]
+    deleteMany?: InspectionReportScalarWhereInput | InspectionReportScalarWhereInput[]
+  }
+
+  export type InspectionReportUncheckedUpdateManyWithoutCustomerAssetNestedInput = {
+    create?: XOR<InspectionReportCreateWithoutCustomerAssetInput, InspectionReportUncheckedCreateWithoutCustomerAssetInput> | InspectionReportCreateWithoutCustomerAssetInput[] | InspectionReportUncheckedCreateWithoutCustomerAssetInput[]
+    connectOrCreate?: InspectionReportCreateOrConnectWithoutCustomerAssetInput | InspectionReportCreateOrConnectWithoutCustomerAssetInput[]
+    upsert?: InspectionReportUpsertWithWhereUniqueWithoutCustomerAssetInput | InspectionReportUpsertWithWhereUniqueWithoutCustomerAssetInput[]
+    set?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    disconnect?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    delete?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    connect?: InspectionReportWhereUniqueInput | InspectionReportWhereUniqueInput[]
+    update?: InspectionReportUpdateWithWhereUniqueWithoutCustomerAssetInput | InspectionReportUpdateWithWhereUniqueWithoutCustomerAssetInput[]
+    updateMany?: InspectionReportUpdateManyWithWhereWithoutCustomerAssetInput | InspectionReportUpdateManyWithWhereWithoutCustomerAssetInput[]
+    deleteMany?: InspectionReportScalarWhereInput | InspectionReportScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -64841,6 +67356,7 @@ export namespace Prisma {
     updatedAt: Date | string
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -64861,6 +67377,7 @@ export namespace Prisma {
     updatedAt: Date | string
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -64889,6 +67406,7 @@ export namespace Prisma {
     verifiedAt?: Date | string | null
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
@@ -64896,7 +67414,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutBookingInput = {
@@ -64916,12 +67433,12 @@ export namespace Prisma {
     verifiedById?: number | null
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutBookingInput = {
@@ -64997,6 +67514,7 @@ export namespace Prisma {
     images?: InspectionReportCreateimagesInput | string[]
     createdAt?: Date | string
     Staff: StaffCreateNestedOneWithoutInspectionReportInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutInspectionReportInput
   }
 
   export type InspectionReportUncheckedCreateWithoutBookingInput = {
@@ -65006,6 +67524,7 @@ export namespace Prisma {
     note?: string | null
     images?: InspectionReportCreateimagesInput | string[]
     createdAt?: Date | string
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutInspectionReportInput
   }
 
   export type InspectionReportCreateOrConnectWithoutBookingInput = {
@@ -65068,6 +67587,38 @@ export namespace Prisma {
   export type ProviderReportCreateManyBookingInputEnvelope = {
     data: ProviderReportCreateManyBookingInput | ProviderReportCreateManyBookingInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ReviewCreateWithoutBookingInput = {
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    updatedAt: Date | string
+    CustomerProfile: CustomerProfileCreateNestedOneWithoutReviewInput
+    ServiceProvider: ServiceProviderCreateNestedOneWithoutReviewInput
+    Service?: ServiceCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutBookingInput = {
+    id?: number
+    customerId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    providerId: number
+    serviceId?: number | null
+    updatedAt: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutBookingInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutBookingInput, ReviewUncheckedCreateWithoutBookingInput>
   }
 
   export type TransactionCreateWithoutBookingInput = {
@@ -65156,6 +67707,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -65176,6 +67728,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -65210,6 +67763,7 @@ export namespace Prisma {
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
@@ -65217,7 +67771,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutBookingInput = {
@@ -65237,12 +67790,12 @@ export namespace Prisma {
     verifiedById?: NullableIntFieldUpdateOperationsInput | number | null
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceRequestUpsertWithoutBookingInput = {
@@ -65336,6 +67889,7 @@ export namespace Prisma {
     images?: InspectionReportUpdateimagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Staff?: StaffUpdateOneRequiredWithoutInspectionReportNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutInspectionReportNestedInput
   }
 
   export type InspectionReportUncheckedUpdateWithoutBookingInput = {
@@ -65345,6 +67899,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     images?: InspectionReportUpdateimagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutInspectionReportNestedInput
   }
 
   export type ProposalUpsertWithoutBookingInput = {
@@ -65405,6 +67960,44 @@ export namespace Prisma {
     reviewedAt?: DateTimeNullableFilter<"ProviderReport"> | Date | string | null
     reviewedById?: IntNullableFilter<"ProviderReport"> | number | null
     note?: StringNullableFilter<"ProviderReport"> | string | null
+  }
+
+  export type ReviewUpsertWithoutBookingInput = {
+    update: XOR<ReviewUpdateWithoutBookingInput, ReviewUncheckedUpdateWithoutBookingInput>
+    create: XOR<ReviewCreateWithoutBookingInput, ReviewUncheckedCreateWithoutBookingInput>
+    where?: ReviewWhereInput
+  }
+
+  export type ReviewUpdateToOneWithWhereWithoutBookingInput = {
+    where?: ReviewWhereInput
+    data: XOR<ReviewUpdateWithoutBookingInput, ReviewUncheckedUpdateWithoutBookingInput>
+  }
+
+  export type ReviewUpdateWithoutBookingInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutReviewNestedInput
+    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutReviewNestedInput
+    Service?: ServiceUpdateOneWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutBookingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    providerId?: IntFieldUpdateOperationsInput | number
+    serviceId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TransactionUpsertWithoutBookingInput = {
@@ -65517,6 +68110,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -65559,6 +68153,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -65605,6 +68200,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -65647,6 +68243,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -65666,6 +68263,7 @@ export namespace Prisma {
     Category?: CategoryCreateNestedOneWithoutOther_CategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -65684,6 +68282,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -65706,6 +68305,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -65724,6 +68324,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -65778,6 +68379,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -65820,6 +68422,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -65857,6 +68460,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CustomerAssetCreateWithoutCategoryInput = {
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    CustomerProfile: CustomerProfileCreateNestedOneWithoutCustomerAssetInput
+    InspectionReport?: InspectionReportCreateNestedManyWithoutCustomerAssetInput
+  }
+
+  export type CustomerAssetUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    customerId: number
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    InspectionReport?: InspectionReportUncheckedCreateNestedManyWithoutCustomerAssetInput
+  }
+
+  export type CustomerAssetCreateOrConnectWithoutCategoryInput = {
+    where: CustomerAssetWhereUniqueInput
+    create: XOR<CustomerAssetCreateWithoutCategoryInput, CustomerAssetUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type CustomerAssetCreateManyCategoryInputEnvelope = {
+    data: CustomerAssetCreateManyCategoryInput | CustomerAssetCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ServiceCreateWithoutCategoryInput = {
     basePrice: number
     virtualPrice: number
@@ -65873,6 +68515,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
     ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceInput
@@ -65901,6 +68544,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -66049,6 +68693,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -66091,6 +68736,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -66143,6 +68789,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -66185,6 +68832,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -66210,6 +68858,7 @@ export namespace Prisma {
     Category?: CategoryUpdateOneWithoutOther_CategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -66228,6 +68877,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
@@ -66315,6 +68965,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -66357,6 +69008,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -66388,6 +69040,40 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CategoryTranslation"> | Date | string
     updatedAt?: DateTimeFilter<"CategoryTranslation"> | Date | string
     deletedAt?: DateTimeNullableFilter<"CategoryTranslation"> | Date | string | null
+  }
+
+  export type CustomerAssetUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: CustomerAssetWhereUniqueInput
+    update: XOR<CustomerAssetUpdateWithoutCategoryInput, CustomerAssetUncheckedUpdateWithoutCategoryInput>
+    create: XOR<CustomerAssetCreateWithoutCategoryInput, CustomerAssetUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type CustomerAssetUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: CustomerAssetWhereUniqueInput
+    data: XOR<CustomerAssetUpdateWithoutCategoryInput, CustomerAssetUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type CustomerAssetUpdateManyWithWhereWithoutCategoryInput = {
+    where: CustomerAssetScalarWhereInput
+    data: XOR<CustomerAssetUpdateManyMutationInput, CustomerAssetUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type CustomerAssetScalarWhereInput = {
+    AND?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
+    OR?: CustomerAssetScalarWhereInput[]
+    NOT?: CustomerAssetScalarWhereInput | CustomerAssetScalarWhereInput[]
+    id?: IntFilter<"CustomerAsset"> | number
+    customerId?: IntFilter<"CustomerAsset"> | number
+    categoryId?: IntFilter<"CustomerAsset"> | number
+    brand?: StringNullableFilter<"CustomerAsset"> | string | null
+    model?: StringNullableFilter<"CustomerAsset"> | string | null
+    serial?: StringNullableFilter<"CustomerAsset"> | string | null
+    purchaseDate?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    nickname?: StringNullableFilter<"CustomerAsset"> | string | null
+    lastMaintenanceDate?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    totalMaintenanceCount?: IntNullableFilter<"CustomerAsset"> | number | null
+    createdAt?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"CustomerAsset"> | Date | string | null
   }
 
   export type ServiceUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -66528,6 +69214,7 @@ export namespace Prisma {
     Category?: CategoryCreateNestedOneWithoutOther_CategoryInput
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -66546,6 +69233,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -66579,6 +69267,7 @@ export namespace Prisma {
     Category?: CategoryUpdateOneWithoutOther_CategoryNestedInput
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -66597,6 +69286,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
@@ -66611,6 +69301,7 @@ export namespace Prisma {
     updatedAt: Date | string
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -66631,6 +69322,7 @@ export namespace Prisma {
     updatedAt: Date | string
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -66664,6 +69356,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -66684,6 +69377,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -66705,6 +69399,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -66722,6 +69417,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -66794,6 +69490,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CustomerAssetCreateWithoutCustomerProfileInput = {
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    Category: CategoryCreateNestedOneWithoutCustomerAssetInput
+    InspectionReport?: InspectionReportCreateNestedManyWithoutCustomerAssetInput
+  }
+
+  export type CustomerAssetUncheckedCreateWithoutCustomerProfileInput = {
+    id?: number
+    categoryId: number
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    InspectionReport?: InspectionReportUncheckedCreateNestedManyWithoutCustomerAssetInput
+  }
+
+  export type CustomerAssetCreateOrConnectWithoutCustomerProfileInput = {
+    where: CustomerAssetWhereUniqueInput
+    create: XOR<CustomerAssetCreateWithoutCustomerProfileInput, CustomerAssetUncheckedCreateWithoutCustomerProfileInput>
+  }
+
+  export type CustomerAssetCreateManyCustomerProfileInputEnvelope = {
+    data: CustomerAssetCreateManyCustomerProfileInput | CustomerAssetCreateManyCustomerProfileInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserCreateWithoutCustomerProfileInput = {
     email: string
     password: string
@@ -66832,6 +69567,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -66874,6 +69610,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -66998,17 +69735,29 @@ export namespace Prisma {
 
   export type ReviewCreateWithoutCustomerProfileInput = {
     rating: number
-    comment: string
+    comment?: string | null
     createdAt?: Date | string
-    bookingId?: number | null
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    updatedAt: Date | string
+    Booking: BookingCreateNestedOneWithoutReviewInput
+    ServiceProvider: ServiceProviderCreateNestedOneWithoutReviewInput
+    Service?: ServiceCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutCustomerProfileInput = {
     id?: number
     rating: number
-    comment: string
+    comment?: string | null
     createdAt?: Date | string
-    bookingId?: number | null
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    providerId: number
+    serviceId?: number | null
+    updatedAt: Date | string
   }
 
   export type ReviewCreateOrConnectWithoutCustomerProfileInput = {
@@ -67174,6 +69923,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Conversation"> | Date | string
   }
 
+  export type CustomerAssetUpsertWithWhereUniqueWithoutCustomerProfileInput = {
+    where: CustomerAssetWhereUniqueInput
+    update: XOR<CustomerAssetUpdateWithoutCustomerProfileInput, CustomerAssetUncheckedUpdateWithoutCustomerProfileInput>
+    create: XOR<CustomerAssetCreateWithoutCustomerProfileInput, CustomerAssetUncheckedCreateWithoutCustomerProfileInput>
+  }
+
+  export type CustomerAssetUpdateWithWhereUniqueWithoutCustomerProfileInput = {
+    where: CustomerAssetWhereUniqueInput
+    data: XOR<CustomerAssetUpdateWithoutCustomerProfileInput, CustomerAssetUncheckedUpdateWithoutCustomerProfileInput>
+  }
+
+  export type CustomerAssetUpdateManyWithWhereWithoutCustomerProfileInput = {
+    where: CustomerAssetScalarWhereInput
+    data: XOR<CustomerAssetUpdateManyMutationInput, CustomerAssetUncheckedUpdateManyWithoutCustomerProfileInput>
+  }
+
   export type UserUpsertWithoutCustomerProfileInput = {
     update: XOR<UserUpdateWithoutCustomerProfileInput, UserUncheckedUpdateWithoutCustomerProfileInput>
     create: XOR<UserCreateWithoutCustomerProfileInput, UserUncheckedCreateWithoutCustomerProfileInput>
@@ -67223,6 +69988,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -67265,6 +70031,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -67392,9 +70159,15 @@ export namespace Prisma {
     id?: IntFilter<"Review"> | number
     customerId?: IntFilter<"Review"> | number
     rating?: IntFilter<"Review"> | number
-    comment?: StringFilter<"Review"> | string
+    comment?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
-    bookingId?: IntNullableFilter<"Review"> | number | null
+    bookingId?: IntFilter<"Review"> | number
+    deletedAt?: DateTimeNullableFilter<"Review"> | Date | string | null
+    images?: StringNullableListFilter<"Review">
+    isEdited?: BoolFilter<"Review"> | boolean
+    providerId?: IntFilter<"Review"> | number
+    serviceId?: IntNullableFilter<"Review"> | number | null
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
   }
 
   export type RewardPointUpsertWithWhereUniqueWithoutCustomerProfileInput = {
@@ -67478,6 +70251,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -67520,6 +70294,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -67602,6 +70377,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -67644,6 +70420,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -67713,6 +70490,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -67755,6 +70533,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -67812,6 +70591,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -67854,6 +70634,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -67866,6 +70647,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutCustomerProfileInput
@@ -67886,6 +70668,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -67919,6 +70702,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutCustomerProfileNestedInput
@@ -67939,6 +70723,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -68059,6 +70844,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -68101,6 +70887,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -68147,6 +70934,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -68189,6 +70977,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -68235,6 +71024,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -68277,6 +71067,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -68362,6 +71153,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -68404,6 +71196,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -68456,6 +71249,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -68498,6 +71292,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -68550,6 +71345,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -68592,6 +71388,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -68634,6 +71431,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -68654,6 +71452,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -68682,6 +71481,7 @@ export namespace Prisma {
     status?: $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
@@ -68711,6 +71511,7 @@ export namespace Prisma {
     status?: $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -68739,6 +71540,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -68759,6 +71561,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -68793,6 +71596,7 @@ export namespace Prisma {
     status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
@@ -68822,6 +71626,7 @@ export namespace Prisma {
     status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -68889,6 +71694,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -68931,6 +71737,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -69020,6 +71827,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -69062,7 +71870,48 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
+  }
+
+  export type BookingCreateWithoutReviewInput = {
+    status: $Enums.BookingStatus
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    completedAt?: Date | string | null
+    CustomerProfile: CustomerProfileCreateNestedOneWithoutBookingInput
+    ServiceProvider: ServiceProviderCreateNestedOneWithoutBookingInput
+    ServiceRequest?: ServiceRequestCreateNestedOneWithoutBookingInput
+    Staff_Booking_staffIdToStaff?: StaffCreateNestedOneWithoutBooking_Booking_staffIdToStaffInput
+    InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
+    Proposal?: ProposalCreateNestedOneWithoutBookingInput
+    ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Transaction?: TransactionCreateNestedOneWithoutBookingInput
+    WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingUncheckedCreateWithoutReviewInput = {
+    id?: number
+    customerId: number
+    providerId: number
+    status: $Enums.BookingStatus
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    staffId?: number | null
+    serviceRequestId?: number | null
+    completedAt?: Date | string | null
+    InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
+    Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
+    ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
+    WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingCreateOrConnectWithoutReviewInput = {
+    where: BookingWhereUniqueInput
+    create: XOR<BookingCreateWithoutReviewInput, BookingUncheckedCreateWithoutReviewInput>
   }
 
   export type CustomerProfileCreateWithoutReviewInput = {
@@ -69074,6 +71923,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -69094,6 +71944,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -69105,6 +71956,160 @@ export namespace Prisma {
   export type CustomerProfileCreateOrConnectWithoutReviewInput = {
     where: CustomerProfileWhereUniqueInput
     create: XOR<CustomerProfileCreateWithoutReviewInput, CustomerProfileUncheckedCreateWithoutReviewInput>
+  }
+
+  export type ServiceProviderCreateWithoutReviewInput = {
+    description?: string | null
+    address: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    companyType?: $Enums.CompanyType
+    industry?: string | null
+    licenseNo?: string | null
+    logo?: string | null
+    taxId?: string
+    verificationStatus?: $Enums.VerificationStatus
+    verifiedAt?: Date | string | null
+    Booking?: BookingCreateNestedManyWithoutServiceProviderInput
+    Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
+    ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Service?: ServiceCreateNestedManyWithoutServiceProviderInput
+    ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
+    User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
+    User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
+    ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
+    ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
+    Staff?: StaffCreateNestedManyWithoutServiceProviderInput
+  }
+
+  export type ServiceProviderUncheckedCreateWithoutReviewInput = {
+    id?: number
+    description?: string | null
+    address: string
+    createdAt?: Date | string
+    updatedAt: Date | string
+    userId: number
+    companyType?: $Enums.CompanyType
+    industry?: string | null
+    licenseNo?: string | null
+    logo?: string | null
+    taxId?: string
+    verificationStatus?: $Enums.VerificationStatus
+    verifiedAt?: Date | string | null
+    verifiedById?: number | null
+    Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
+    ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
+    ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
+    ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
+    ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
+    Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
+  }
+
+  export type ServiceProviderCreateOrConnectWithoutReviewInput = {
+    where: ServiceProviderWhereUniqueInput
+    create: XOR<ServiceProviderCreateWithoutReviewInput, ServiceProviderUncheckedCreateWithoutReviewInput>
+  }
+
+  export type ServiceCreateWithoutReviewInput = {
+    basePrice: number
+    virtualPrice: number
+    images?: ServiceCreateimagesInput | string[]
+    durationMinutes: number
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    name?: string
+    publishedAt?: Date | string | null
+    description?: string
+    unit?: $Enums.Unit
+    status?: $Enums.ServiceStatus
+    FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
+    ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
+    RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Category: CategoryCreateNestedOneWithoutServiceInput
+    User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
+    User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
+    ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceInput
+    User_Service_updatedByIdToUser?: UserCreateNestedOneWithoutService_Service_updatedByIdToUserInput
+    Service_ServiceItems?: Service_ServiceItemsCreateNestedManyWithoutServiceInput
+  }
+
+  export type ServiceUncheckedCreateWithoutReviewInput = {
+    id?: number
+    basePrice: number
+    virtualPrice: number
+    images?: ServiceCreateimagesInput | string[]
+    durationMinutes: number
+    providerId: number
+    createdById?: number | null
+    updatedById?: number | null
+    deletedById?: number | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    name?: string
+    publishedAt?: Date | string | null
+    description?: string
+    categoryId: number
+    unit?: $Enums.Unit
+    status?: $Enums.ServiceStatus
+    FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
+    ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
+    RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
+  }
+
+  export type ServiceCreateOrConnectWithoutReviewInput = {
+    where: ServiceWhereUniqueInput
+    create: XOR<ServiceCreateWithoutReviewInput, ServiceUncheckedCreateWithoutReviewInput>
+  }
+
+  export type BookingUpsertWithoutReviewInput = {
+    update: XOR<BookingUpdateWithoutReviewInput, BookingUncheckedUpdateWithoutReviewInput>
+    create: XOR<BookingCreateWithoutReviewInput, BookingUncheckedCreateWithoutReviewInput>
+    where?: BookingWhereInput
+  }
+
+  export type BookingUpdateToOneWithWhereWithoutReviewInput = {
+    where?: BookingWhereInput
+    data: XOR<BookingUpdateWithoutReviewInput, BookingUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type BookingUpdateWithoutReviewInput = {
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutBookingNestedInput
+    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutBookingNestedInput
+    ServiceRequest?: ServiceRequestUpdateOneWithoutBookingNestedInput
+    Staff_Booking_staffIdToStaff?: StaffUpdateOneWithoutBooking_Booking_staffIdToStaffNestedInput
+    InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
+    Proposal?: ProposalUpdateOneWithoutBookingNestedInput
+    ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Transaction?: TransactionUpdateOneWithoutBookingNestedInput
+    WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
+  }
+
+  export type BookingUncheckedUpdateWithoutReviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    providerId?: IntFieldUpdateOperationsInput | number
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    staffId?: NullableIntFieldUpdateOperationsInput | number | null
+    serviceRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
+    Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
+    ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
+    WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type CustomerProfileUpsertWithoutReviewInput = {
@@ -69127,6 +72132,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -69147,12 +72153,133 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     RewardPoint?: RewardPointUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCustomerProfileNestedInput
+  }
+
+  export type ServiceProviderUpsertWithoutReviewInput = {
+    update: XOR<ServiceProviderUpdateWithoutReviewInput, ServiceProviderUncheckedUpdateWithoutReviewInput>
+    create: XOR<ServiceProviderCreateWithoutReviewInput, ServiceProviderUncheckedCreateWithoutReviewInput>
+    where?: ServiceProviderWhereInput
+  }
+
+  export type ServiceProviderUpdateToOneWithWhereWithoutReviewInput = {
+    where?: ServiceProviderWhereInput
+    data: XOR<ServiceProviderUpdateWithoutReviewInput, ServiceProviderUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type ServiceProviderUpdateWithoutReviewInput = {
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    companyType?: EnumCompanyTypeFieldUpdateOperationsInput | $Enums.CompanyType
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    licenseNo?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: StringFieldUpdateOperationsInput | string
+    verificationStatus?: EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
+    Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
+    ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
+    ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
+    User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
+    User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
+    ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
+    ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
+    Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
+  }
+
+  export type ServiceProviderUncheckedUpdateWithoutReviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
+    companyType?: EnumCompanyTypeFieldUpdateOperationsInput | $Enums.CompanyType
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    licenseNo?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: StringFieldUpdateOperationsInput | string
+    verificationStatus?: EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedById?: NullableIntFieldUpdateOperationsInput | number | null
+    Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
+    ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
+    ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
+    ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
+    ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
+  }
+
+  export type ServiceUpsertWithoutReviewInput = {
+    update: XOR<ServiceUpdateWithoutReviewInput, ServiceUncheckedUpdateWithoutReviewInput>
+    create: XOR<ServiceCreateWithoutReviewInput, ServiceUncheckedCreateWithoutReviewInput>
+    where?: ServiceWhereInput
+  }
+
+  export type ServiceUpdateToOneWithWhereWithoutReviewInput = {
+    where?: ServiceWhereInput
+    data: XOR<ServiceUpdateWithoutReviewInput, ServiceUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type ServiceUpdateWithoutReviewInput = {
+    basePrice?: FloatFieldUpdateOperationsInput | number
+    virtualPrice?: FloatFieldUpdateOperationsInput | number
+    images?: ServiceUpdateimagesInput | string[]
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    unit?: EnumUnitFieldUpdateOperationsInput | $Enums.Unit
+    status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+    FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
+    ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
+    RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
+    User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
+    User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
+    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceNestedInput
+    User_Service_updatedByIdToUser?: UserUpdateOneWithoutService_Service_updatedByIdToUserNestedInput
+    Service_ServiceItems?: Service_ServiceItemsUpdateManyWithoutServiceNestedInput
+  }
+
+  export type ServiceUncheckedUpdateWithoutReviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    basePrice?: FloatFieldUpdateOperationsInput | number
+    virtualPrice?: FloatFieldUpdateOperationsInput | number
+    images?: ServiceUpdateimagesInput | string[]
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    providerId?: IntFieldUpdateOperationsInput | number
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedById?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    unit?: EnumUnitFieldUpdateOperationsInput | $Enums.Unit
+    status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+    FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
+    ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
+    RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
   export type CustomerProfileCreateWithoutRewardPointInput = {
@@ -69164,6 +72291,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -69184,6 +72312,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -69217,6 +72346,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -69237,6 +72367,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -69283,6 +72414,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -69325,6 +72457,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -69371,6 +72504,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -69413,6 +72547,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -69459,6 +72594,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -69501,6 +72637,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -69582,6 +72719,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
   }
 
   export type UserUncheckedCreateWithoutRole_UserRolesInput = {
@@ -69624,6 +72762,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
   }
 
   export type UserCreateOrConnectWithoutRole_UserRolesInput = {
@@ -69680,6 +72819,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -69722,6 +72862,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -69774,6 +72915,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -69816,6 +72958,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -69868,6 +73011,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -69910,6 +73054,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -70056,6 +73201,43 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ReviewCreateWithoutServiceInput = {
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    updatedAt: Date | string
+    Booking: BookingCreateNestedOneWithoutReviewInput
+    CustomerProfile: CustomerProfileCreateNestedOneWithoutReviewInput
+    ServiceProvider: ServiceProviderCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutServiceInput = {
+    id?: number
+    customerId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    providerId: number
+    updatedAt: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutServiceInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutServiceInput, ReviewUncheckedCreateWithoutServiceInput>
+  }
+
+  export type ReviewCreateManyServiceInputEnvelope = {
+    data: ReviewCreateManyServiceInput | ReviewCreateManyServiceInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CategoryCreateWithoutServiceInput = {
     name: string
     logo?: string | null
@@ -70068,6 +73250,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
     suggested_services_config?: suggested_services_configCreateNestedManyWithoutCategoryInput
@@ -70086,6 +73269,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
     suggested_services_config?: suggested_services_configUncheckedCreateNestedManyWithoutCategoryInput
@@ -70134,6 +73318,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -70176,6 +73361,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -70222,6 +73408,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -70264,6 +73451,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -70287,13 +73475,13 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
     User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutServiceInput = {
@@ -70314,11 +73502,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutServiceInput = {
@@ -70364,6 +73552,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -70406,6 +73595,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -70491,6 +73681,22 @@ export namespace Prisma {
     data: XOR<RecurringBookingUpdateManyMutationInput, RecurringBookingUncheckedUpdateManyWithoutServiceInput>
   }
 
+  export type ReviewUpsertWithWhereUniqueWithoutServiceInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutServiceInput, ReviewUncheckedUpdateWithoutServiceInput>
+    create: XOR<ReviewCreateWithoutServiceInput, ReviewUncheckedCreateWithoutServiceInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutServiceInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutServiceInput, ReviewUncheckedUpdateWithoutServiceInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutServiceInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutServiceInput>
+  }
+
   export type CategoryUpsertWithoutServiceInput = {
     update: XOR<CategoryUpdateWithoutServiceInput, CategoryUncheckedUpdateWithoutServiceInput>
     create: XOR<CategoryCreateWithoutServiceInput, CategoryUncheckedCreateWithoutServiceInput>
@@ -70514,6 +73720,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
     suggested_services_config?: suggested_services_configUpdateManyWithoutCategoryNestedInput
@@ -70532,6 +73739,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
     suggested_services_config?: suggested_services_configUncheckedUpdateManyWithoutCategoryNestedInput
@@ -70586,6 +73794,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -70628,6 +73837,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -70680,6 +73890,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -70722,6 +73933,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -70751,13 +73963,13 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
     User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutServiceInput = {
@@ -70778,11 +73990,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type UserUpsertWithoutService_Service_updatedByIdToUserInput = {
@@ -70834,6 +74046,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -70876,6 +74089,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -70915,6 +74129,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -70932,6 +74147,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -71016,6 +74232,43 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ReviewCreateWithoutServiceProviderInput = {
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    updatedAt: Date | string
+    Booking: BookingCreateNestedOneWithoutReviewInput
+    CustomerProfile: CustomerProfileCreateNestedOneWithoutReviewInput
+    Service?: ServiceCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutServiceProviderInput = {
+    id?: number
+    customerId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    serviceId?: number | null
+    updatedAt: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutServiceProviderInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutServiceProviderInput, ReviewUncheckedCreateWithoutServiceProviderInput>
+  }
+
+  export type ReviewCreateManyServiceProviderInputEnvelope = {
+    data: ReviewCreateManyServiceProviderInput | ReviewCreateManyServiceProviderInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ServiceCreateWithoutServiceProviderInput = {
     basePrice: number
     virtualPrice: number
@@ -71032,6 +74285,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
@@ -71060,6 +74314,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -71154,6 +74409,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -71196,6 +74452,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -71242,6 +74499,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -71284,6 +74542,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -71393,35 +74652,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type WithdrawalRequestCreateWithoutServiceProviderInput = {
-    amount: number
-    status?: $Enums.WithdrawalStatus
-    createdAt?: Date | string
-    processedAt?: Date | string | null
-    note?: string | null
-    User?: UserCreateNestedOneWithoutWithdrawalRequestInput
-  }
-
-  export type WithdrawalRequestUncheckedCreateWithoutServiceProviderInput = {
-    id?: number
-    amount: number
-    status?: $Enums.WithdrawalStatus
-    createdAt?: Date | string
-    processedAt?: Date | string | null
-    processedById?: number | null
-    note?: string | null
-  }
-
-  export type WithdrawalRequestCreateOrConnectWithoutServiceProviderInput = {
-    where: WithdrawalRequestWhereUniqueInput
-    create: XOR<WithdrawalRequestCreateWithoutServiceProviderInput, WithdrawalRequestUncheckedCreateWithoutServiceProviderInput>
-  }
-
-  export type WithdrawalRequestCreateManyServiceProviderInputEnvelope = {
-    data: WithdrawalRequestCreateManyServiceProviderInput | WithdrawalRequestCreateManyServiceProviderInput[]
-    skipDuplicates?: boolean
-  }
-
   export type BookingUpsertWithWhereUniqueWithoutServiceProviderInput = {
     where: BookingWhereUniqueInput
     update: XOR<BookingUpdateWithoutServiceProviderInput, BookingUncheckedUpdateWithoutServiceProviderInput>
@@ -71468,6 +74698,22 @@ export namespace Prisma {
   export type ProviderReportUpdateManyWithWhereWithoutServiceProviderInput = {
     where: ProviderReportScalarWhereInput
     data: XOR<ProviderReportUpdateManyMutationInput, ProviderReportUncheckedUpdateManyWithoutServiceProviderInput>
+  }
+
+  export type ReviewUpsertWithWhereUniqueWithoutServiceProviderInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutServiceProviderInput, ReviewUncheckedUpdateWithoutServiceProviderInput>
+    create: XOR<ReviewCreateWithoutServiceProviderInput, ReviewUncheckedCreateWithoutServiceProviderInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutServiceProviderInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutServiceProviderInput, ReviewUncheckedUpdateWithoutServiceProviderInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutServiceProviderInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutServiceProviderInput>
   }
 
   export type ServiceUpsertWithWhereUniqueWithoutServiceProviderInput = {
@@ -71571,6 +74817,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -71613,6 +74860,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -71665,6 +74913,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -71707,6 +74956,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -71784,36 +75034,6 @@ export namespace Prisma {
     isActive?: BoolFilter<"Staff"> | boolean
   }
 
-  export type WithdrawalRequestUpsertWithWhereUniqueWithoutServiceProviderInput = {
-    where: WithdrawalRequestWhereUniqueInput
-    update: XOR<WithdrawalRequestUpdateWithoutServiceProviderInput, WithdrawalRequestUncheckedUpdateWithoutServiceProviderInput>
-    create: XOR<WithdrawalRequestCreateWithoutServiceProviderInput, WithdrawalRequestUncheckedCreateWithoutServiceProviderInput>
-  }
-
-  export type WithdrawalRequestUpdateWithWhereUniqueWithoutServiceProviderInput = {
-    where: WithdrawalRequestWhereUniqueInput
-    data: XOR<WithdrawalRequestUpdateWithoutServiceProviderInput, WithdrawalRequestUncheckedUpdateWithoutServiceProviderInput>
-  }
-
-  export type WithdrawalRequestUpdateManyWithWhereWithoutServiceProviderInput = {
-    where: WithdrawalRequestScalarWhereInput
-    data: XOR<WithdrawalRequestUpdateManyMutationInput, WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderInput>
-  }
-
-  export type WithdrawalRequestScalarWhereInput = {
-    AND?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
-    OR?: WithdrawalRequestScalarWhereInput[]
-    NOT?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
-    id?: IntFilter<"WithdrawalRequest"> | number
-    providerId?: IntFilter<"WithdrawalRequest"> | number
-    amount?: FloatFilter<"WithdrawalRequest"> | number
-    status?: EnumWithdrawalStatusFilter<"WithdrawalRequest"> | $Enums.WithdrawalStatus
-    createdAt?: DateTimeFilter<"WithdrawalRequest"> | Date | string
-    processedAt?: DateTimeNullableFilter<"WithdrawalRequest"> | Date | string | null
-    processedById?: IntNullableFilter<"WithdrawalRequest"> | number | null
-    note?: StringNullableFilter<"WithdrawalRequest"> | string | null
-  }
-
   export type ServiceProviderCreateWithoutServiceProviderTranslationInput = {
     description?: string | null
     address: string
@@ -71829,13 +75049,13 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
     User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutServiceProviderTranslationInput = {
@@ -71856,11 +75076,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutServiceProviderTranslationInput = {
@@ -71894,13 +75114,13 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
     User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutServiceProviderTranslationInput = {
@@ -71921,11 +75141,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type BookingCreateWithoutStaff_Booking_staffIdToStaffInput = {
@@ -71940,6 +75160,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -71957,6 +75178,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -71977,6 +75199,7 @@ export namespace Prisma {
     images?: InspectionReportCreateimagesInput | string[]
     createdAt?: Date | string
     Booking: BookingCreateNestedOneWithoutInspectionReportInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutInspectionReportInput
   }
 
   export type InspectionReportUncheckedCreateWithoutStaffInput = {
@@ -71986,6 +75209,7 @@ export namespace Prisma {
     note?: string | null
     images?: InspectionReportCreateimagesInput | string[]
     createdAt?: Date | string
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutInspectionReportInput
   }
 
   export type InspectionReportCreateOrConnectWithoutStaffInput = {
@@ -72013,13 +75237,13 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
     User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutStaffInput = {
@@ -72040,11 +75264,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutStaffInput = {
@@ -72090,6 +75314,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -72132,6 +75357,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -72262,13 +75488,13 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
     User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutStaffInput = {
@@ -72289,11 +75515,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type UserUpsertWithoutStaffInput = {
@@ -72345,6 +75571,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -72387,6 +75614,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -72434,6 +75662,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     suggested_services_config?: suggested_services_configCreateNestedManyWithoutCategoryInput
@@ -72452,6 +75681,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     suggested_services_config?: suggested_services_configUncheckedCreateNestedManyWithoutCategoryInput
@@ -72513,6 +75743,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     suggested_services_config?: suggested_services_configUpdateManyWithoutCategoryNestedInput
@@ -72531,6 +75762,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     suggested_services_config?: suggested_services_configUncheckedUpdateManyWithoutCategoryNestedInput
@@ -72583,6 +75815,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
 
@@ -72600,6 +75833,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
 
@@ -72632,6 +75866,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
 
@@ -72649,6 +75884,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
 
@@ -72663,6 +75899,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -72681,6 +75918,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -72708,6 +75946,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -72726,6 +75965,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -72753,6 +75993,7 @@ export namespace Prisma {
     Category?: CategoryCreateNestedOneWithoutOther_CategoryInput
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -72771,6 +76012,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -72796,6 +76038,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutCustomerProfileInput
@@ -72815,6 +76058,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -73177,6 +76421,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
     ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceInput
@@ -73205,6 +76450,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -73234,6 +76480,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceInput
@@ -73262,6 +76509,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -73291,6 +76539,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
@@ -73319,6 +76568,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -73347,13 +76597,13 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutUser_ServiceProvider_userIdToUserInput = {
@@ -73373,12 +76623,12 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutUser_ServiceProvider_userIdToUserInput = {
@@ -73401,13 +76651,13 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutUser_ServiceProvider_verifiedByIdToUserInput = {
@@ -73427,12 +76677,12 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutUser_ServiceProvider_verifiedByIdToUserInput = {
@@ -73511,6 +76761,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73553,6 +76804,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73599,6 +76851,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73641,6 +76894,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73692,6 +76946,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73734,6 +76989,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73780,6 +77036,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73822,6 +77079,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73873,6 +77131,7 @@ export namespace Prisma {
     User_User_updatedByIdToUser?: UserCreateNestedOneWithoutOther_User_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73915,6 +77174,7 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_deletedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -73961,6 +77221,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -74003,6 +77264,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -74046,17 +77308,17 @@ export namespace Prisma {
     createdAt?: Date | string
     processedAt?: Date | string | null
     note?: string | null
-    ServiceProvider: ServiceProviderCreateNestedOneWithoutWithdrawalRequestInput
+    User_WithdrawalRequest_userIdToUser: UserCreateNestedOneWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput
   }
 
   export type WithdrawalRequestUncheckedCreateWithoutUserInput = {
     id?: number
-    providerId: number
     amount: number
     status?: $Enums.WithdrawalStatus
     createdAt?: Date | string
     processedAt?: Date | string | null
     note?: string | null
+    userId: number
   }
 
   export type WithdrawalRequestCreateOrConnectWithoutUserInput = {
@@ -74066,6 +77328,35 @@ export namespace Prisma {
 
   export type WithdrawalRequestCreateManyUserInputEnvelope = {
     data: WithdrawalRequestCreateManyUserInput | WithdrawalRequestCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    createdAt?: Date | string
+    processedAt?: Date | string | null
+    note?: string | null
+    User?: UserCreateNestedOneWithoutWithdrawalRequestInput
+  }
+
+  export type WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    id?: number
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    createdAt?: Date | string
+    processedAt?: Date | string | null
+    processedById?: number | null
+    note?: string | null
+  }
+
+  export type WithdrawalRequestCreateOrConnectWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    where: WithdrawalRequestWhereUniqueInput
+    create: XOR<WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput>
+  }
+
+  export type WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInputEnvelope = {
+    data: WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInput | WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -74165,6 +77456,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutCustomerProfileNestedInput
@@ -74184,6 +77476,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -74452,13 +77745,13 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutUser_ServiceProvider_userIdToUserInput = {
@@ -74478,12 +77771,12 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUpsertWithWhereUniqueWithoutUser_ServiceProvider_verifiedByIdToUserInput = {
@@ -74605,6 +77898,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -74647,6 +77941,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -74715,6 +78010,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -74757,6 +78053,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -74825,6 +78122,7 @@ export namespace Prisma {
     User_User_updatedByIdToUser?: UserUpdateOneWithoutOther_User_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -74867,6 +78165,7 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_deletedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -74932,6 +78231,36 @@ export namespace Prisma {
     data: XOR<WithdrawalRequestUpdateManyMutationInput, WithdrawalRequestUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type WithdrawalRequestScalarWhereInput = {
+    AND?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
+    OR?: WithdrawalRequestScalarWhereInput[]
+    NOT?: WithdrawalRequestScalarWhereInput | WithdrawalRequestScalarWhereInput[]
+    id?: IntFilter<"WithdrawalRequest"> | number
+    amount?: FloatFilter<"WithdrawalRequest"> | number
+    status?: EnumWithdrawalStatusFilter<"WithdrawalRequest"> | $Enums.WithdrawalStatus
+    createdAt?: DateTimeFilter<"WithdrawalRequest"> | Date | string
+    processedAt?: DateTimeNullableFilter<"WithdrawalRequest"> | Date | string | null
+    processedById?: IntNullableFilter<"WithdrawalRequest"> | number | null
+    note?: StringNullableFilter<"WithdrawalRequest"> | string | null
+    userId?: IntFilter<"WithdrawalRequest"> | number
+  }
+
+  export type WithdrawalRequestUpsertWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    where: WithdrawalRequestWhereUniqueInput
+    update: XOR<WithdrawalRequestUpdateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedUpdateWithoutUser_WithdrawalRequest_userIdToUserInput>
+    create: XOR<WithdrawalRequestCreateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedCreateWithoutUser_WithdrawalRequest_userIdToUserInput>
+  }
+
+  export type WithdrawalRequestUpdateWithWhereUniqueWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    where: WithdrawalRequestWhereUniqueInput
+    data: XOR<WithdrawalRequestUpdateWithoutUser_WithdrawalRequest_userIdToUserInput, WithdrawalRequestUncheckedUpdateWithoutUser_WithdrawalRequest_userIdToUserInput>
+  }
+
+  export type WithdrawalRequestUpdateManyWithWhereWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    where: WithdrawalRequestScalarWhereInput
+    data: XOR<WithdrawalRequestUpdateManyMutationInput, WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserInput>
+  }
+
   export type RoleUpsertWithWhereUniqueWithoutUser_UserRolesInput = {
     where: RoleWhereUniqueInput
     update: XOR<RoleUpdateWithoutUser_UserRolesInput, RoleUncheckedUpdateWithoutUser_UserRolesInput>
@@ -74961,6 +78290,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
   }
 
@@ -74978,6 +78308,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
   }
 
@@ -75038,6 +78369,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
   }
 
@@ -75055,6 +78387,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
   }
 
@@ -75104,6 +78437,7 @@ export namespace Prisma {
     Staff_Booking_staffIdToStaff?: StaffCreateNestedOneWithoutBooking_Booking_staffIdToStaffInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -75121,6 +78455,7 @@ export namespace Prisma {
     completedAt?: Date | string | null
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -75158,6 +78493,40 @@ export namespace Prisma {
     create: XOR<StaffCreateWithoutInspectionReportInput, StaffUncheckedCreateWithoutInspectionReportInput>
   }
 
+  export type CustomerAssetCreateWithoutInspectionReportInput = {
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    Category: CategoryCreateNestedOneWithoutCustomerAssetInput
+    CustomerProfile: CustomerProfileCreateNestedOneWithoutCustomerAssetInput
+  }
+
+  export type CustomerAssetUncheckedCreateWithoutInspectionReportInput = {
+    id?: number
+    customerId: number
+    categoryId: number
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+  }
+
+  export type CustomerAssetCreateOrConnectWithoutInspectionReportInput = {
+    where: CustomerAssetWhereUniqueInput
+    create: XOR<CustomerAssetCreateWithoutInspectionReportInput, CustomerAssetUncheckedCreateWithoutInspectionReportInput>
+  }
+
   export type BookingUpsertWithoutInspectionReportInput = {
     update: XOR<BookingUpdateWithoutInspectionReportInput, BookingUncheckedUpdateWithoutInspectionReportInput>
     create: XOR<BookingCreateWithoutInspectionReportInput, BookingUncheckedCreateWithoutInspectionReportInput>
@@ -75181,6 +78550,7 @@ export namespace Prisma {
     Staff_Booking_staffIdToStaff?: StaffUpdateOneWithoutBooking_Booking_staffIdToStaffNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -75198,6 +78568,7 @@ export namespace Prisma {
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -75236,6 +78607,22 @@ export namespace Prisma {
     WorkLog?: WorkLogUncheckedUpdateManyWithoutStaffNestedInput
   }
 
+  export type CustomerAssetUpsertWithWhereUniqueWithoutInspectionReportInput = {
+    where: CustomerAssetWhereUniqueInput
+    update: XOR<CustomerAssetUpdateWithoutInspectionReportInput, CustomerAssetUncheckedUpdateWithoutInspectionReportInput>
+    create: XOR<CustomerAssetCreateWithoutInspectionReportInput, CustomerAssetUncheckedCreateWithoutInspectionReportInput>
+  }
+
+  export type CustomerAssetUpdateWithWhereUniqueWithoutInspectionReportInput = {
+    where: CustomerAssetWhereUniqueInput
+    data: XOR<CustomerAssetUpdateWithoutInspectionReportInput, CustomerAssetUncheckedUpdateWithoutInspectionReportInput>
+  }
+
+  export type CustomerAssetUpdateManyWithWhereWithoutInspectionReportInput = {
+    where: CustomerAssetScalarWhereInput
+    data: XOR<CustomerAssetUpdateManyMutationInput, CustomerAssetUncheckedUpdateManyWithoutInspectionReportInput>
+  }
+
   export type ServiceProviderCreateWithoutServiceItemInput = {
     description?: string | null
     address: string
@@ -75251,13 +78638,13 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
     User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutServiceItemInput = {
@@ -75278,11 +78665,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutServiceItemInput = {
@@ -75334,13 +78721,13 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
     User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutServiceItemInput = {
@@ -75361,11 +78748,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type Service_ServiceItemsUpsertWithWhereUniqueWithoutServiceItemInput = {
@@ -75396,6 +78783,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -75413,6 +78801,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -75472,6 +78861,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
     suggested_services_config?: suggested_services_configCreateNestedManyWithoutCategoryInput
@@ -75490,6 +78880,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
     suggested_services_config?: suggested_services_configUncheckedCreateNestedManyWithoutCategoryInput
@@ -75509,6 +78900,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -75529,6 +78921,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -75557,13 +78950,13 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
     User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutServiceRequestInput = {
@@ -75584,11 +78977,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutServiceRequestInput = {
@@ -75619,6 +79012,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -75636,6 +79030,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -75707,6 +79102,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
     suggested_services_config?: suggested_services_configUpdateManyWithoutCategoryNestedInput
@@ -75725,6 +79121,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
     suggested_services_config?: suggested_services_configUncheckedUpdateManyWithoutCategoryNestedInput
@@ -75750,6 +79147,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -75770,6 +79168,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -75804,13 +79203,13 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
     User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutServiceRequestInput = {
@@ -75831,11 +79230,11 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type BookingCreateWithoutProposalInput = {
@@ -75850,6 +79249,7 @@ export namespace Prisma {
     Staff_Booking_staffIdToStaff?: StaffCreateNestedOneWithoutBooking_Booking_staffIdToStaffInput
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -75867,6 +79267,7 @@ export namespace Prisma {
     completedAt?: Date | string | null
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -75922,6 +79323,7 @@ export namespace Prisma {
     Staff_Booking_staffIdToStaff?: StaffUpdateOneWithoutBooking_Booking_staffIdToStaffNestedInput
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -75939,6 +79341,7 @@ export namespace Prisma {
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -75994,6 +79397,7 @@ export namespace Prisma {
     status?: $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
@@ -76023,6 +79427,7 @@ export namespace Prisma {
     status?: $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -76083,6 +79488,7 @@ export namespace Prisma {
     status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
@@ -76112,6 +79518,7 @@ export namespace Prisma {
     status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -76131,6 +79538,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
@@ -76160,6 +79568,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutServiceInput
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
   }
 
   export type ServiceCreateOrConnectWithoutService_ServiceItemsInput = {
@@ -76232,6 +79641,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
@@ -76261,6 +79671,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
   }
 
   export type ServiceItemUpsertWithoutService_ServiceItemsInput = {
@@ -76345,6 +79756,7 @@ export namespace Prisma {
     User_User_updatedByIdToUser?: UserCreateNestedOneWithoutOther_User_User_updatedByIdToUserInput
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -76387,6 +79799,7 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_deletedByIdToUserInput
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -76444,6 +79857,7 @@ export namespace Prisma {
     User_User_updatedByIdToUser?: UserUpdateOneWithoutOther_User_User_updatedByIdToUserNestedInput
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -76486,6 +79900,7 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_deletedByIdToUserNestedInput
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -76501,6 +79916,7 @@ export namespace Prisma {
     Staff_Booking_staffIdToStaff?: StaffCreateNestedOneWithoutBooking_Booking_staffIdToStaffInput
     InspectionReport?: InspectionReportCreateNestedOneWithoutBookingInput
     Proposal?: ProposalCreateNestedOneWithoutBookingInput
+    Review?: ReviewCreateNestedOneWithoutBookingInput
     Transaction?: TransactionCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogCreateNestedManyWithoutBookingInput
   }
@@ -76518,6 +79934,7 @@ export namespace Prisma {
     completedAt?: Date | string | null
     InspectionReport?: InspectionReportUncheckedCreateNestedOneWithoutBookingInput
     Proposal?: ProposalUncheckedCreateNestedOneWithoutBookingInput
+    Review?: ReviewUncheckedCreateNestedOneWithoutBookingInput
     Transaction?: TransactionUncheckedCreateNestedOneWithoutBookingInput
     WorkLog?: WorkLogUncheckedCreateNestedManyWithoutBookingInput
   }
@@ -76536,6 +79953,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -76556,6 +79974,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -76583,6 +80002,7 @@ export namespace Prisma {
     verifiedAt?: Date | string | null
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
@@ -76590,7 +80010,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutProviderReportInput = {
@@ -76610,12 +80029,12 @@ export namespace Prisma {
     verifiedById?: number | null
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutProviderReportInput = {
@@ -76661,6 +80080,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -76703,6 +80123,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
     WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -76734,6 +80155,7 @@ export namespace Prisma {
     Staff_Booking_staffIdToStaff?: StaffUpdateOneWithoutBooking_Booking_staffIdToStaffNestedInput
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -76751,6 +80173,7 @@ export namespace Prisma {
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -76775,6 +80198,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -76795,6 +80219,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -76828,6 +80253,7 @@ export namespace Prisma {
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
@@ -76835,7 +80261,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutProviderReportInput = {
@@ -76855,12 +80280,12 @@ export namespace Prisma {
     verifiedById?: NullableIntFieldUpdateOperationsInput | number | null
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type UserUpsertWithoutProviderReportInput = {
@@ -76912,6 +80337,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -76954,6 +80380,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -76995,6 +80422,7 @@ export namespace Prisma {
     User_User_updatedByIdToUser?: UserCreateNestedOneWithoutOther_User_User_updatedByIdToUserInput
     other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletCreateNestedOneWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -77037,6 +80465,7 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_deletedByIdToUserInput
     other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
     Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedCreateNestedManyWithoutUser_WithdrawalRequest_userIdToUserInput
     Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
@@ -77045,58 +80474,94 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutWithdrawalRequestInput, UserUncheckedCreateWithoutWithdrawalRequestInput>
   }
 
-  export type ServiceProviderCreateWithoutWithdrawalRequestInput = {
-    description?: string | null
-    address: string
+  export type UserCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
+    email: string
+    password: string
+    name: string
+    phone: string
+    avatar?: string | null
+    totpSecret?: string | null
+    status?: $Enums.UserStatus
+    deletedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt: Date | string
-    companyType?: $Enums.CompanyType
-    industry?: string | null
-    licenseNo?: string | null
-    logo?: string | null
-    taxId?: string
-    verificationStatus?: $Enums.VerificationStatus
-    verifiedAt?: Date | string | null
-    Booking?: BookingCreateNestedManyWithoutServiceProviderInput
-    Conversation?: ConversationCreateNestedManyWithoutServiceProviderInput
-    ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
-    Service?: ServiceCreateNestedManyWithoutServiceProviderInput
-    ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
-    User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
-    User_ServiceProvider_verifiedByIdToUser?: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserInput
-    ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
-    ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
-    Staff?: StaffCreateNestedManyWithoutServiceProviderInput
+    Category_Category_createdByIdToUser?: CategoryCreateNestedManyWithoutUser_Category_createdByIdToUserInput
+    Category_Category_deletedByIdToUser?: CategoryCreateNestedManyWithoutUser_Category_deletedByIdToUserInput
+    Category_Category_updatedByIdToUser?: CategoryCreateNestedManyWithoutUser_Category_updatedByIdToUserInput
+    CustomerProfile?: CustomerProfileCreateNestedOneWithoutUserInput
+    Device?: DeviceCreateNestedManyWithoutUserInput
+    Notification?: NotificationCreateNestedManyWithoutUserInput
+    Permission_Permission_createdByIdToUser?: PermissionCreateNestedManyWithoutUser_Permission_createdByIdToUserInput
+    Permission_Permission_deletedByIdToUser?: PermissionCreateNestedManyWithoutUser_Permission_deletedByIdToUserInput
+    Permission_Permission_updatedByIdToUser?: PermissionCreateNestedManyWithoutUser_Permission_updatedByIdToUserInput
+    ProviderReport?: ProviderReportCreateNestedManyWithoutUserInput
+    RefreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
+    Role_Role_createdByIdToUser?: RoleCreateNestedManyWithoutUser_Role_createdByIdToUserInput
+    Role_Role_deletedByIdToUser?: RoleCreateNestedManyWithoutUser_Role_deletedByIdToUserInput
+    Role_Role_updatedByIdToUser?: RoleCreateNestedManyWithoutUser_Role_updatedByIdToUserInput
+    Service_Service_createdByIdToUser?: ServiceCreateNestedManyWithoutUser_Service_createdByIdToUserInput
+    Service_Service_deletedByIdToUser?: ServiceCreateNestedManyWithoutUser_Service_deletedByIdToUserInput
+    Service_Service_updatedByIdToUser?: ServiceCreateNestedManyWithoutUser_Service_updatedByIdToUserInput
+    ServiceProvider_ServiceProvider_userIdToUser?: ServiceProviderCreateNestedOneWithoutUser_ServiceProvider_userIdToUserInput
+    ServiceProvider_ServiceProvider_verifiedByIdToUser?: ServiceProviderCreateNestedManyWithoutUser_ServiceProvider_verifiedByIdToUserInput
+    Staff?: StaffCreateNestedOneWithoutUserInput
+    User_User_createdByIdToUser?: UserCreateNestedOneWithoutOther_User_User_createdByIdToUserInput
+    other_User_User_createdByIdToUser?: UserCreateNestedManyWithoutUser_User_createdByIdToUserInput
+    User_User_deletedByIdToUser?: UserCreateNestedOneWithoutOther_User_User_deletedByIdToUserInput
+    other_User_User_deletedByIdToUser?: UserCreateNestedManyWithoutUser_User_deletedByIdToUserInput
+    User_User_updatedByIdToUser?: UserCreateNestedOneWithoutOther_User_User_updatedByIdToUserInput
+    other_User_User_updatedByIdToUser?: UserCreateNestedManyWithoutUser_User_updatedByIdToUserInput
+    Wallet?: WalletCreateNestedOneWithoutUserInput
+    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    Role_UserRoles?: RoleCreateNestedManyWithoutUser_UserRolesInput
   }
 
-  export type ServiceProviderUncheckedCreateWithoutWithdrawalRequestInput = {
+  export type UserUncheckedCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
     id?: number
-    description?: string | null
-    address: string
+    email: string
+    password: string
+    name: string
+    phone: string
+    avatar?: string | null
+    totpSecret?: string | null
+    status?: $Enums.UserStatus
+    createdById?: number | null
+    updatedById?: number | null
+    deletedById?: number | null
+    deletedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt: Date | string
-    userId: number
-    companyType?: $Enums.CompanyType
-    industry?: string | null
-    licenseNo?: string | null
-    logo?: string | null
-    taxId?: string
-    verificationStatus?: $Enums.VerificationStatus
-    verifiedAt?: Date | string | null
-    verifiedById?: number | null
-    Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
-    Conversation?: ConversationUncheckedCreateNestedManyWithoutServiceProviderInput
-    ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
-    Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
-    ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
-    ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
-    ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
-    Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
+    Category_Category_createdByIdToUser?: CategoryUncheckedCreateNestedManyWithoutUser_Category_createdByIdToUserInput
+    Category_Category_deletedByIdToUser?: CategoryUncheckedCreateNestedManyWithoutUser_Category_deletedByIdToUserInput
+    Category_Category_updatedByIdToUser?: CategoryUncheckedCreateNestedManyWithoutUser_Category_updatedByIdToUserInput
+    CustomerProfile?: CustomerProfileUncheckedCreateNestedOneWithoutUserInput
+    Device?: DeviceUncheckedCreateNestedManyWithoutUserInput
+    Notification?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    Permission_Permission_createdByIdToUser?: PermissionUncheckedCreateNestedManyWithoutUser_Permission_createdByIdToUserInput
+    Permission_Permission_deletedByIdToUser?: PermissionUncheckedCreateNestedManyWithoutUser_Permission_deletedByIdToUserInput
+    Permission_Permission_updatedByIdToUser?: PermissionUncheckedCreateNestedManyWithoutUser_Permission_updatedByIdToUserInput
+    ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutUserInput
+    RefreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    Role_Role_createdByIdToUser?: RoleUncheckedCreateNestedManyWithoutUser_Role_createdByIdToUserInput
+    Role_Role_deletedByIdToUser?: RoleUncheckedCreateNestedManyWithoutUser_Role_deletedByIdToUserInput
+    Role_Role_updatedByIdToUser?: RoleUncheckedCreateNestedManyWithoutUser_Role_updatedByIdToUserInput
+    Service_Service_createdByIdToUser?: ServiceUncheckedCreateNestedManyWithoutUser_Service_createdByIdToUserInput
+    Service_Service_deletedByIdToUser?: ServiceUncheckedCreateNestedManyWithoutUser_Service_deletedByIdToUserInput
+    Service_Service_updatedByIdToUser?: ServiceUncheckedCreateNestedManyWithoutUser_Service_updatedByIdToUserInput
+    ServiceProvider_ServiceProvider_userIdToUser?: ServiceProviderUncheckedCreateNestedOneWithoutUser_ServiceProvider_userIdToUserInput
+    ServiceProvider_ServiceProvider_verifiedByIdToUser?: ServiceProviderUncheckedCreateNestedManyWithoutUser_ServiceProvider_verifiedByIdToUserInput
+    Staff?: StaffUncheckedCreateNestedOneWithoutUserInput
+    other_User_User_createdByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_createdByIdToUserInput
+    other_User_User_deletedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_deletedByIdToUserInput
+    other_User_User_updatedByIdToUser?: UserUncheckedCreateNestedManyWithoutUser_User_updatedByIdToUserInput
+    Wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
+    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    Role_UserRoles?: RoleUncheckedCreateNestedManyWithoutUser_UserRolesInput
   }
 
-  export type ServiceProviderCreateOrConnectWithoutWithdrawalRequestInput = {
-    where: ServiceProviderWhereUniqueInput
-    create: XOR<ServiceProviderCreateWithoutWithdrawalRequestInput, ServiceProviderUncheckedCreateWithoutWithdrawalRequestInput>
+  export type UserCreateOrConnectWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput, UserUncheckedCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>
   }
 
   export type UserUpsertWithoutWithdrawalRequestInput = {
@@ -77148,6 +80613,7 @@ export namespace Prisma {
     User_User_updatedByIdToUser?: UserUpdateOneWithoutOther_User_User_updatedByIdToUserNestedInput
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -77190,67 +80656,104 @@ export namespace Prisma {
     other_User_User_deletedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_deletedByIdToUserNestedInput
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
-  export type ServiceProviderUpsertWithoutWithdrawalRequestInput = {
-    update: XOR<ServiceProviderUpdateWithoutWithdrawalRequestInput, ServiceProviderUncheckedUpdateWithoutWithdrawalRequestInput>
-    create: XOR<ServiceProviderCreateWithoutWithdrawalRequestInput, ServiceProviderUncheckedCreateWithoutWithdrawalRequestInput>
-    where?: ServiceProviderWhereInput
+  export type UserUpsertWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
+    update: XOR<UserUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput, UserUncheckedUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>
+    create: XOR<UserCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput, UserUncheckedCreateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>
+    where?: UserWhereInput
   }
 
-  export type ServiceProviderUpdateToOneWithWhereWithoutWithdrawalRequestInput = {
-    where?: ServiceProviderWhereInput
-    data: XOR<ServiceProviderUpdateWithoutWithdrawalRequestInput, ServiceProviderUncheckedUpdateWithoutWithdrawalRequestInput>
+  export type UserUpdateToOneWithWhereWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput, UserUncheckedUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput>
   }
 
-  export type ServiceProviderUpdateWithoutWithdrawalRequestInput = {
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: StringFieldUpdateOperationsInput | string
+  export type UserUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    companyType?: EnumCompanyTypeFieldUpdateOperationsInput | $Enums.CompanyType
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    licenseNo?: NullableStringFieldUpdateOperationsInput | string | null
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    taxId?: StringFieldUpdateOperationsInput | string
-    verificationStatus?: EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
-    Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
-    ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
-    Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
-    ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
-    User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
-    User_ServiceProvider_verifiedByIdToUser?: UserUpdateOneWithoutServiceProvider_ServiceProvider_verifiedByIdToUserNestedInput
-    ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
-    ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
-    Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
+    Category_Category_createdByIdToUser?: CategoryUpdateManyWithoutUser_Category_createdByIdToUserNestedInput
+    Category_Category_deletedByIdToUser?: CategoryUpdateManyWithoutUser_Category_deletedByIdToUserNestedInput
+    Category_Category_updatedByIdToUser?: CategoryUpdateManyWithoutUser_Category_updatedByIdToUserNestedInput
+    CustomerProfile?: CustomerProfileUpdateOneWithoutUserNestedInput
+    Device?: DeviceUpdateManyWithoutUserNestedInput
+    Notification?: NotificationUpdateManyWithoutUserNestedInput
+    Permission_Permission_createdByIdToUser?: PermissionUpdateManyWithoutUser_Permission_createdByIdToUserNestedInput
+    Permission_Permission_deletedByIdToUser?: PermissionUpdateManyWithoutUser_Permission_deletedByIdToUserNestedInput
+    Permission_Permission_updatedByIdToUser?: PermissionUpdateManyWithoutUser_Permission_updatedByIdToUserNestedInput
+    ProviderReport?: ProviderReportUpdateManyWithoutUserNestedInput
+    RefreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
+    Role_Role_createdByIdToUser?: RoleUpdateManyWithoutUser_Role_createdByIdToUserNestedInput
+    Role_Role_deletedByIdToUser?: RoleUpdateManyWithoutUser_Role_deletedByIdToUserNestedInput
+    Role_Role_updatedByIdToUser?: RoleUpdateManyWithoutUser_Role_updatedByIdToUserNestedInput
+    Service_Service_createdByIdToUser?: ServiceUpdateManyWithoutUser_Service_createdByIdToUserNestedInput
+    Service_Service_deletedByIdToUser?: ServiceUpdateManyWithoutUser_Service_deletedByIdToUserNestedInput
+    Service_Service_updatedByIdToUser?: ServiceUpdateManyWithoutUser_Service_updatedByIdToUserNestedInput
+    ServiceProvider_ServiceProvider_userIdToUser?: ServiceProviderUpdateOneWithoutUser_ServiceProvider_userIdToUserNestedInput
+    ServiceProvider_ServiceProvider_verifiedByIdToUser?: ServiceProviderUpdateManyWithoutUser_ServiceProvider_verifiedByIdToUserNestedInput
+    Staff?: StaffUpdateOneWithoutUserNestedInput
+    User_User_createdByIdToUser?: UserUpdateOneWithoutOther_User_User_createdByIdToUserNestedInput
+    other_User_User_createdByIdToUser?: UserUpdateManyWithoutUser_User_createdByIdToUserNestedInput
+    User_User_deletedByIdToUser?: UserUpdateOneWithoutOther_User_User_deletedByIdToUserNestedInput
+    other_User_User_deletedByIdToUser?: UserUpdateManyWithoutUser_User_deletedByIdToUserNestedInput
+    User_User_updatedByIdToUser?: UserUpdateOneWithoutOther_User_User_updatedByIdToUserNestedInput
+    other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
+    Wallet?: WalletUpdateOneWithoutUserNestedInput
+    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
-  export type ServiceProviderUncheckedUpdateWithoutWithdrawalRequestInput = {
+  export type UserUncheckedUpdateWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    totpSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedById?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-    companyType?: EnumCompanyTypeFieldUpdateOperationsInput | $Enums.CompanyType
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    licenseNo?: NullableStringFieldUpdateOperationsInput | string | null
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    taxId?: StringFieldUpdateOperationsInput | string
-    verificationStatus?: EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedById?: NullableIntFieldUpdateOperationsInput | number | null
-    Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
-    Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
-    ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
-    Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
-    ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
-    ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
-    ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
-    Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Category_Category_createdByIdToUser?: CategoryUncheckedUpdateManyWithoutUser_Category_createdByIdToUserNestedInput
+    Category_Category_deletedByIdToUser?: CategoryUncheckedUpdateManyWithoutUser_Category_deletedByIdToUserNestedInput
+    Category_Category_updatedByIdToUser?: CategoryUncheckedUpdateManyWithoutUser_Category_updatedByIdToUserNestedInput
+    CustomerProfile?: CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
+    Device?: DeviceUncheckedUpdateManyWithoutUserNestedInput
+    Notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Permission_Permission_createdByIdToUser?: PermissionUncheckedUpdateManyWithoutUser_Permission_createdByIdToUserNestedInput
+    Permission_Permission_deletedByIdToUser?: PermissionUncheckedUpdateManyWithoutUser_Permission_deletedByIdToUserNestedInput
+    Permission_Permission_updatedByIdToUser?: PermissionUncheckedUpdateManyWithoutUser_Permission_updatedByIdToUserNestedInput
+    ProviderReport?: ProviderReportUncheckedUpdateManyWithoutUserNestedInput
+    RefreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    Role_Role_createdByIdToUser?: RoleUncheckedUpdateManyWithoutUser_Role_createdByIdToUserNestedInput
+    Role_Role_deletedByIdToUser?: RoleUncheckedUpdateManyWithoutUser_Role_deletedByIdToUserNestedInput
+    Role_Role_updatedByIdToUser?: RoleUncheckedUpdateManyWithoutUser_Role_updatedByIdToUserNestedInput
+    Service_Service_createdByIdToUser?: ServiceUncheckedUpdateManyWithoutUser_Service_createdByIdToUserNestedInput
+    Service_Service_deletedByIdToUser?: ServiceUncheckedUpdateManyWithoutUser_Service_deletedByIdToUserNestedInput
+    Service_Service_updatedByIdToUser?: ServiceUncheckedUpdateManyWithoutUser_Service_updatedByIdToUserNestedInput
+    ServiceProvider_ServiceProvider_userIdToUser?: ServiceProviderUncheckedUpdateOneWithoutUser_ServiceProvider_userIdToUserNestedInput
+    ServiceProvider_ServiceProvider_verifiedByIdToUser?: ServiceProviderUncheckedUpdateManyWithoutUser_ServiceProvider_verifiedByIdToUserNestedInput
+    Staff?: StaffUncheckedUpdateOneWithoutUserNestedInput
+    other_User_User_createdByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_createdByIdToUserNestedInput
+    other_User_User_deletedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_deletedByIdToUserNestedInput
+    other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
+    Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
+    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
   export type CustomerProfileCreateWithoutConversationInput = {
@@ -77261,6 +80764,7 @@ export namespace Prisma {
     updatedAt: Date | string
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
@@ -77281,6 +80785,7 @@ export namespace Prisma {
     updatedAt: Date | string
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -77309,6 +80814,7 @@ export namespace Prisma {
     verifiedAt?: Date | string | null
     Booking?: BookingCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemCreateNestedManyWithoutServiceProviderInput
     User_ServiceProvider_userIdToUser: UserCreateNestedOneWithoutServiceProvider_ServiceProvider_userIdToUserInput
@@ -77316,7 +80822,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderUncheckedCreateWithoutConversationInput = {
@@ -77336,12 +80841,12 @@ export namespace Prisma {
     verifiedById?: number | null
     Booking?: BookingUncheckedCreateNestedManyWithoutServiceProviderInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutServiceProviderInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceProviderInput
     Service?: ServiceUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceItem?: ServiceItemUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedCreateNestedManyWithoutServiceProviderInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutServiceProviderInput
     Staff?: StaffUncheckedCreateNestedManyWithoutServiceProviderInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedCreateNestedManyWithoutServiceProviderInput
   }
 
   export type ServiceProviderCreateOrConnectWithoutConversationInput = {
@@ -77397,6 +80902,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
@@ -77417,6 +80923,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -77451,6 +80958,7 @@ export namespace Prisma {
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
@@ -77458,7 +80966,6 @@ export namespace Prisma {
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutConversationInput = {
@@ -77478,12 +80985,12 @@ export namespace Prisma {
     verifiedById?: NullableIntFieldUpdateOperationsInput | number | null
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -77525,6 +81032,7 @@ export namespace Prisma {
     Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCustomerProfileInput
     User: UserCreateNestedOneWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportCreateNestedManyWithoutCustomerProfileInput
@@ -77545,6 +81053,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
     ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCustomerProfileInput
     PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
     ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutCustomerProfileInput
@@ -77573,6 +81082,7 @@ export namespace Prisma {
     status?: $Enums.ServiceStatus
     ProposalItem?: ProposalItemCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingCreateNestedManyWithoutServiceInput
+    Review?: ReviewCreateNestedManyWithoutServiceInput
     Category: CategoryCreateNestedOneWithoutServiceInput
     User_Service_createdByIdToUser?: UserCreateNestedOneWithoutService_Service_createdByIdToUserInput
     User_Service_deletedByIdToUser?: UserCreateNestedOneWithoutService_Service_deletedByIdToUserInput
@@ -77602,6 +81112,7 @@ export namespace Prisma {
     status?: $Enums.ServiceStatus
     ProposalItem?: ProposalItemUncheckedCreateNestedManyWithoutServiceInput
     RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutServiceInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutServiceInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedCreateNestedManyWithoutServiceInput
   }
 
@@ -77630,6 +81141,7 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCustomerProfileNestedInput
     User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutCustomerProfileNestedInput
@@ -77650,6 +81162,7 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCustomerProfileNestedInput
     PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
@@ -77684,6 +81197,7 @@ export namespace Prisma {
     status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
@@ -77713,6 +81227,7 @@ export namespace Prisma {
     status?: EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -77790,6 +81305,7 @@ export namespace Prisma {
     other_Category?: CategoryCreateNestedManyWithoutCategoryInput
     User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
     CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetCreateNestedManyWithoutCategoryInput
     Service?: ServiceCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
@@ -77808,6 +81324,7 @@ export namespace Prisma {
     updatedAt: Date | string
     other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
     CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    CustomerAsset?: CustomerAssetUncheckedCreateNestedManyWithoutCategoryInput
     Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
     ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
     StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
@@ -77841,6 +81358,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -77859,9 +81377,234 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryCreateWithoutCustomerAssetInput = {
+    name: string
+    logo?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    User_Category_createdByIdToUser?: UserCreateNestedOneWithoutCategory_Category_createdByIdToUserInput
+    User_Category_deletedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_deletedByIdToUserInput
+    Category?: CategoryCreateNestedOneWithoutOther_CategoryInput
+    other_Category?: CategoryCreateNestedManyWithoutCategoryInput
+    User_Category_updatedByIdToUser?: UserCreateNestedOneWithoutCategory_Category_updatedByIdToUserInput
+    CategoryTranslation?: CategoryTranslationCreateNestedManyWithoutCategoryInput
+    Service?: ServiceCreateNestedManyWithoutCategoryInput
+    ServiceRequest?: ServiceRequestCreateNestedManyWithoutCategoryInput
+    StaffCategory?: StaffCategoryCreateNestedManyWithoutCategoryInput
+    suggested_services_config?: suggested_services_configCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUncheckedCreateWithoutCustomerAssetInput = {
+    id?: number
+    name: string
+    logo?: string | null
+    parentCategoryId?: number | null
+    createdById?: number | null
+    updatedById?: number | null
+    deletedById?: number | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    other_Category?: CategoryUncheckedCreateNestedManyWithoutCategoryInput
+    CategoryTranslation?: CategoryTranslationUncheckedCreateNestedManyWithoutCategoryInput
+    Service?: ServiceUncheckedCreateNestedManyWithoutCategoryInput
+    ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCategoryInput
+    StaffCategory?: StaffCategoryUncheckedCreateNestedManyWithoutCategoryInput
+    suggested_services_config?: suggested_services_configUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutCustomerAssetInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutCustomerAssetInput, CategoryUncheckedCreateWithoutCustomerAssetInput>
+  }
+
+  export type CustomerProfileCreateWithoutCustomerAssetInput = {
+    address?: string | null
+    dateOfBirth?: Date | string | null
+    gender?: $Enums.Gender | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    Booking?: BookingCreateNestedManyWithoutCustomerProfileInput
+    ChatMessage?: ChatMessageCreateNestedManyWithoutCustomerProfileInput
+    Conversation?: ConversationCreateNestedManyWithoutCustomerProfileInput
+    User: UserCreateNestedOneWithoutCustomerProfileInput
+    FavoriteService?: FavoriteServiceCreateNestedManyWithoutCustomerProfileInput
+    PackageRecommendation?: PackageRecommendationCreateNestedManyWithoutCustomerProfileInput
+    ProviderReport?: ProviderReportCreateNestedManyWithoutCustomerProfileInput
+    RecurringBooking?: RecurringBookingCreateNestedManyWithoutCustomerProfileInput
+    Review?: ReviewCreateNestedManyWithoutCustomerProfileInput
+    RewardPoint?: RewardPointCreateNestedManyWithoutCustomerProfileInput
+    ServiceRequest?: ServiceRequestCreateNestedManyWithoutCustomerProfileInput
+  }
+
+  export type CustomerProfileUncheckedCreateWithoutCustomerAssetInput = {
+    id?: number
+    userId: number
+    address?: string | null
+    dateOfBirth?: Date | string | null
+    gender?: $Enums.Gender | null
+    createdAt?: Date | string
+    updatedAt: Date | string
+    Booking?: BookingUncheckedCreateNestedManyWithoutCustomerProfileInput
+    ChatMessage?: ChatMessageUncheckedCreateNestedManyWithoutCustomerProfileInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    FavoriteService?: FavoriteServiceUncheckedCreateNestedManyWithoutCustomerProfileInput
+    PackageRecommendation?: PackageRecommendationUncheckedCreateNestedManyWithoutCustomerProfileInput
+    ProviderReport?: ProviderReportUncheckedCreateNestedManyWithoutCustomerProfileInput
+    RecurringBooking?: RecurringBookingUncheckedCreateNestedManyWithoutCustomerProfileInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutCustomerProfileInput
+    RewardPoint?: RewardPointUncheckedCreateNestedManyWithoutCustomerProfileInput
+    ServiceRequest?: ServiceRequestUncheckedCreateNestedManyWithoutCustomerProfileInput
+  }
+
+  export type CustomerProfileCreateOrConnectWithoutCustomerAssetInput = {
+    where: CustomerProfileWhereUniqueInput
+    create: XOR<CustomerProfileCreateWithoutCustomerAssetInput, CustomerProfileUncheckedCreateWithoutCustomerAssetInput>
+  }
+
+  export type InspectionReportCreateWithoutCustomerAssetInput = {
+    estimatedTime?: number | null
+    note?: string | null
+    images?: InspectionReportCreateimagesInput | string[]
+    createdAt?: Date | string
+    Booking: BookingCreateNestedOneWithoutInspectionReportInput
+    Staff: StaffCreateNestedOneWithoutInspectionReportInput
+  }
+
+  export type InspectionReportUncheckedCreateWithoutCustomerAssetInput = {
+    id?: number
+    bookingId: number
+    staffId: number
+    estimatedTime?: number | null
+    note?: string | null
+    images?: InspectionReportCreateimagesInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type InspectionReportCreateOrConnectWithoutCustomerAssetInput = {
+    where: InspectionReportWhereUniqueInput
+    create: XOR<InspectionReportCreateWithoutCustomerAssetInput, InspectionReportUncheckedCreateWithoutCustomerAssetInput>
+  }
+
+  export type CategoryUpsertWithoutCustomerAssetInput = {
+    update: XOR<CategoryUpdateWithoutCustomerAssetInput, CategoryUncheckedUpdateWithoutCustomerAssetInput>
+    create: XOR<CategoryCreateWithoutCustomerAssetInput, CategoryUncheckedCreateWithoutCustomerAssetInput>
+    where?: CategoryWhereInput
+  }
+
+  export type CategoryUpdateToOneWithWhereWithoutCustomerAssetInput = {
+    where?: CategoryWhereInput
+    data: XOR<CategoryUpdateWithoutCustomerAssetInput, CategoryUncheckedUpdateWithoutCustomerAssetInput>
+  }
+
+  export type CategoryUpdateWithoutCustomerAssetInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User_Category_createdByIdToUser?: UserUpdateOneWithoutCategory_Category_createdByIdToUserNestedInput
+    User_Category_deletedByIdToUser?: UserUpdateOneWithoutCategory_Category_deletedByIdToUserNestedInput
+    Category?: CategoryUpdateOneWithoutOther_CategoryNestedInput
+    other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
+    User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
+    CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    Service?: ServiceUpdateManyWithoutCategoryNestedInput
+    ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
+    StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
+    suggested_services_config?: suggested_services_configUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateWithoutCustomerAssetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    parentCategoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdById?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedById?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedById?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
+    CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
+    ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
+    StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+    suggested_services_config?: suggested_services_configUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CustomerProfileUpsertWithoutCustomerAssetInput = {
+    update: XOR<CustomerProfileUpdateWithoutCustomerAssetInput, CustomerProfileUncheckedUpdateWithoutCustomerAssetInput>
+    create: XOR<CustomerProfileCreateWithoutCustomerAssetInput, CustomerProfileUncheckedCreateWithoutCustomerAssetInput>
+    where?: CustomerProfileWhereInput
+  }
+
+  export type CustomerProfileUpdateToOneWithWhereWithoutCustomerAssetInput = {
+    where?: CustomerProfileWhereInput
+    data: XOR<CustomerProfileUpdateWithoutCustomerAssetInput, CustomerProfileUncheckedUpdateWithoutCustomerAssetInput>
+  }
+
+  export type CustomerProfileUpdateWithoutCustomerAssetInput = {
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Booking?: BookingUpdateManyWithoutCustomerProfileNestedInput
+    ChatMessage?: ChatMessageUpdateManyWithoutCustomerProfileNestedInput
+    Conversation?: ConversationUpdateManyWithoutCustomerProfileNestedInput
+    User?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
+    FavoriteService?: FavoriteServiceUpdateManyWithoutCustomerProfileNestedInput
+    PackageRecommendation?: PackageRecommendationUpdateManyWithoutCustomerProfileNestedInput
+    ProviderReport?: ProviderReportUpdateManyWithoutCustomerProfileNestedInput
+    RecurringBooking?: RecurringBookingUpdateManyWithoutCustomerProfileNestedInput
+    Review?: ReviewUpdateManyWithoutCustomerProfileNestedInput
+    RewardPoint?: RewardPointUpdateManyWithoutCustomerProfileNestedInput
+    ServiceRequest?: ServiceRequestUpdateManyWithoutCustomerProfileNestedInput
+  }
+
+  export type CustomerProfileUncheckedUpdateWithoutCustomerAssetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Booking?: BookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    ChatMessage?: ChatMessageUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    PackageRecommendation?: PackageRecommendationUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    ProviderReport?: ProviderReportUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    RewardPoint?: RewardPointUncheckedUpdateManyWithoutCustomerProfileNestedInput
+    ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCustomerProfileNestedInput
+  }
+
+  export type InspectionReportUpsertWithWhereUniqueWithoutCustomerAssetInput = {
+    where: InspectionReportWhereUniqueInput
+    update: XOR<InspectionReportUpdateWithoutCustomerAssetInput, InspectionReportUncheckedUpdateWithoutCustomerAssetInput>
+    create: XOR<InspectionReportCreateWithoutCustomerAssetInput, InspectionReportUncheckedCreateWithoutCustomerAssetInput>
+  }
+
+  export type InspectionReportUpdateWithWhereUniqueWithoutCustomerAssetInput = {
+    where: InspectionReportWhereUniqueInput
+    data: XOR<InspectionReportUpdateWithoutCustomerAssetInput, InspectionReportUncheckedUpdateWithoutCustomerAssetInput>
+  }
+
+  export type InspectionReportUpdateManyWithWhereWithoutCustomerAssetInput = {
+    where: InspectionReportScalarWhereInput
+    data: XOR<InspectionReportUpdateManyMutationInput, InspectionReportUncheckedUpdateManyWithoutCustomerAssetInput>
   }
 
   export type ProviderReportCreateManyBookingInput = {
@@ -77988,6 +81731,20 @@ export namespace Prisma {
     deletedAt?: Date | string | null
   }
 
+  export type CustomerAssetCreateManyCategoryInput = {
+    id?: number
+    customerId: number
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+  }
+
   export type ServiceCreateManyCategoryInput = {
     id?: number
     basePrice: number
@@ -78046,6 +81803,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -78064,6 +81822,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
@@ -78111,6 +81870,49 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type CustomerAssetUpdateWithoutCategoryInput = {
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutCustomerAssetNestedInput
+    InspectionReport?: InspectionReportUpdateManyWithoutCustomerAssetNestedInput
+  }
+
+  export type CustomerAssetUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    InspectionReport?: InspectionReportUncheckedUpdateManyWithoutCustomerAssetNestedInput
+  }
+
+  export type CustomerAssetUncheckedUpdateManyWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type ServiceUpdateWithoutCategoryInput = {
     basePrice?: FloatFieldUpdateOperationsInput | number
     virtualPrice?: FloatFieldUpdateOperationsInput | number
@@ -78127,6 +81929,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
     ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceNestedInput
@@ -78155,6 +81958,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -78292,6 +82096,20 @@ export namespace Prisma {
     updatedAt: Date | string
   }
 
+  export type CustomerAssetCreateManyCustomerProfileInput = {
+    id?: number
+    categoryId: number
+    brand?: string | null
+    model?: string | null
+    serial?: string | null
+    purchaseDate?: Date | string | null
+    nickname?: string | null
+    lastMaintenanceDate?: Date | string | null
+    totalMaintenanceCount?: number | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+  }
+
   export type FavoriteServiceCreateManyCustomerProfileInput = {
     id?: number
     serviceId: number
@@ -78334,9 +82152,15 @@ export namespace Prisma {
   export type ReviewCreateManyCustomerProfileInput = {
     id?: number
     rating: number
-    comment: string
+    comment?: string | null
     createdAt?: Date | string
-    bookingId?: number | null
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    providerId: number
+    serviceId?: number | null
+    updatedAt: Date | string
   }
 
   export type RewardPointCreateManyCustomerProfileInput = {
@@ -78371,6 +82195,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -78388,6 +82213,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -78459,6 +82285,49 @@ export namespace Prisma {
     unreadByProvider?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomerAssetUpdateWithoutCustomerProfileInput = {
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Category?: CategoryUpdateOneRequiredWithoutCustomerAssetNestedInput
+    InspectionReport?: InspectionReportUpdateManyWithoutCustomerAssetNestedInput
+  }
+
+  export type CustomerAssetUncheckedUpdateWithoutCustomerProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    InspectionReport?: InspectionReportUncheckedUpdateManyWithoutCustomerAssetNestedInput
+  }
+
+  export type CustomerAssetUncheckedUpdateManyWithoutCustomerProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type FavoriteServiceUpdateWithoutCustomerProfileInput = {
@@ -78576,25 +82445,43 @@ export namespace Prisma {
 
   export type ReviewUpdateWithoutCustomerProfileInput = {
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingId?: NullableIntFieldUpdateOperationsInput | number | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Booking?: BookingUpdateOneRequiredWithoutReviewNestedInput
+    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutReviewNestedInput
+    Service?: ServiceUpdateOneWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutCustomerProfileInput = {
     id?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    providerId?: IntFieldUpdateOperationsInput | number
+    serviceId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReviewUncheckedUpdateManyWithoutCustomerProfileInput = {
     id?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookingId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    providerId?: IntFieldUpdateOperationsInput | number
+    serviceId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RewardPointUpdateWithoutCustomerProfileInput = {
@@ -78807,6 +82694,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRole_UserRolesInput = {
@@ -78849,6 +82737,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRole_UserRolesInput = {
@@ -78888,6 +82777,20 @@ export namespace Prisma {
     nextRunDate: Date | string
     active?: boolean
     createdAt?: Date | string
+    updatedAt: Date | string
+  }
+
+  export type ReviewCreateManyServiceInput = {
+    id?: number
+    customerId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    providerId: number
     updatedAt: Date | string
   }
 
@@ -78961,6 +82864,47 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ReviewUpdateWithoutServiceInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Booking?: BookingUpdateOneRequiredWithoutReviewNestedInput
+    CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutReviewNestedInput
+    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutServiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    providerId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutServiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    providerId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Service_ServiceItemsUpdateWithoutServiceInput = {
     ServiceItem?: ServiceItemUpdateOneRequiredWithoutService_ServiceItemsNestedInput
   }
@@ -79008,6 +82952,20 @@ export namespace Prisma {
     reviewedAt?: Date | string | null
     reviewedById?: number | null
     note?: string | null
+  }
+
+  export type ReviewCreateManyServiceProviderInput = {
+    id?: number
+    customerId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    bookingId: number
+    deletedAt?: Date | string | null
+    images?: ReviewCreateimagesInput | string[]
+    isEdited?: boolean
+    serviceId?: number | null
+    updatedAt: Date | string
   }
 
   export type ServiceCreateManyServiceProviderInput = {
@@ -79077,16 +83035,6 @@ export namespace Prisma {
     isActive?: boolean
   }
 
-  export type WithdrawalRequestCreateManyServiceProviderInput = {
-    id?: number
-    amount: number
-    status?: $Enums.WithdrawalStatus
-    createdAt?: Date | string
-    processedAt?: Date | string | null
-    processedById?: number | null
-    note?: string | null
-  }
-
   export type BookingUpdateWithoutServiceProviderInput = {
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -79099,6 +83047,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -79116,6 +83065,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -79207,6 +83157,47 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type ReviewUpdateWithoutServiceProviderInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Booking?: BookingUpdateOneRequiredWithoutReviewNestedInput
+    CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutReviewNestedInput
+    Service?: ServiceUpdateOneWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutServiceProviderInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    serviceId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutServiceProviderInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingId?: IntFieldUpdateOperationsInput | number
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    images?: ReviewUpdateimagesInput | string[]
+    isEdited?: BoolFieldUpdateOperationsInput | boolean
+    serviceId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ServiceUpdateWithoutServiceProviderInput = {
     basePrice?: FloatFieldUpdateOperationsInput | number
     virtualPrice?: FloatFieldUpdateOperationsInput | number
@@ -79223,6 +83214,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
@@ -79251,6 +83243,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -79425,35 +83418,6 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type WithdrawalRequestUpdateWithoutServiceProviderInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-    User?: UserUpdateOneWithoutWithdrawalRequestNestedInput
-  }
-
-  export type WithdrawalRequestUncheckedUpdateWithoutServiceProviderInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    processedById?: NullableIntFieldUpdateOperationsInput | number | null
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    processedById?: NullableIntFieldUpdateOperationsInput | number | null
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type BookingCreateManyStaff_Booking_staffIdToStaffInput = {
     id?: number
     customerId: number
@@ -79503,6 +83467,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUpdateManyWithoutBookingNestedInput
   }
@@ -79520,6 +83485,7 @@ export namespace Prisma {
     InspectionReport?: InspectionReportUncheckedUpdateOneWithoutBookingNestedInput
     Proposal?: ProposalUncheckedUpdateOneWithoutBookingNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutBookingNestedInput
+    Review?: ReviewUncheckedUpdateOneWithoutBookingNestedInput
     Transaction?: TransactionUncheckedUpdateOneWithoutBookingNestedInput
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
@@ -79542,6 +83508,7 @@ export namespace Prisma {
     images?: InspectionReportUpdateimagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Booking?: BookingUpdateOneRequiredWithoutInspectionReportNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutInspectionReportNestedInput
   }
 
   export type InspectionReportUncheckedUpdateWithoutStaffInput = {
@@ -79551,6 +83518,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     images?: InspectionReportUpdateimagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutInspectionReportNestedInput
   }
 
   export type InspectionReportUncheckedUpdateManyWithoutStaffInput = {
@@ -79882,11 +83850,21 @@ export namespace Prisma {
 
   export type WithdrawalRequestCreateManyUserInput = {
     id?: number
-    providerId: number
     amount: number
     status?: $Enums.WithdrawalStatus
     createdAt?: Date | string
     processedAt?: Date | string | null
+    note?: string | null
+    userId: number
+  }
+
+  export type WithdrawalRequestCreateManyUser_WithdrawalRequest_userIdToUserInput = {
+    id?: number
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    createdAt?: Date | string
+    processedAt?: Date | string | null
+    processedById?: number | null
     note?: string | null
   }
 
@@ -79901,6 +83879,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -79919,6 +83898,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
@@ -79948,6 +83928,7 @@ export namespace Prisma {
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     User_Category_updatedByIdToUser?: UserUpdateOneWithoutCategory_Category_updatedByIdToUserNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -79966,6 +83947,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
@@ -79995,6 +83977,7 @@ export namespace Prisma {
     Category?: CategoryUpdateOneWithoutOther_CategoryNestedInput
     other_Category?: CategoryUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUpdateManyWithoutCategoryNestedInput
@@ -80013,6 +83996,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     other_Category?: CategoryUncheckedUpdateManyWithoutCategoryNestedInput
     CategoryTranslation?: CategoryTranslationUncheckedUpdateManyWithoutCategoryNestedInput
+    CustomerAsset?: CustomerAssetUncheckedUpdateManyWithoutCategoryNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutCategoryNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutCategoryNestedInput
     StaffCategory?: StaffCategoryUncheckedUpdateManyWithoutCategoryNestedInput
@@ -80390,6 +84374,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
     ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceNestedInput
@@ -80418,6 +84403,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -80457,6 +84443,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceNestedInput
@@ -80485,6 +84472,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -80524,6 +84512,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUpdateManyWithoutServiceNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceNestedInput
     User_Service_createdByIdToUser?: UserUpdateOneWithoutService_Service_createdByIdToUserNestedInput
     User_Service_deletedByIdToUser?: UserUpdateOneWithoutService_Service_deletedByIdToUserNestedInput
@@ -80552,6 +84541,7 @@ export namespace Prisma {
     FavoriteService?: FavoriteServiceUncheckedUpdateManyWithoutServiceNestedInput
     ProposalItem?: ProposalItemUncheckedUpdateManyWithoutServiceNestedInput
     RecurringBooking?: RecurringBookingUncheckedUpdateManyWithoutServiceNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceNestedInput
     Service_ServiceItems?: Service_ServiceItemsUncheckedUpdateManyWithoutServiceNestedInput
   }
 
@@ -80590,13 +84580,13 @@ export namespace Prisma {
     Booking?: BookingUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUpdateManyWithoutServiceProviderNestedInput
     User_ServiceProvider_userIdToUser?: UserUpdateOneRequiredWithoutServiceProvider_ServiceProvider_userIdToUserNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateWithoutUser_ServiceProvider_verifiedByIdToUserInput = {
@@ -80616,12 +84606,12 @@ export namespace Prisma {
     Booking?: BookingUncheckedUpdateManyWithoutServiceProviderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ProviderReport?: ProviderReportUncheckedUpdateManyWithoutServiceProviderNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutServiceProviderNestedInput
     Service?: ServiceUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceItem?: ServiceItemUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceProviderTranslation?: ServiceProviderTranslationUncheckedUpdateManyWithoutServiceProviderNestedInput
     ServiceRequest?: ServiceRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
     Staff?: StaffUncheckedUpdateManyWithoutServiceProviderNestedInput
-    WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutServiceProviderNestedInput
   }
 
   export type ServiceProviderUncheckedUpdateManyWithoutUser_ServiceProvider_verifiedByIdToUserInput = {
@@ -80678,6 +84668,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -80720,6 +84711,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -80777,6 +84769,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -80819,6 +84812,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -80876,6 +84870,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -80918,6 +84913,7 @@ export namespace Prisma {
     other_User_User_updatedByIdToUser?: UserUncheckedUpdateManyWithoutUser_User_updatedByIdToUserNestedInput
     Wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     WithdrawalRequest?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    WithdrawalRequest_WithdrawalRequest_userIdToUser?: WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserNestedInput
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
@@ -80943,26 +84939,55 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutWithdrawalRequestNestedInput
+    User_WithdrawalRequest_userIdToUser?: UserUpdateOneRequiredWithoutWithdrawalRequest_WithdrawalRequest_userIdToUserNestedInput
   }
 
   export type WithdrawalRequestUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    providerId?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type WithdrawalRequestUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    providerId?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WithdrawalRequestUpdateWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    User?: UserUpdateOneWithoutWithdrawalRequestNestedInput
+  }
+
+  export type WithdrawalRequestUncheckedUpdateWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    processedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type WithdrawalRequestUncheckedUpdateManyWithoutUser_WithdrawalRequest_userIdToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    processedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -80998,6 +85023,50 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomerAssetUpdateWithoutInspectionReportInput = {
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Category?: CategoryUpdateOneRequiredWithoutCustomerAssetNestedInput
+    CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutCustomerAssetNestedInput
+  }
+
+  export type CustomerAssetUncheckedUpdateWithoutInspectionReportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CustomerAssetUncheckedUpdateManyWithoutInspectionReportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMaintenanceDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalMaintenanceCount?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type Service_ServiceItemsCreateManyServiceItemInput = {
@@ -81080,6 +85149,35 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
     sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionReportUpdateWithoutCustomerAssetInput = {
+    estimatedTime?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: InspectionReportUpdateimagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Booking?: BookingUpdateOneRequiredWithoutInspectionReportNestedInput
+    Staff?: StaffUpdateOneRequiredWithoutInspectionReportNestedInput
+  }
+
+  export type InspectionReportUncheckedUpdateWithoutCustomerAssetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookingId?: IntFieldUpdateOperationsInput | number
+    staffId?: IntFieldUpdateOperationsInput | number
+    estimatedTime?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: InspectionReportUpdateimagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionReportUncheckedUpdateManyWithoutCustomerAssetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookingId?: IntFieldUpdateOperationsInput | number
+    staffId?: IntFieldUpdateOperationsInput | number
+    estimatedTime?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: InspectionReportUpdateimagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

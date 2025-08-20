@@ -224,7 +224,27 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         message = (responseData && responseData.message) || 'Manual PayOS failed handled';
         break;
       }
+case 'PAY_EXISTING_SERVICE_REQUEST': {
+        if (!data) {
+          throw new AppError(
+            'Error.MissingData',
+            { message: 'Missing data for PAY_EXISTING_SERVICE_REQUEST', path: 'data' },
+            400
+          );
+        }
 
+        const { serviceRequestId, userId, paymentMethod, amount } = data
+     
+        responseData = await paymentService.payExistingServiceRequest({
+          serviceRequestId,
+          userId,
+          paymentMethod,
+          amount,
+        });
+
+        message = 'Service request payment processed successfully';
+        break;
+      }
       default: {
         throw new AppError(
           'Error.UnknownRequestType',

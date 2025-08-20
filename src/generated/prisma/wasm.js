@@ -264,7 +264,13 @@ exports.Prisma.ReviewScalarFieldEnum = {
   rating: 'rating',
   comment: 'comment',
   createdAt: 'createdAt',
-  bookingId: 'bookingId'
+  bookingId: 'bookingId',
+  deletedAt: 'deletedAt',
+  images: 'images',
+  isEdited: 'isEdited',
+  providerId: 'providerId',
+  serviceId: 'serviceId',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.RewardPointScalarFieldEnum = {
@@ -494,13 +500,13 @@ exports.Prisma.ProviderReportScalarFieldEnum = {
 
 exports.Prisma.WithdrawalRequestScalarFieldEnum = {
   id: 'id',
-  providerId: 'providerId',
   amount: 'amount',
   status: 'status',
   createdAt: 'createdAt',
   processedAt: 'processedAt',
   processedById: 'processedById',
-  note: 'note'
+  note: 'note',
+  userId: 'userId'
 };
 
 exports.Prisma.ConversationScalarFieldEnum = {
@@ -542,6 +548,21 @@ exports.Prisma.Suggested_services_configScalarFieldEnum = {
   is_active: 'is_active',
   created_at: 'created_at',
   updated_at: 'updated_at'
+};
+
+exports.Prisma.CustomerAssetScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  categoryId: 'categoryId',
+  brand: 'brand',
+  model: 'model',
+  serial: 'serial',
+  purchaseDate: 'purchaseDate',
+  nickname: 'nickname',
+  lastMaintenanceDate: 'lastMaintenanceDate',
+  totalMaintenanceCount: 'totalMaintenanceCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -658,7 +679,8 @@ exports.RequestStatus = exports.$Enums.RequestStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
   ESTIMATED: 'ESTIMATED',
-  CANCELLED: 'CANCELLED'
+  CANCELLED: 'CANCELLED',
+  WAIT_FOR_PAYMENT: 'WAIT_FOR_PAYMENT'
 };
 
 exports.ProposalStatus = exports.$Enums.ProposalStatus = {
@@ -724,7 +746,8 @@ exports.Prisma.ModelName = {
   Conversation: 'Conversation',
   FavoriteService: 'FavoriteService',
   Message: 'Message',
-  suggested_services_config: 'suggested_services_config'
+  suggested_services_config: 'suggested_services_config',
+  CustomerAsset: 'CustomerAsset'
 };
 
 /**
