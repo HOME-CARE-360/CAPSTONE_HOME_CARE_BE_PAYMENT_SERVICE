@@ -38,7 +38,7 @@ export const upsertBookingTransaction = async ({
         throw new AppError(
           "Error.TransactionAlreadyPaid",
           { message: `Booking ${bookingId} has already been paid.` },
-          409
+          409,
         );
       }
 
@@ -74,7 +74,6 @@ export const upsertBookingTransaction = async ({
   });
 };
 
-
 /**
  * Tạo transaction cho booking (bảng Transaction)
  */
@@ -103,7 +102,10 @@ export const createTransaction = async ({
 /**
  * Tăng số dư ví (top-up)
  */
-export const topUpWallet = async (userId: number, amount: number): Promise<void> => {
+export const topUpWallet = async (
+  userId: number,
+  amount: number,
+): Promise<void> => {
   try {
     await prisma.wallet.update({
       where: { userId },
@@ -117,7 +119,7 @@ export const topUpWallet = async (userId: number, amount: number): Promise<void>
     throw new AppError(
       "Error.WalletTopUpFailed",
       { message: "Failed to top up wallet", error: err?.message || err },
-      500
+      500,
     );
   }
 };
@@ -125,7 +127,9 @@ export const topUpWallet = async (userId: number, amount: number): Promise<void>
 /**
  * Tìm ví theo userId
  */
-export const findWalletByUserId = async (userId: number): Promise<Wallet | null> => {
+export const findWalletByUserId = async (
+  userId: number,
+): Promise<Wallet | null> => {
   return prisma.wallet.findUnique({ where: { userId } });
 };
 
@@ -162,27 +166,27 @@ export const markTransactionAsFailed = async (orderCode: string) => {
  * ❷ amountIn là số tiền nạp vào ví (Int)
  */
 type CreatePaymentTxBase = {
-  referenceNumber: string;          // orderCode từ cổng
-  gateway: string;                  // "PAYOS" | "MOMO" | ...
+  referenceNumber: string; // orderCode từ cổng
+  gateway: string; // "PAYOS" | "MOMO" | ...
   status?: PaymentTransactionStatus; // mặc định PENDING
   accountNumber?: string | null;
   subAccount?: string | null;
-  body?: string | null;             // JSON string tuỳ ý (metadata)
+  body?: string | null; // JSON string tuỳ ý (metadata)
   serviceRequestId?: number | null; // gắn nếu giao dịch liên quan SR (tuỳ nghiệp vụ)
 };
 
 type CreateTopUp = CreatePaymentTxBase & {
   kind: "TOPUP";
-  userId: number;                   // chủ ví
-  amount: number;                   // số tiền nạp
+  userId: number; // chủ ví
+  amount: number; // số tiền nạp
 };
 
 type CreateDeposit = CreatePaymentTxBase & {
   kind: "DEPOSIT";
-  userId: number;            
-  serviceRequestId: number;               
-  amount: number;                   
-  description?: string;             
+  userId: number;
+  serviceRequestId: number;
+  amount: number;
+  description?: string;
 };
 
 type CreatePaymentTx = CreateTopUp | CreateDeposit;
@@ -194,19 +198,28 @@ type CreatePaymentTx = CreateTopUp | CreateDeposit;
  * Idempotent nhẹ theo referenceNumber: nếu đã có PENDING/PROCESSING -> trả về luôn.
  */
 export const createPaymentTransaction = async (
-  input: CreatePaymentTx
+  input: CreatePaymentTx,
 ): Promise<PaymentTransaction> => {
   // 1) Chuẩn hoá & validate số tiền (Int VND)
   const rawAmount = Math.trunc(Number(input.amount));
   if (!Number.isFinite(rawAmount) || rawAmount <= 0) {
-    throw new AppError("Error.InvalidAmount", { message: "Amount must be a positive integer (VND)" }, 400);
+    throw new AppError(
+      "Error.InvalidAmount",
+      { message: "Amount must be a positive integer (VND)" },
+      400,
+    );
   }
 
   // 2) Idempotent nhẹ theo referenceNumber + trạng thái đang mở
   const existing = await prisma.paymentTransaction.findFirst({
     where: {
       referenceNumber: input.referenceNumber,
-      status: { in: [PaymentTransactionStatus.PENDING, PaymentTransactionStatus.PROCESSING] },
+      status: {
+        in: [
+          PaymentTransactionStatus.PENDING,
+          PaymentTransactionStatus.PROCESSING,
+        ],
+      },
     },
   });
   if (existing) return existing;
@@ -242,7 +255,7 @@ export const createPaymentTransaction = async (
     throw new AppError(
       "Error.ServiceRequestRequired",
       { message: "DEPOSIT requires a valid serviceRequestId." },
-      400
+      400,
     );
   }
 
@@ -261,7 +274,6 @@ export const createPaymentTransaction = async (
     },
   });
 };
-
 
 /**
  * Tìm PaymentTransaction theo referenceNumber (orderCode PayOS)
@@ -286,7 +298,7 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
     throw new AppError(
       "Error.PaymentTransactionNotFound",
       { message: `Top-up transaction with orderCode ${orderCode} not found.` },
-      404
+      404,
     );
   }
 
@@ -296,8 +308,10 @@ export const markPaymentTransactionAsPaid = async (orderCode: string) => {
   ) {
     throw new AppError(
       "Error.InvalidStatusForSuccess",
-      { message: `Cannot mark transaction as SUCCESS from status ${paymentTx.status}.` },
-      400
+      {
+        message: `Cannot mark transaction as SUCCESS from status ${paymentTx.status}.`,
+      },
+      400,
     );
   }
 
@@ -323,7 +337,7 @@ export const markPaymentTransactionAsFailed = async (orderCode: string) => {
     throw new AppError(
       "Error.PaymentTransactionNotFound",
       { message: `Top-up transaction with orderCode ${orderCode} not found.` },
-      404
+      404,
     );
   }
 
@@ -333,8 +347,10 @@ export const markPaymentTransactionAsFailed = async (orderCode: string) => {
   ) {
     throw new AppError(
       "Error.InvalidStatusForFailure",
-      { message: `Cannot mark transaction as FAILED from status ${paymentTx.status}.` },
-      400
+      {
+        message: `Cannot mark transaction as FAILED from status ${paymentTx.status}.`,
+      },
+      400,
     );
   }
 
@@ -369,7 +385,7 @@ export const payProposalByBookingId = async ({
     throw new AppError(
       "Error.ProposalNotFound",
       { message: `No proposal found for bookingId ${bookingId}` },
-      404
+      404,
     );
   }
 
@@ -391,35 +407,40 @@ export const payProposalByBookingId = async ({
 export const payProposalWithWalletAtomic = async (
   userId: number,
   bookingId: number,
-  amount: number
-): Promise<PaymentTransaction> => {
+  amount: number,
+): Promise<Transaction> => {
   // Chuẩn hoá VND (Int)
   const amountVnd = Math.trunc(Number(amount));
   if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
-    throw new AppError("Error.InvalidAmount", { message: "Amount must be a positive integer (VND)" }, 400);
+    throw new AppError(
+      "Error.InvalidAmount",
+      { message: "Amount must be a positive integer (VND)" },
+      400,
+    );
   }
 
   return prisma.$transaction(async (tx) => {
-    // 1) Lấy booking + serviceRequestId để gắn vào PaymentTransaction
+    // 1) Lấy booking để kiểm tra tồn tại
     const booking = await tx.booking.findUnique({
       where: { id: bookingId },
-      select: { serviceRequestId: true },
+      select: { id: true },
     });
     if (!booking) {
-      throw new AppError("Error.BookingNotFound", { message: `Booking ${bookingId} not found` }, 404);
-    }
-    if (!booking.serviceRequestId) {
       throw new AppError(
-        "Error.ServiceRequestRequired",
-        { message: `Booking ${bookingId} has no linked ServiceRequest` },
-        400
+        "Error.BookingNotFound",
+        { message: `Booking ${bookingId} not found` },
+        404,
       );
     }
 
     // 2) Đọc ví và kiểm tra số dư
     const wallet = await tx.wallet.findUnique({ where: { userId } });
     if (!wallet) {
-      throw new AppError("Error.WalletNotFound", { message: "Wallet not found for user" }, 404);
+      throw new AppError(
+        "Error.WalletNotFound",
+        { message: "Wallet not found for user" },
+        404,
+      );
     }
     if (wallet.balance < amountVnd) {
       throw new AppError(
@@ -429,7 +450,7 @@ export const payProposalWithWalletAtomic = async (
           currentBalance: wallet.balance,
           requiredAmount: amountVnd,
         },
-        400
+        400,
       );
     }
 
@@ -439,24 +460,50 @@ export const payProposalWithWalletAtomic = async (
       data: { balance: { decrement: amountVnd }, updatedAt: new Date() },
     });
 
-    // 4) Tạo PaymentTransaction (DEPOSIT) – SUCCESS ngay vì là ví nội bộ
-    const referenceNumber = `WALLET-${bookingId}-${Date.now()}`;
-    const paymentTx = await tx.paymentTransaction.create({
-      data: {
-        gateway: "INTERNAL_WALLET",
-        accountNumber: null,
-        subAccount: null,
-        amountIn: 0,
-        amountOut: amountVnd,
-        accumulated: 0,
-        referenceNumber,
-        transactionContent: `Proposal payment via wallet for booking #${bookingId}`,
-        body: JSON.stringify({ bookingId, userId, source: "WALLET" }),
-        serviceRequestId: booking.serviceRequestId, // bắt buộc theo schema của bạn
-        status: PaymentTransactionStatus.SUCCESS,   // thanh toán nội bộ → success tức thì
-        userId,
-      },
+    // 4) Tạo orderCode và Transaction
+    const orderCode = `WALLET-${bookingId}-${Date.now()}`;
+    
+    // Sử dụng upsert logic tương tự như các hàm khác
+    const existingTx = await tx.transaction.findUnique({
+      where: { bookingId }
     });
+
+    let transaction: Transaction;
+    
+    if (existingTx) {
+      if (existingTx.status === PaymentStatus.PAID) {
+        throw new AppError(
+          "Error.TransactionAlreadyPaid",
+          { message: `Booking ${bookingId} has already been paid.` },
+          409,
+        );
+      }
+      // Update existing transaction
+      transaction = await tx.transaction.update({
+        where: { id: existingTx.id },
+        data: {
+          amount: amountVnd,
+          method: PaymentMethod.WALLET,
+          orderCode,
+          status: PaymentStatus.PAID,
+          paidAt: new Date(),
+          createdById: userId,
+        },
+      });
+    } else {
+      // Create new transaction
+      transaction = await tx.transaction.create({
+        data: {
+          bookingId,
+          amount: amountVnd,
+          method: PaymentMethod.WALLET,
+          orderCode,
+          status: PaymentStatus.PAID,
+          paidAt: new Date(),
+          createdById: userId,
+        },
+      });
+    }
 
     // 5) Cập nhật Proposal → ACCEPTED
     await tx.proposal.update({
@@ -464,9 +511,10 @@ export const payProposalWithWalletAtomic = async (
       data: { status: ProposalStatus.ACCEPTED },
     });
 
-    return paymentTx;
+    return transaction;
   });
 };
+
 export const findProposalByBookingId = async (bookingId: number) => {
   return prisma.proposal.findUnique({ where: { bookingId } });
 };
@@ -487,7 +535,9 @@ export async function getBookingTxWithOwner(orderCode: string) {
   return prisma.transaction.findUnique({
     where: { orderCode },
     include: {
-      Booking: { select: { id: true, CustomerProfile: { select: { userId: true } } } },
+      Booking: {
+        select: { id: true, CustomerProfile: { select: { userId: true } } },
+      },
     },
   });
 }
@@ -509,33 +559,33 @@ export async function getPaymentTxByReference(orderCode: string) {
 /** Map PaymentStatus -> unified status */
 export function mapBookingTxStatus(
   s: PaymentStatus,
-): 'PENDING' | 'PAID' | 'FAILED' {
+): "PENDING" | "PAID" | "FAILED" {
   switch (s) {
-    case 'PAID':
-      return 'PAID';
-    case 'FAILED':
-      return 'FAILED';
-    case 'PENDING':
+    case "PAID":
+      return "PAID";
+    case "FAILED":
+      return "FAILED";
+    case "PENDING":
     default:
-      return 'PENDING';
+      return "PENDING";
   }
 }
 
 export function mapPaymentTxStatus(
   s: PaymentTransactionStatus,
-): 'PENDING' | 'PAID' | 'FAILED' {
+): "PENDING" | "PAID" | "FAILED" {
   switch (s) {
-    case 'SUCCESS':
-      return 'PAID';
-    case 'FAILED':
-    case 'CANCELLED':
-    case 'REFUNDED':
-    case 'EXPIRED':
-      return 'FAILED';
-    case 'PENDING':
-    case 'PROCESSING':
-    case 'MANUAL_REVIEW':
+    case "SUCCESS":
+      return "PAID";
+    case "FAILED":
+    case "CANCELLED":
+    case "REFUNDED":
+    case "EXPIRED":
+      return "FAILED";
+    case "PENDING":
+    case "PROCESSING":
+    case "MANUAL_REVIEW":
     default:
-      return 'PENDING';
+      return "PENDING";
   }
 }

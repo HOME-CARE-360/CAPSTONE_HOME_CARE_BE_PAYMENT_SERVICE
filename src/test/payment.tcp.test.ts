@@ -6,7 +6,11 @@ import { sendTCPRequest } from "../tcp/client";
  * @param result The result object from the TCP request.
  * @param timestamp The timestamp of the request.
  */
-function logResponse(title: string, result: any, timestamp = new Date().toISOString()) {
+function logResponse(
+  title: string,
+  result: any,
+  timestamp = new Date().toISOString(),
+) {
   if (result?.statusCode && result.statusCode >= 400) {
     console.warn(`⚠️ [${timestamp}] ${title} Failed:`, {
       statusCode: result.statusCode,
@@ -34,12 +38,18 @@ export async function testCreateTransaction() {
       method: "BANK_TRANSFER",
     },
   };
-  console.log(`📦 Sending CREATE_TRANSACTION request at ${timestamp}:`, payload);
+  console.log(
+    `📦 Sending CREATE_TRANSACTION request at ${timestamp}:`,
+    payload,
+  );
   try {
     const result = await sendTCPRequest(payload);
     logResponse("CREATE_TRANSACTION", result, timestamp);
   } catch (error: any) {
-    console.error(`❌ [${timestamp}] CREATE_TRANSACTION Error:`, error?.message || error);
+    console.error(
+      `❌ [${timestamp}] CREATE_TRANSACTION Error:`,
+      error?.message || error,
+    );
   }
 }
 
@@ -62,7 +72,10 @@ export async function testCreateTopUp() {
     const result = await sendTCPRequest(payload);
     logResponse("CREATE_TOPUP", result, timestamp);
   } catch (error: any) {
-    console.error(`❌ [${timestamp}] CREATE_TOPUP Error:`, error?.message || error);
+    console.error(
+      `❌ [${timestamp}] CREATE_TOPUP Error:`,
+      error?.message || error,
+    );
   }
 }
 
@@ -72,7 +85,7 @@ export async function testHandlePayOSCallback() {
   const payload = {
     type: "HANDLE_PAYOS_CALLBACK",
     data: {
-      orderCode: "1754846680166",  
+      orderCode: "1754846680166",
       status: "PAID",
     },
   };
@@ -83,7 +96,10 @@ export async function testHandlePayOSCallback() {
     const result = await sendTCPRequest(payload);
     logResponse("HANDLE_PAYOS_CALLBACK", result, timestamp);
   } catch (error: any) {
-    console.error(`❌ [${timestamp}] HANDLE_PAYOS_CALLBACK Error:`, error?.message || error);
+    console.error(
+      `❌ [${timestamp}] HANDLE_PAYOS_CALLBACK Error:`,
+      error?.message || error,
+    );
   }
 }
 
