@@ -597,8 +597,9 @@ export const createProposalPayment = async ({
     proposal.ProposalItem.reduce(
       (sum, item) => sum + item.quantity * item.Service.virtualPrice,
       0,
-    ) - 100000;
+    ) - 30000;
 
+    console.log("Raw amount:", rawAmount);
   const amountVnd = Math.trunc(Number(rawAmount));
   if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
     throw new AppError(
@@ -649,7 +650,7 @@ if (paymentMethod === PaymentMethod.WALLET) {
     bookingId: tx.bookingId,
     amount: tx.amount,
     method: tx.method,
-    status: tx.status as PaymentStatus, // PENDING
+    status: tx.status as PaymentStatus,
     createdAt: tx.createdAt,
     orderCode: String(orderCode),
     responseData,
