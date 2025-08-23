@@ -7,6 +7,7 @@ import {
   ProposalStatus,
   Wallet,
   PaymentTransaction,
+  BookingStatus,
 } from "../generated/prisma";
 import { AppError } from "../handlers/error";
 
@@ -409,7 +410,6 @@ export const payProposalWithWalletAtomic = async (
   bookingId: number,
   amount: number,
 ): Promise<Transaction> => {
-  // Chuẩn hoá VND (Int)
   const amountVnd = Math.trunc(Number(amount));
   if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
     throw new AppError(
@@ -420,7 +420,7 @@ export const payProposalWithWalletAtomic = async (
   }
 
   return prisma.$transaction(async (tx) => {
-    // 1) Lấy booking để kiểm tra tồn tại
+    // 1) Validate booking
     const booking = await tx.booking.findUnique({
       where: { id: bookingId },
       select: { id: true },
@@ -433,7 +433,7 @@ export const payProposalWithWalletAtomic = async (
       );
     }
 
-    // 2) Đọc ví và kiểm tra số dư
+    // 2) Check wallet
     const wallet = await tx.wallet.findUnique({ where: { userId } });
     if (!wallet) {
       throw new AppError(
@@ -454,22 +454,17 @@ export const payProposalWithWalletAtomic = async (
       );
     }
 
-    // 3) Trừ ví
+    // 3) Deduct wallet
     await tx.wallet.update({
       where: { userId },
       data: { balance: { decrement: amountVnd }, updatedAt: new Date() },
     });
 
-    // 4) Tạo orderCode và Transaction
+    // 4) Create or update Transaction
     const orderCode = `WALLET-${bookingId}-${Date.now()}`;
-    
-    // Sử dụng upsert logic tương tự như các hàm khác
-    const existingTx = await tx.transaction.findUnique({
-      where: { bookingId }
-    });
+    const existingTx = await tx.transaction.findUnique({ where: { bookingId } });
 
     let transaction: Transaction;
-    
     if (existingTx) {
       if (existingTx.status === PaymentStatus.PAID) {
         throw new AppError(
@@ -478,7 +473,6 @@ export const payProposalWithWalletAtomic = async (
           409,
         );
       }
-      // Update existing transaction
       transaction = await tx.transaction.update({
         where: { id: existingTx.id },
         data: {
@@ -491,7 +485,6 @@ export const payProposalWithWalletAtomic = async (
         },
       });
     } else {
-      // Create new transaction
       transaction = await tx.transaction.create({
         data: {
           bookingId,
@@ -505,15 +498,22 @@ export const payProposalWithWalletAtomic = async (
       });
     }
 
-    // 5) Cập nhật Proposal → ACCEPTED
+    // 5) Update Proposal → ACCEPTED
     await tx.proposal.update({
       where: { bookingId },
       data: { status: ProposalStatus.ACCEPTED },
     });
 
+    // 6) Update Booking → CONFIRMED
+    await tx.booking.update({
+      where: { id: bookingId },
+      data: { status: BookingStatus.CONFIRMED },
+    });
+
     return transaction;
   });
 };
+  
 
 export const findProposalByBookingId = async (bookingId: number) => {
   return prisma.proposal.findUnique({ where: { bookingId } });

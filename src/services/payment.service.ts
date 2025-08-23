@@ -618,7 +618,6 @@ if (paymentMethod === PaymentMethod.WALLET) {
     amountVnd,
   );
 
-  // Proposal đã được update trong payProposalWithWalletAtomic, không cần update lại
   
   return {
     message: "Proposal paid via wallet",
@@ -717,9 +716,6 @@ export async function getPaymentStatus(orderCode: string) {
   };
 }
 
-/**
- * Xử lý thủ công khi payment thành công (trường hợp webhook PayOS lỗi)
- */
 export async function handlePayOSSuccessManual(orderCode: string) {
   return prisma.$transaction(async (tx) => {
     // 1) Booking transaction
@@ -776,9 +772,6 @@ export async function handlePayOSSuccessManual(orderCode: string) {
   });
 }
 
-/**
- * Xử lý thủ công khi payment thất bại (trường hợp webhook PayOS lỗi)
- */
 export async function handlePayOSFailedManual(orderCode: string) {
   return prisma.$transaction(async (tx) => {
     // 1) Booking transaction
