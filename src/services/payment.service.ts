@@ -593,13 +593,26 @@ export const createProposalPayment = async ({
     );
   }
 
+  // Only include items with status = ACCEPTED
+  const acceptedItems = proposal.ProposalItem.filter(
+    (item) => item.status === "ACCEPTED",
+  );
+  if (acceptedItems.length === 0) {
+    throw new AppError(
+      "Error.NoAcceptedProposalItem",
+      { message: `No ACCEPTED proposal items for booking #${bookingId}` },
+      400,
+    );
+  }
+
   const rawAmount =
-    proposal.ProposalItem.reduce(
-      (sum, item) => sum + item.quantity * item.Service.virtualPrice,
+    acceptedItems.reduce(
+      (sum, item) => sum + item.quantity * item.amount,
       0,
     ) - 30000;
 
-    console.log("Raw amount:", rawAmount);
+  console.log("Raw amount (ACCEPTED only):", rawAmount);
+
   const amountVnd = Math.trunc(Number(rawAmount));
   if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
     throw new AppError(
@@ -611,25 +624,24 @@ export const createProposalPayment = async ({
 
   const paymentMethod = method;
 
-if (paymentMethod === PaymentMethod.WALLET) {
-  const transaction = await paymentRepo.payProposalWithWalletAtomic(
-    userId,
-    bookingId,
-    amountVnd,
-  );
+  if (paymentMethod === PaymentMethod.WALLET) {
+    const transaction = await paymentRepo.payProposalWithWalletAtomic(
+      userId,
+      bookingId,
+      amountVnd,
+    );
 
-  
-  return {
-    message: "Proposal paid via wallet",
-    transactionId: transaction.id,
-    orderCode: transaction.orderCode,
-    status: transaction.status,
-    amount: transaction.amount,
-    method: transaction.method,
-    paidAt: transaction.paidAt,
-    bookingId,
-  };
-}
+    return {
+      message: "Proposal paid via wallet",
+      transactionId: transaction.id,
+      orderCode: transaction.orderCode,
+      status: transaction.status,
+      amount: transaction.amount,
+      method: transaction.method,
+      paidAt: transaction.paidAt,
+      bookingId,
+    };
+  }
 
   const orderCode = Number(`${bookingId}${Date.now().toString().slice(-6)}`);
   const description = `Thanh toán proposal #${bookingId}`;
@@ -656,6 +668,7 @@ if (paymentMethod === PaymentMethod.WALLET) {
     checkoutUrl: responseData?.checkoutUrl,
   };
 };
+
 
 export async function getPaymentStatus(orderCode: string) {
   // Validate input
