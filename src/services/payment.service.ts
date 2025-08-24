@@ -165,7 +165,7 @@ async function handleWalletTransaction(
     );
   }
 
-  const description = `Thanh toán deposit #${data.serviceRequestId}`;
+  const description = `Thanh toán đặt cọc #${data.serviceRequestId}`;
 
   return prisma.$transaction(async (tx) => {
     const paymentTx = await paymentRepo.createPaymentTransaction({
@@ -222,7 +222,7 @@ async function handleBankTransferTransaction(
     `${data.serviceRequestId}${Date.now().toString().slice(-6)}`,
   );
 
-  const description = `Thanh toán deposit #${data.serviceRequestId}`;
+  const description = `Thanh toán đặt cọc #${data.serviceRequestId}`;
 
   // Tạo payment link qua PayOS
   const responseData = await requestPayOS(orderCode, amountVnd, description);

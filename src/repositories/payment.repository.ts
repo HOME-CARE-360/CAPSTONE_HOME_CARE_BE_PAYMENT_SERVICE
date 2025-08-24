@@ -243,7 +243,7 @@ export const createPaymentTransaction = async (
         ...commonData,
         amountIn: rawAmount,
         amountOut: 0,
-        transactionContent: `Top-up for user #${input.userId}`,
+        transactionContent: `Nạp tiền vào ví #${input.userId}`,
         userId: input.userId,
         serviceRequestId: null,
       },
