@@ -593,14 +593,13 @@ export const createProposalPayment = async ({
     );
   }
 
-  // Only include items with status = ACCEPTED
   const acceptedItems = proposal.ProposalItem.filter(
-    (item) => item.status === "ACCEPTED",
+    (item) => item.status === "PENDING",
   );
   if (acceptedItems.length === 0) {
     throw new AppError(
-      "Error.NoAcceptedProposalItem",
-      { message: `No ACCEPTED proposal items for booking #${bookingId}` },
+      "Error.NoPendingProposalItem",
+      { message: `No PENDING proposal items for booking #${bookingId}` },
       400,
     );
   }
