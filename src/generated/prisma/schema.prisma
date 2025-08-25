@@ -127,7 +127,7 @@ model PaymentTransaction {
   userId              Int?
   withdrawalRequestId Int?                     @unique
   ServiceRequest      ServiceRequest?          @relation(fields: [serviceRequestId], references: [id])
-  WithdrawalRequest   WithdrawalRequest?       @relation(fields: [withdrawalRequestId], references: [id], onDelete: Cascade)
+  WithdrawalRequest   WithdrawalRequest?       @relation(fields: [withdrawalRequestId], references: [id])
 }
 
 model Permission {
@@ -465,8 +465,8 @@ model ProposalItem {
   serviceId  Int
   quantity   Int                @default(1)
   createdAt  DateTime           @default(now())
-  amount     Float
   status     ProposalItemStatus @default(PENDING)
+  price      Float
   Proposal   Proposal           @relation(fields: [proposalId], references: [id], onDelete: Cascade)
   Service    Service            @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 }
@@ -666,6 +666,21 @@ model ProductEmbedding {
 }
 
 model n8nchathistory {
+  id         Int    @id @default(autoincrement())
+  session_id String @db.VarChar(255)
+  message    Json
+}
+
+model SystemConfig {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String?
+  type      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model n8n_chat_histories {
   id         Int    @id @default(autoincrement())
   session_id String @db.VarChar(255)
   message    Json

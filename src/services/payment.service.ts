@@ -18,6 +18,7 @@ import {
 } from "../generated/prisma";
 import * as paymentRepo from "../repositories/payment.repository";
 import { CheckoutResponseDataType } from "@payos/node/lib/type";
+import { getConfig } from "./config.service";
 
 // NOTE: Tốt nhất dùng 1 instance Prisma chung, nhưng giữ nguyên phong cách file này:
 const prisma = new PrismaClient();
@@ -249,15 +250,15 @@ async function handleBankTransferTransaction(
     message: "Payment transaction created",
     paymentTransactionId: paymentTx.id,
     referenceNumber: paymentTx.referenceNumber,
-    status: paymentTx.status, // PENDING
-    amountOut: paymentTx.amountOut, // = amountVnd
-    gateway: paymentTx.gateway, // PAYOS
+    status: paymentTx.status, 
+    amountOut: paymentTx.amountOut, 
+    gateway: paymentTx.gateway, 
     transactionDate: paymentTx.transactionDate,
     userId: paymentTx.userId,
     serviceRequestId: data.serviceRequestId,
     responseData,
     checkoutUrl: responseData?.checkoutUrl,
-    requiresPayment: true, // Cần thanh toán qua link
+    requiresPayment: true,
   };
 }
 
@@ -270,25 +271,23 @@ export const createWalletTopUpUsingPaymentTransaction = async (
   validateOrThrow(WalletTopUpSchema, data);
 
   try {
-    // orderCode numeric: dùng timestamp cho tính duy nhất
     const orderCode = Date.now();
-
-    // VND là số nguyên
     const amountVnd = Math.trunc(Number(data.amount));
-    if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
+    const minTopUpAmount = getConfig<number>("WALLET_TOPUP_MIN", 10000);
+    if (!Number.isFinite(amountVnd) || amountVnd < minTopUpAmount) {
       throw new AppError(
         "Error.InvalidAmount",
-        { message: "Invalid amount" },
+        { message: `Số tiền nạp không hợp lệ. Vui lòng nạp tối thiểu ${minTopUpAmount} VND.` },
         400,
       );
     }
 
     const description = `Nạp tiền vào ví #${data.userId}`;
 
-    // 1) Tạo phiên thanh toán PayOS
+    // 1) Tạo  thanh toán PayOS
     const responseData = await requestPayOS(orderCode, amountVnd, description);
 
-    // 2) Ghi sổ PaymentTransaction: TOPUP => amountIn = amount, amountOut = 0
+    // 2) Ghi  PaymentTransaction: TOPUP => amountIn = amount, amountOut = 0
     const paymentTx = await paymentRepo.createPaymentTransaction({
       kind: "TOPUP",
       referenceNumber: String(orderCode), // map orderCode -> referenceNumber
@@ -306,9 +305,9 @@ export const createWalletTopUpUsingPaymentTransaction = async (
       message: "Top-up payment transaction created",
       paymentTransactionId: paymentTx.id,
       referenceNumber: paymentTx.referenceNumber,
-      status: paymentTx.status, // PENDING
-      amountIn: paymentTx.amountIn, // = amountVnd
-      gateway: paymentTx.gateway, // PAYOS
+      status: paymentTx.status,
+      amountIn: paymentTx.amountIn, 
+      gateway: paymentTx.gateway,
       transactionDate: paymentTx.transactionDate,
       userId: paymentTx.userId,
       responseData,
@@ -323,6 +322,7 @@ export const createWalletTopUpUsingPaymentTransaction = async (
     );
   }
 };
+
 
 export const handlePayOSCallback = async (payload: {
   orderCode: string;
@@ -546,7 +546,7 @@ export const payProposalWithWalletAtomic = async (
           status: PaymentStatus.PAID,
           paidAt: new Date(),
           createdById: userId,
-          type: "PROPOSAL_PAYMENT", // theo enum transaction_type
+          type: "PROPOSAL_PAYMENT",
         },
       });
     } else {
@@ -560,7 +560,7 @@ export const payProposalWithWalletAtomic = async (
           status: PaymentStatus.PAID,
           paidAt: new Date(),
           createdById: userId,
-          type: "PROPOSAL_PAYMENT", // theo enum transaction_type
+          type: "PROPOSAL_PAYMENT", 
         },
       });
     }
@@ -604,11 +604,14 @@ export const createProposalPayment = async ({
     );
   }
 
+  const bookingDeposit = getConfig<number>("BOOKING_DEPOSIT", 30000);
+
   const rawAmount =
     acceptedItems.reduce(
-      (sum, item) => sum + item.quantity * item.amount,
+      (sum, item) => sum + item.quantity * item.price,
       0,
-    ) - 30000;
+    ) - bookingDeposit;
+
 
   console.log("Raw amount (ACCEPTED only):", rawAmount);
 
@@ -670,7 +673,6 @@ export const createProposalPayment = async ({
 
 
 export async function getPaymentStatus(orderCode: string) {
-  // Validate input
   if (!orderCode || typeof orderCode !== "string") {
     throw new AppError(
       "Error.InvalidOrderCode",
@@ -728,105 +730,7 @@ export async function getPaymentStatus(orderCode: string) {
   };
 }
 
-export async function handlePayOSSuccessManual(orderCode: string) {
-  return prisma.$transaction(async (tx) => {
-    // 1) Booking transaction
-    const transaction = await tx.transaction.findUnique({
-      where: { orderCode },
-    });
-    if (transaction) {
-      if (transaction.status !== PaymentStatus.PENDING) {
-        return { message: "Booking transaction already handled" };
-      }
-
-      await tx.transaction.update({
-        where: { orderCode },
-        data: { status: PaymentStatus.PAID, paidAt: new Date() },
-      });
-
-      if (transaction.bookingId) {
-        await tx.proposal.update({
-          where: { bookingId: transaction.bookingId },
-          data: { status: ProposalStatus.ACCEPTED },
-        });
-      }
-
-      return { message: "Booking payment success" };
-    }
-
-    // 2) Wallet top-up
-    const paymentTransaction = await tx.paymentTransaction.findFirst({
-      where: { referenceNumber: orderCode },
-    });
-    if (!paymentTransaction) {
-      throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
-    }
-    if (
-      paymentTransaction.status !== PaymentTransactionStatus.PENDING &&
-      paymentTransaction.status !== PaymentTransactionStatus.PROCESSING
-    ) {
-      return { message: "Wallet top-up already handled" };
-    }
-
-    await tx.paymentTransaction.update({
-      where: { id: paymentTransaction.id },
-      data: { status: PaymentTransactionStatus.SUCCESS },
-    });
-
-    if (paymentTransaction.userId) {
-      await tx.wallet.update({
-        where: { userId: paymentTransaction.userId },
-        data: { balance: { increment: paymentTransaction.amountIn } },
-      });
-    }
-
-    return { message: "Wallet top-up success" };
-  });
-}
-
-export async function handlePayOSFailedManual(orderCode: string) {
-  return prisma.$transaction(async (tx) => {
-    // 1) Booking transaction
-    const transaction = await tx.transaction.findUnique({
-      where: { orderCode },
-    });
-    if (transaction) {
-      if (transaction.status !== PaymentStatus.PENDING) {
-        return { message: "Booking transaction already handled" };
-      }
-
-      await tx.transaction.update({
-        where: { orderCode },
-        data: { status: PaymentStatus.FAILED },
-      });
-
-      return { message: "Booking payment failed" };
-    }
-
-    // 2) Wallet top-up
-    const paymentTransaction = await tx.paymentTransaction.findFirst({
-      where: { referenceNumber: orderCode },
-    });
-    if (!paymentTransaction) {
-      throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
-    }
-    if (
-      paymentTransaction.status !== PaymentTransactionStatus.PENDING &&
-      paymentTransaction.status !== PaymentTransactionStatus.PROCESSING
-    ) {
-      return { message: "Wallet top-up already handled" };
-    }
-
-    await tx.paymentTransaction.update({
-      where: { id: paymentTransaction.id },
-      data: { status: PaymentTransactionStatus.FAILED },
-    });
-
-    return { message: "Wallet top-up failed" };
-  });
-}
-
-/**
+ /**
  * Thanh toán cho service request đã tồn tại
  */
 export const payExistingServiceRequest = async ({
@@ -841,7 +745,6 @@ export const payExistingServiceRequest = async ({
   amount: number;
 }) => {
   try {
-    // Validate amount
     const amountVnd = Math.trunc(Number(amount));
     if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
       throw new AppError(
@@ -851,7 +754,6 @@ export const payExistingServiceRequest = async ({
       );
     }
 
-    // Kiểm tra service request tồn tại và thuộc về user
     const serviceRequest = await prisma.serviceRequest.findFirst({
       where: {
         id: serviceRequestId,
@@ -873,7 +775,6 @@ export const payExistingServiceRequest = async ({
       );
     }
 
-    // Kiểm tra trạng thái service request có thể thanh toán
     if (serviceRequest.status !== RequestStatus.WAIT_FOR_PAYMENT) {
       throw new AppError(
         "Error.InvalidServiceRequestStatus",
@@ -886,7 +787,6 @@ export const payExistingServiceRequest = async ({
       );
     }
 
-    // Kiểm tra đã có payment transaction pending nào chưa
     const existingPaymentTx = await prisma.paymentTransaction.findFirst({
       where: {
         serviceRequestId: serviceRequestId,

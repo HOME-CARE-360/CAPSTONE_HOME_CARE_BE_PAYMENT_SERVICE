@@ -1,9 +1,9 @@
 import net from "net";
 import dotenv from "dotenv";
 import { handleTCPRequest } from "./handlers/tcp-handler";
-
+import { loadConfigFromDb } from "./services/config.service";
 dotenv.config();
-
+loadConfigFromDb();
 const server = net.createServer((socket) => {
   console.log("🔌 New TCP connection established");
 

@@ -426,8 +426,8 @@ exports.Prisma.ProposalItemScalarFieldEnum = {
   serviceId: 'serviceId',
   quantity: 'quantity',
   createdAt: 'createdAt',
-  amount: 'amount',
-  status: 'status'
+  status: 'status',
+  price: 'price'
 };
 
 exports.Prisma.Service_ServiceItemsScalarFieldEnum = {
@@ -568,6 +568,21 @@ exports.Prisma.ProductEmbeddingScalarFieldEnum = {
 };
 
 exports.Prisma.N8nchathistoryScalarFieldEnum = {
+  id: 'id',
+  session_id: 'session_id',
+  message: 'message'
+};
+
+exports.Prisma.SystemConfigScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.N8n_chat_historiesScalarFieldEnum = {
   id: 'id',
   session_id: 'session_id',
   message: 'message'
@@ -783,7 +798,9 @@ exports.Prisma.ModelName = {
   BookingReport: 'BookingReport',
   ExternalProduct: 'ExternalProduct',
   ProductEmbedding: 'ProductEmbedding',
-  n8nchathistory: 'n8nchathistory'
+  n8nchathistory: 'n8nchathistory',
+  SystemConfig: 'SystemConfig',
+  n8n_chat_histories: 'n8n_chat_histories'
 };
 
 /**

@@ -203,6 +203,16 @@ export type ProductEmbedding = $Result.DefaultSelection<Prisma.$ProductEmbedding
  * 
  */
 export type n8nchathistory = $Result.DefaultSelection<Prisma.$n8nchathistoryPayload>
+/**
+ * Model SystemConfig
+ * 
+ */
+export type SystemConfig = $Result.DefaultSelection<Prisma.$SystemConfigPayload>
+/**
+ * Model n8n_chat_histories
+ * 
+ */
+export type n8n_chat_histories = $Result.DefaultSelection<Prisma.$n8n_chat_historiesPayload>
 
 /**
  * Enums
@@ -1050,6 +1060,26 @@ export class PrismaClient<
     * ```
     */
   get n8nchathistory(): Prisma.n8nchathistoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.systemConfig`: Exposes CRUD operations for the **SystemConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SystemConfigs
+    * const systemConfigs = await prisma.systemConfig.findMany()
+    * ```
+    */
+  get systemConfig(): Prisma.SystemConfigDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.n8n_chat_histories`: Exposes CRUD operations for the **n8n_chat_histories** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more N8n_chat_histories
+    * const n8n_chat_histories = await prisma.n8n_chat_histories.findMany()
+    * ```
+    */
+  get n8n_chat_histories(): Prisma.n8n_chat_historiesDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1527,7 +1557,9 @@ export namespace Prisma {
     BookingReport: 'BookingReport',
     ExternalProduct: 'ExternalProduct',
     ProductEmbedding: 'ProductEmbedding',
-    n8nchathistory: 'n8nchathistory'
+    n8nchathistory: 'n8nchathistory',
+    SystemConfig: 'SystemConfig',
+    n8n_chat_histories: 'n8n_chat_histories'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1546,7 +1578,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "booking" | "category" | "chatMessage" | "customerProfile" | "device" | "notification" | "paymentTransaction" | "permission" | "recurringBooking" | "refreshToken" | "review" | "role" | "service" | "serviceProvider" | "staff" | "staffCategory" | "transaction" | "user" | "verificationCode" | "workLog" | "inspectionReport" | "serviceItem" | "serviceRequest" | "proposal" | "proposalItem" | "service_ServiceItems" | "wallet" | "withdrawalRequest" | "conversation" | "favoriteService" | "message" | "suggested_services_config" | "customerAsset" | "assetSuggestion" | "bookingReport" | "externalProduct" | "productEmbedding" | "n8nchathistory"
+      modelProps: "booking" | "category" | "chatMessage" | "customerProfile" | "device" | "notification" | "paymentTransaction" | "permission" | "recurringBooking" | "refreshToken" | "review" | "role" | "service" | "serviceProvider" | "staff" | "staffCategory" | "transaction" | "user" | "verificationCode" | "workLog" | "inspectionReport" | "serviceItem" | "serviceRequest" | "proposal" | "proposalItem" | "service_ServiceItems" | "wallet" | "withdrawalRequest" | "conversation" | "favoriteService" | "message" | "suggested_services_config" | "customerAsset" | "assetSuggestion" | "bookingReport" | "externalProduct" | "productEmbedding" | "n8nchathistory" | "systemConfig" | "n8n_chat_histories"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4362,6 +4394,154 @@ export namespace Prisma {
           }
         }
       }
+      SystemConfig: {
+        payload: Prisma.$SystemConfigPayload<ExtArgs>
+        fields: Prisma.SystemConfigFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SystemConfigFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SystemConfigFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
+          }
+          findFirst: {
+            args: Prisma.SystemConfigFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SystemConfigFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
+          }
+          findMany: {
+            args: Prisma.SystemConfigFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>[]
+          }
+          create: {
+            args: Prisma.SystemConfigCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
+          }
+          createMany: {
+            args: Prisma.SystemConfigCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SystemConfigCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>[]
+          }
+          delete: {
+            args: Prisma.SystemConfigDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
+          }
+          update: {
+            args: Prisma.SystemConfigUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
+          }
+          deleteMany: {
+            args: Prisma.SystemConfigDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SystemConfigUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SystemConfigUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>[]
+          }
+          upsert: {
+            args: Prisma.SystemConfigUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
+          }
+          aggregate: {
+            args: Prisma.SystemConfigAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSystemConfig>
+          }
+          groupBy: {
+            args: Prisma.SystemConfigGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SystemConfigGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SystemConfigCountArgs<ExtArgs>
+            result: $Utils.Optional<SystemConfigCountAggregateOutputType> | number
+          }
+        }
+      }
+      n8n_chat_histories: {
+        payload: Prisma.$n8n_chat_historiesPayload<ExtArgs>
+        fields: Prisma.n8n_chat_historiesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.n8n_chat_historiesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.n8n_chat_historiesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>
+          }
+          findFirst: {
+            args: Prisma.n8n_chat_historiesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.n8n_chat_historiesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>
+          }
+          findMany: {
+            args: Prisma.n8n_chat_historiesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>[]
+          }
+          create: {
+            args: Prisma.n8n_chat_historiesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>
+          }
+          createMany: {
+            args: Prisma.n8n_chat_historiesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.n8n_chat_historiesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>[]
+          }
+          delete: {
+            args: Prisma.n8n_chat_historiesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>
+          }
+          update: {
+            args: Prisma.n8n_chat_historiesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>
+          }
+          deleteMany: {
+            args: Prisma.n8n_chat_historiesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.n8n_chat_historiesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.n8n_chat_historiesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>[]
+          }
+          upsert: {
+            args: Prisma.n8n_chat_historiesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_chat_historiesPayload>
+          }
+          aggregate: {
+            args: Prisma.N8n_chat_historiesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateN8n_chat_histories>
+          }
+          groupBy: {
+            args: Prisma.n8n_chat_historiesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<N8n_chat_historiesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.n8n_chat_historiesCountArgs<ExtArgs>
+            result: $Utils.Optional<N8n_chat_historiesCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4484,6 +4664,8 @@ export namespace Prisma {
     externalProduct?: ExternalProductOmit
     productEmbedding?: ProductEmbeddingOmit
     n8nchathistory?: n8nchathistoryOmit
+    systemConfig?: SystemConfigOmit
+    n8n_chat_histories?: n8n_chat_historiesOmit
   }
 
   /* Types for Logging */
@@ -36090,7 +36272,7 @@ export namespace Prisma {
     proposalId: number | null
     serviceId: number | null
     quantity: number | null
-    amount: number | null
+    price: number | null
   }
 
   export type ProposalItemSumAggregateOutputType = {
@@ -36098,7 +36280,7 @@ export namespace Prisma {
     proposalId: number | null
     serviceId: number | null
     quantity: number | null
-    amount: number | null
+    price: number | null
   }
 
   export type ProposalItemMinAggregateOutputType = {
@@ -36107,8 +36289,8 @@ export namespace Prisma {
     serviceId: number | null
     quantity: number | null
     createdAt: Date | null
-    amount: number | null
     status: $Enums.ProposalItemStatus | null
+    price: number | null
   }
 
   export type ProposalItemMaxAggregateOutputType = {
@@ -36117,8 +36299,8 @@ export namespace Prisma {
     serviceId: number | null
     quantity: number | null
     createdAt: Date | null
-    amount: number | null
     status: $Enums.ProposalItemStatus | null
+    price: number | null
   }
 
   export type ProposalItemCountAggregateOutputType = {
@@ -36127,8 +36309,8 @@ export namespace Prisma {
     serviceId: number
     quantity: number
     createdAt: number
-    amount: number
     status: number
+    price: number
     _all: number
   }
 
@@ -36138,7 +36320,7 @@ export namespace Prisma {
     proposalId?: true
     serviceId?: true
     quantity?: true
-    amount?: true
+    price?: true
   }
 
   export type ProposalItemSumAggregateInputType = {
@@ -36146,7 +36328,7 @@ export namespace Prisma {
     proposalId?: true
     serviceId?: true
     quantity?: true
-    amount?: true
+    price?: true
   }
 
   export type ProposalItemMinAggregateInputType = {
@@ -36155,8 +36337,8 @@ export namespace Prisma {
     serviceId?: true
     quantity?: true
     createdAt?: true
-    amount?: true
     status?: true
+    price?: true
   }
 
   export type ProposalItemMaxAggregateInputType = {
@@ -36165,8 +36347,8 @@ export namespace Prisma {
     serviceId?: true
     quantity?: true
     createdAt?: true
-    amount?: true
     status?: true
+    price?: true
   }
 
   export type ProposalItemCountAggregateInputType = {
@@ -36175,8 +36357,8 @@ export namespace Prisma {
     serviceId?: true
     quantity?: true
     createdAt?: true
-    amount?: true
     status?: true
+    price?: true
     _all?: true
   }
 
@@ -36272,8 +36454,8 @@ export namespace Prisma {
     serviceId: number
     quantity: number
     createdAt: Date
-    amount: number
     status: $Enums.ProposalItemStatus
+    price: number
     _count: ProposalItemCountAggregateOutputType | null
     _avg: ProposalItemAvgAggregateOutputType | null
     _sum: ProposalItemSumAggregateOutputType | null
@@ -36301,8 +36483,8 @@ export namespace Prisma {
     serviceId?: boolean
     quantity?: boolean
     createdAt?: boolean
-    amount?: boolean
     status?: boolean
+    price?: boolean
     Proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     Service?: boolean | ServiceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["proposalItem"]>
@@ -36313,8 +36495,8 @@ export namespace Prisma {
     serviceId?: boolean
     quantity?: boolean
     createdAt?: boolean
-    amount?: boolean
     status?: boolean
+    price?: boolean
     Proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     Service?: boolean | ServiceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["proposalItem"]>
@@ -36325,8 +36507,8 @@ export namespace Prisma {
     serviceId?: boolean
     quantity?: boolean
     createdAt?: boolean
-    amount?: boolean
     status?: boolean
+    price?: boolean
     Proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     Service?: boolean | ServiceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["proposalItem"]>
@@ -36337,11 +36519,11 @@ export namespace Prisma {
     serviceId?: boolean
     quantity?: boolean
     createdAt?: boolean
-    amount?: boolean
     status?: boolean
+    price?: boolean
   }
 
-  export type ProposalItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "proposalId" | "serviceId" | "quantity" | "createdAt" | "amount" | "status", ExtArgs["result"]["proposalItem"]>
+  export type ProposalItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "proposalId" | "serviceId" | "quantity" | "createdAt" | "status" | "price", ExtArgs["result"]["proposalItem"]>
   export type ProposalItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     Service?: boolean | ServiceDefaultArgs<ExtArgs>
@@ -36367,8 +36549,8 @@ export namespace Prisma {
       serviceId: number
       quantity: number
       createdAt: Date
-      amount: number
       status: $Enums.ProposalItemStatus
+      price: number
     }, ExtArgs["result"]["proposalItem"]>
     composites: {}
   }
@@ -36799,8 +36981,8 @@ export namespace Prisma {
     readonly serviceId: FieldRef<"ProposalItem", 'Int'>
     readonly quantity: FieldRef<"ProposalItem", 'Int'>
     readonly createdAt: FieldRef<"ProposalItem", 'DateTime'>
-    readonly amount: FieldRef<"ProposalItem", 'Float'>
     readonly status: FieldRef<"ProposalItem", 'ProposalItemStatus'>
+    readonly price: FieldRef<"ProposalItem", 'Float'>
   }
     
 
@@ -52266,6 +52448,2047 @@ export namespace Prisma {
 
 
   /**
+   * Model SystemConfig
+   */
+
+  export type AggregateSystemConfig = {
+    _count: SystemConfigCountAggregateOutputType | null
+    _avg: SystemConfigAvgAggregateOutputType | null
+    _sum: SystemConfigSumAggregateOutputType | null
+    _min: SystemConfigMinAggregateOutputType | null
+    _max: SystemConfigMaxAggregateOutputType | null
+  }
+
+  export type SystemConfigAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SystemConfigSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SystemConfigMinAggregateOutputType = {
+    id: number | null
+    key: string | null
+    value: string | null
+    type: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SystemConfigMaxAggregateOutputType = {
+    id: number | null
+    key: string | null
+    value: string | null
+    type: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SystemConfigCountAggregateOutputType = {
+    id: number
+    key: number
+    value: number
+    type: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SystemConfigAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SystemConfigSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SystemConfigMinAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SystemConfigMaxAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SystemConfigCountAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    type?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SystemConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemConfig to aggregate.
+     */
+    where?: SystemConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemConfigs to fetch.
+     */
+    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SystemConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SystemConfigs
+    **/
+    _count?: true | SystemConfigCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SystemConfigAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SystemConfigSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SystemConfigMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SystemConfigMaxAggregateInputType
+  }
+
+  export type GetSystemConfigAggregateType<T extends SystemConfigAggregateArgs> = {
+        [P in keyof T & keyof AggregateSystemConfig]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSystemConfig[P]>
+      : GetScalarType<T[P], AggregateSystemConfig[P]>
+  }
+
+
+
+
+  export type SystemConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SystemConfigWhereInput
+    orderBy?: SystemConfigOrderByWithAggregationInput | SystemConfigOrderByWithAggregationInput[]
+    by: SystemConfigScalarFieldEnum[] | SystemConfigScalarFieldEnum
+    having?: SystemConfigScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SystemConfigCountAggregateInputType | true
+    _avg?: SystemConfigAvgAggregateInputType
+    _sum?: SystemConfigSumAggregateInputType
+    _min?: SystemConfigMinAggregateInputType
+    _max?: SystemConfigMaxAggregateInputType
+  }
+
+  export type SystemConfigGroupByOutputType = {
+    id: number
+    key: string
+    value: string | null
+    type: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SystemConfigCountAggregateOutputType | null
+    _avg: SystemConfigAvgAggregateOutputType | null
+    _sum: SystemConfigSumAggregateOutputType | null
+    _min: SystemConfigMinAggregateOutputType | null
+    _max: SystemConfigMaxAggregateOutputType | null
+  }
+
+  type GetSystemConfigGroupByPayload<T extends SystemConfigGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SystemConfigGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SystemConfigGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SystemConfigGroupByOutputType[P]>
+            : GetScalarType<T[P], SystemConfigGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SystemConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemConfig"]>
+
+  export type SystemConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemConfig"]>
+
+  export type SystemConfigSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["systemConfig"]>
+
+  export type SystemConfigSelectScalar = {
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SystemConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "value" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["systemConfig"]>
+
+  export type $SystemConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SystemConfig"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      key: string
+      value: string | null
+      type: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["systemConfig"]>
+    composites: {}
+  }
+
+  type SystemConfigGetPayload<S extends boolean | null | undefined | SystemConfigDefaultArgs> = $Result.GetResult<Prisma.$SystemConfigPayload, S>
+
+  type SystemConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SystemConfigFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SystemConfigCountAggregateInputType | true
+    }
+
+  export interface SystemConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SystemConfig'], meta: { name: 'SystemConfig' } }
+    /**
+     * Find zero or one SystemConfig that matches the filter.
+     * @param {SystemConfigFindUniqueArgs} args - Arguments to find a SystemConfig
+     * @example
+     * // Get one SystemConfig
+     * const systemConfig = await prisma.systemConfig.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SystemConfigFindUniqueArgs>(args: SelectSubset<T, SystemConfigFindUniqueArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SystemConfig that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SystemConfigFindUniqueOrThrowArgs} args - Arguments to find a SystemConfig
+     * @example
+     * // Get one SystemConfig
+     * const systemConfig = await prisma.systemConfig.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SystemConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, SystemConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemConfig that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemConfigFindFirstArgs} args - Arguments to find a SystemConfig
+     * @example
+     * // Get one SystemConfig
+     * const systemConfig = await prisma.systemConfig.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SystemConfigFindFirstArgs>(args?: SelectSubset<T, SystemConfigFindFirstArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemConfig that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemConfigFindFirstOrThrowArgs} args - Arguments to find a SystemConfig
+     * @example
+     * // Get one SystemConfig
+     * const systemConfig = await prisma.systemConfig.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SystemConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, SystemConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SystemConfigs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemConfigFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SystemConfigs
+     * const systemConfigs = await prisma.systemConfig.findMany()
+     * 
+     * // Get first 10 SystemConfigs
+     * const systemConfigs = await prisma.systemConfig.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const systemConfigWithIdOnly = await prisma.systemConfig.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SystemConfigFindManyArgs>(args?: SelectSubset<T, SystemConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SystemConfig.
+     * @param {SystemConfigCreateArgs} args - Arguments to create a SystemConfig.
+     * @example
+     * // Create one SystemConfig
+     * const SystemConfig = await prisma.systemConfig.create({
+     *   data: {
+     *     // ... data to create a SystemConfig
+     *   }
+     * })
+     * 
+     */
+    create<T extends SystemConfigCreateArgs>(args: SelectSubset<T, SystemConfigCreateArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SystemConfigs.
+     * @param {SystemConfigCreateManyArgs} args - Arguments to create many SystemConfigs.
+     * @example
+     * // Create many SystemConfigs
+     * const systemConfig = await prisma.systemConfig.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SystemConfigCreateManyArgs>(args?: SelectSubset<T, SystemConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SystemConfigs and returns the data saved in the database.
+     * @param {SystemConfigCreateManyAndReturnArgs} args - Arguments to create many SystemConfigs.
+     * @example
+     * // Create many SystemConfigs
+     * const systemConfig = await prisma.systemConfig.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SystemConfigs and only return the `id`
+     * const systemConfigWithIdOnly = await prisma.systemConfig.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SystemConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, SystemConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SystemConfig.
+     * @param {SystemConfigDeleteArgs} args - Arguments to delete one SystemConfig.
+     * @example
+     * // Delete one SystemConfig
+     * const SystemConfig = await prisma.systemConfig.delete({
+     *   where: {
+     *     // ... filter to delete one SystemConfig
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SystemConfigDeleteArgs>(args: SelectSubset<T, SystemConfigDeleteArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SystemConfig.
+     * @param {SystemConfigUpdateArgs} args - Arguments to update one SystemConfig.
+     * @example
+     * // Update one SystemConfig
+     * const systemConfig = await prisma.systemConfig.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SystemConfigUpdateArgs>(args: SelectSubset<T, SystemConfigUpdateArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SystemConfigs.
+     * @param {SystemConfigDeleteManyArgs} args - Arguments to filter SystemConfigs to delete.
+     * @example
+     * // Delete a few SystemConfigs
+     * const { count } = await prisma.systemConfig.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SystemConfigDeleteManyArgs>(args?: SelectSubset<T, SystemConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemConfigUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SystemConfigs
+     * const systemConfig = await prisma.systemConfig.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SystemConfigUpdateManyArgs>(args: SelectSubset<T, SystemConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemConfigs and returns the data updated in the database.
+     * @param {SystemConfigUpdateManyAndReturnArgs} args - Arguments to update many SystemConfigs.
+     * @example
+     * // Update many SystemConfigs
+     * const systemConfig = await prisma.systemConfig.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SystemConfigs and only return the `id`
+     * const systemConfigWithIdOnly = await prisma.systemConfig.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SystemConfigUpdateManyAndReturnArgs>(args: SelectSubset<T, SystemConfigUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SystemConfig.
+     * @param {SystemConfigUpsertArgs} args - Arguments to update or create a SystemConfig.
+     * @example
+     * // Update or create a SystemConfig
+     * const systemConfig = await prisma.systemConfig.upsert({
+     *   create: {
+     *     // ... data to create a SystemConfig
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SystemConfig we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SystemConfigUpsertArgs>(args: SelectSubset<T, SystemConfigUpsertArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SystemConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemConfigCountArgs} args - Arguments to filter SystemConfigs to count.
+     * @example
+     * // Count the number of SystemConfigs
+     * const count = await prisma.systemConfig.count({
+     *   where: {
+     *     // ... the filter for the SystemConfigs we want to count
+     *   }
+     * })
+    **/
+    count<T extends SystemConfigCountArgs>(
+      args?: Subset<T, SystemConfigCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SystemConfigCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SystemConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SystemConfigAggregateArgs>(args: Subset<T, SystemConfigAggregateArgs>): Prisma.PrismaPromise<GetSystemConfigAggregateType<T>>
+
+    /**
+     * Group by SystemConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemConfigGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SystemConfigGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SystemConfigGroupByArgs['orderBy'] }
+        : { orderBy?: SystemConfigGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SystemConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSystemConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SystemConfig model
+   */
+  readonly fields: SystemConfigFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SystemConfig.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SystemConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SystemConfig model
+   */
+  interface SystemConfigFieldRefs {
+    readonly id: FieldRef<"SystemConfig", 'Int'>
+    readonly key: FieldRef<"SystemConfig", 'String'>
+    readonly value: FieldRef<"SystemConfig", 'String'>
+    readonly type: FieldRef<"SystemConfig", 'String'>
+    readonly createdAt: FieldRef<"SystemConfig", 'DateTime'>
+    readonly updatedAt: FieldRef<"SystemConfig", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SystemConfig findUnique
+   */
+  export type SystemConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemConfig to fetch.
+     */
+    where: SystemConfigWhereUniqueInput
+  }
+
+  /**
+   * SystemConfig findUniqueOrThrow
+   */
+  export type SystemConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemConfig to fetch.
+     */
+    where: SystemConfigWhereUniqueInput
+  }
+
+  /**
+   * SystemConfig findFirst
+   */
+  export type SystemConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemConfig to fetch.
+     */
+    where?: SystemConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemConfigs to fetch.
+     */
+    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemConfigs.
+     */
+    cursor?: SystemConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemConfigs.
+     */
+    distinct?: SystemConfigScalarFieldEnum | SystemConfigScalarFieldEnum[]
+  }
+
+  /**
+   * SystemConfig findFirstOrThrow
+   */
+  export type SystemConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemConfig to fetch.
+     */
+    where?: SystemConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemConfigs to fetch.
+     */
+    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemConfigs.
+     */
+    cursor?: SystemConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemConfigs.
+     */
+    distinct?: SystemConfigScalarFieldEnum | SystemConfigScalarFieldEnum[]
+  }
+
+  /**
+   * SystemConfig findMany
+   */
+  export type SystemConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemConfigs to fetch.
+     */
+    where?: SystemConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemConfigs to fetch.
+     */
+    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SystemConfigs.
+     */
+    cursor?: SystemConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemConfigs.
+     */
+    skip?: number
+    distinct?: SystemConfigScalarFieldEnum | SystemConfigScalarFieldEnum[]
+  }
+
+  /**
+   * SystemConfig create
+   */
+  export type SystemConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SystemConfig.
+     */
+    data: XOR<SystemConfigCreateInput, SystemConfigUncheckedCreateInput>
+  }
+
+  /**
+   * SystemConfig createMany
+   */
+  export type SystemConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SystemConfigs.
+     */
+    data: SystemConfigCreateManyInput | SystemConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemConfig createManyAndReturn
+   */
+  export type SystemConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * The data used to create many SystemConfigs.
+     */
+    data: SystemConfigCreateManyInput | SystemConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemConfig update
+   */
+  export type SystemConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SystemConfig.
+     */
+    data: XOR<SystemConfigUpdateInput, SystemConfigUncheckedUpdateInput>
+    /**
+     * Choose, which SystemConfig to update.
+     */
+    where: SystemConfigWhereUniqueInput
+  }
+
+  /**
+   * SystemConfig updateMany
+   */
+  export type SystemConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SystemConfigs.
+     */
+    data: XOR<SystemConfigUpdateManyMutationInput, SystemConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemConfigs to update
+     */
+    where?: SystemConfigWhereInput
+    /**
+     * Limit how many SystemConfigs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemConfig updateManyAndReturn
+   */
+  export type SystemConfigUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * The data used to update SystemConfigs.
+     */
+    data: XOR<SystemConfigUpdateManyMutationInput, SystemConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemConfigs to update
+     */
+    where?: SystemConfigWhereInput
+    /**
+     * Limit how many SystemConfigs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemConfig upsert
+   */
+  export type SystemConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SystemConfig to update in case it exists.
+     */
+    where: SystemConfigWhereUniqueInput
+    /**
+     * In case the SystemConfig found by the `where` argument doesn't exist, create a new SystemConfig with this data.
+     */
+    create: XOR<SystemConfigCreateInput, SystemConfigUncheckedCreateInput>
+    /**
+     * In case the SystemConfig was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SystemConfigUpdateInput, SystemConfigUncheckedUpdateInput>
+  }
+
+  /**
+   * SystemConfig delete
+   */
+  export type SystemConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+    /**
+     * Filter which SystemConfig to delete.
+     */
+    where: SystemConfigWhereUniqueInput
+  }
+
+  /**
+   * SystemConfig deleteMany
+   */
+  export type SystemConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemConfigs to delete
+     */
+    where?: SystemConfigWhereInput
+    /**
+     * Limit how many SystemConfigs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemConfig without action
+   */
+  export type SystemConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemConfig
+     */
+    select?: SystemConfigSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemConfig
+     */
+    omit?: SystemConfigOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model n8n_chat_histories
+   */
+
+  export type AggregateN8n_chat_histories = {
+    _count: N8n_chat_historiesCountAggregateOutputType | null
+    _avg: N8n_chat_historiesAvgAggregateOutputType | null
+    _sum: N8n_chat_historiesSumAggregateOutputType | null
+    _min: N8n_chat_historiesMinAggregateOutputType | null
+    _max: N8n_chat_historiesMaxAggregateOutputType | null
+  }
+
+  export type N8n_chat_historiesAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type N8n_chat_historiesSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type N8n_chat_historiesMinAggregateOutputType = {
+    id: number | null
+    session_id: string | null
+  }
+
+  export type N8n_chat_historiesMaxAggregateOutputType = {
+    id: number | null
+    session_id: string | null
+  }
+
+  export type N8n_chat_historiesCountAggregateOutputType = {
+    id: number
+    session_id: number
+    message: number
+    _all: number
+  }
+
+
+  export type N8n_chat_historiesAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type N8n_chat_historiesSumAggregateInputType = {
+    id?: true
+  }
+
+  export type N8n_chat_historiesMinAggregateInputType = {
+    id?: true
+    session_id?: true
+  }
+
+  export type N8n_chat_historiesMaxAggregateInputType = {
+    id?: true
+    session_id?: true
+  }
+
+  export type N8n_chat_historiesCountAggregateInputType = {
+    id?: true
+    session_id?: true
+    message?: true
+    _all?: true
+  }
+
+  export type N8n_chat_historiesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which n8n_chat_histories to aggregate.
+     */
+    where?: n8n_chat_historiesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_chat_histories to fetch.
+     */
+    orderBy?: n8n_chat_historiesOrderByWithRelationInput | n8n_chat_historiesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: n8n_chat_historiesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_chat_histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_chat_histories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned n8n_chat_histories
+    **/
+    _count?: true | N8n_chat_historiesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: N8n_chat_historiesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: N8n_chat_historiesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: N8n_chat_historiesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: N8n_chat_historiesMaxAggregateInputType
+  }
+
+  export type GetN8n_chat_historiesAggregateType<T extends N8n_chat_historiesAggregateArgs> = {
+        [P in keyof T & keyof AggregateN8n_chat_histories]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateN8n_chat_histories[P]>
+      : GetScalarType<T[P], AggregateN8n_chat_histories[P]>
+  }
+
+
+
+
+  export type n8n_chat_historiesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: n8n_chat_historiesWhereInput
+    orderBy?: n8n_chat_historiesOrderByWithAggregationInput | n8n_chat_historiesOrderByWithAggregationInput[]
+    by: N8n_chat_historiesScalarFieldEnum[] | N8n_chat_historiesScalarFieldEnum
+    having?: n8n_chat_historiesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: N8n_chat_historiesCountAggregateInputType | true
+    _avg?: N8n_chat_historiesAvgAggregateInputType
+    _sum?: N8n_chat_historiesSumAggregateInputType
+    _min?: N8n_chat_historiesMinAggregateInputType
+    _max?: N8n_chat_historiesMaxAggregateInputType
+  }
+
+  export type N8n_chat_historiesGroupByOutputType = {
+    id: number
+    session_id: string
+    message: JsonValue
+    _count: N8n_chat_historiesCountAggregateOutputType | null
+    _avg: N8n_chat_historiesAvgAggregateOutputType | null
+    _sum: N8n_chat_historiesSumAggregateOutputType | null
+    _min: N8n_chat_historiesMinAggregateOutputType | null
+    _max: N8n_chat_historiesMaxAggregateOutputType | null
+  }
+
+  type GetN8n_chat_historiesGroupByPayload<T extends n8n_chat_historiesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<N8n_chat_historiesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof N8n_chat_historiesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], N8n_chat_historiesGroupByOutputType[P]>
+            : GetScalarType<T[P], N8n_chat_historiesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type n8n_chat_historiesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    session_id?: boolean
+    message?: boolean
+  }, ExtArgs["result"]["n8n_chat_histories"]>
+
+  export type n8n_chat_historiesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    session_id?: boolean
+    message?: boolean
+  }, ExtArgs["result"]["n8n_chat_histories"]>
+
+  export type n8n_chat_historiesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    session_id?: boolean
+    message?: boolean
+  }, ExtArgs["result"]["n8n_chat_histories"]>
+
+  export type n8n_chat_historiesSelectScalar = {
+    id?: boolean
+    session_id?: boolean
+    message?: boolean
+  }
+
+  export type n8n_chat_historiesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "session_id" | "message", ExtArgs["result"]["n8n_chat_histories"]>
+
+  export type $n8n_chat_historiesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "n8n_chat_histories"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      session_id: string
+      message: Prisma.JsonValue
+    }, ExtArgs["result"]["n8n_chat_histories"]>
+    composites: {}
+  }
+
+  type n8n_chat_historiesGetPayload<S extends boolean | null | undefined | n8n_chat_historiesDefaultArgs> = $Result.GetResult<Prisma.$n8n_chat_historiesPayload, S>
+
+  type n8n_chat_historiesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<n8n_chat_historiesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: N8n_chat_historiesCountAggregateInputType | true
+    }
+
+  export interface n8n_chat_historiesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['n8n_chat_histories'], meta: { name: 'n8n_chat_histories' } }
+    /**
+     * Find zero or one N8n_chat_histories that matches the filter.
+     * @param {n8n_chat_historiesFindUniqueArgs} args - Arguments to find a N8n_chat_histories
+     * @example
+     * // Get one N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends n8n_chat_historiesFindUniqueArgs>(args: SelectSubset<T, n8n_chat_historiesFindUniqueArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one N8n_chat_histories that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {n8n_chat_historiesFindUniqueOrThrowArgs} args - Arguments to find a N8n_chat_histories
+     * @example
+     * // Get one N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends n8n_chat_historiesFindUniqueOrThrowArgs>(args: SelectSubset<T, n8n_chat_historiesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first N8n_chat_histories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_chat_historiesFindFirstArgs} args - Arguments to find a N8n_chat_histories
+     * @example
+     * // Get one N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends n8n_chat_historiesFindFirstArgs>(args?: SelectSubset<T, n8n_chat_historiesFindFirstArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first N8n_chat_histories that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_chat_historiesFindFirstOrThrowArgs} args - Arguments to find a N8n_chat_histories
+     * @example
+     * // Get one N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends n8n_chat_historiesFindFirstOrThrowArgs>(args?: SelectSubset<T, n8n_chat_historiesFindFirstOrThrowArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more N8n_chat_histories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_chat_historiesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.findMany()
+     * 
+     * // Get first 10 N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const n8n_chat_historiesWithIdOnly = await prisma.n8n_chat_histories.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends n8n_chat_historiesFindManyArgs>(args?: SelectSubset<T, n8n_chat_historiesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a N8n_chat_histories.
+     * @param {n8n_chat_historiesCreateArgs} args - Arguments to create a N8n_chat_histories.
+     * @example
+     * // Create one N8n_chat_histories
+     * const N8n_chat_histories = await prisma.n8n_chat_histories.create({
+     *   data: {
+     *     // ... data to create a N8n_chat_histories
+     *   }
+     * })
+     * 
+     */
+    create<T extends n8n_chat_historiesCreateArgs>(args: SelectSubset<T, n8n_chat_historiesCreateArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many N8n_chat_histories.
+     * @param {n8n_chat_historiesCreateManyArgs} args - Arguments to create many N8n_chat_histories.
+     * @example
+     * // Create many N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends n8n_chat_historiesCreateManyArgs>(args?: SelectSubset<T, n8n_chat_historiesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many N8n_chat_histories and returns the data saved in the database.
+     * @param {n8n_chat_historiesCreateManyAndReturnArgs} args - Arguments to create many N8n_chat_histories.
+     * @example
+     * // Create many N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many N8n_chat_histories and only return the `id`
+     * const n8n_chat_historiesWithIdOnly = await prisma.n8n_chat_histories.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends n8n_chat_historiesCreateManyAndReturnArgs>(args?: SelectSubset<T, n8n_chat_historiesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a N8n_chat_histories.
+     * @param {n8n_chat_historiesDeleteArgs} args - Arguments to delete one N8n_chat_histories.
+     * @example
+     * // Delete one N8n_chat_histories
+     * const N8n_chat_histories = await prisma.n8n_chat_histories.delete({
+     *   where: {
+     *     // ... filter to delete one N8n_chat_histories
+     *   }
+     * })
+     * 
+     */
+    delete<T extends n8n_chat_historiesDeleteArgs>(args: SelectSubset<T, n8n_chat_historiesDeleteArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one N8n_chat_histories.
+     * @param {n8n_chat_historiesUpdateArgs} args - Arguments to update one N8n_chat_histories.
+     * @example
+     * // Update one N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends n8n_chat_historiesUpdateArgs>(args: SelectSubset<T, n8n_chat_historiesUpdateArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more N8n_chat_histories.
+     * @param {n8n_chat_historiesDeleteManyArgs} args - Arguments to filter N8n_chat_histories to delete.
+     * @example
+     * // Delete a few N8n_chat_histories
+     * const { count } = await prisma.n8n_chat_histories.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends n8n_chat_historiesDeleteManyArgs>(args?: SelectSubset<T, n8n_chat_historiesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more N8n_chat_histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_chat_historiesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends n8n_chat_historiesUpdateManyArgs>(args: SelectSubset<T, n8n_chat_historiesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more N8n_chat_histories and returns the data updated in the database.
+     * @param {n8n_chat_historiesUpdateManyAndReturnArgs} args - Arguments to update many N8n_chat_histories.
+     * @example
+     * // Update many N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more N8n_chat_histories and only return the `id`
+     * const n8n_chat_historiesWithIdOnly = await prisma.n8n_chat_histories.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends n8n_chat_historiesUpdateManyAndReturnArgs>(args: SelectSubset<T, n8n_chat_historiesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one N8n_chat_histories.
+     * @param {n8n_chat_historiesUpsertArgs} args - Arguments to update or create a N8n_chat_histories.
+     * @example
+     * // Update or create a N8n_chat_histories
+     * const n8n_chat_histories = await prisma.n8n_chat_histories.upsert({
+     *   create: {
+     *     // ... data to create a N8n_chat_histories
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the N8n_chat_histories we want to update
+     *   }
+     * })
+     */
+    upsert<T extends n8n_chat_historiesUpsertArgs>(args: SelectSubset<T, n8n_chat_historiesUpsertArgs<ExtArgs>>): Prisma__n8n_chat_historiesClient<$Result.GetResult<Prisma.$n8n_chat_historiesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of N8n_chat_histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_chat_historiesCountArgs} args - Arguments to filter N8n_chat_histories to count.
+     * @example
+     * // Count the number of N8n_chat_histories
+     * const count = await prisma.n8n_chat_histories.count({
+     *   where: {
+     *     // ... the filter for the N8n_chat_histories we want to count
+     *   }
+     * })
+    **/
+    count<T extends n8n_chat_historiesCountArgs>(
+      args?: Subset<T, n8n_chat_historiesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], N8n_chat_historiesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a N8n_chat_histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {N8n_chat_historiesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends N8n_chat_historiesAggregateArgs>(args: Subset<T, N8n_chat_historiesAggregateArgs>): Prisma.PrismaPromise<GetN8n_chat_historiesAggregateType<T>>
+
+    /**
+     * Group by N8n_chat_histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_chat_historiesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends n8n_chat_historiesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: n8n_chat_historiesGroupByArgs['orderBy'] }
+        : { orderBy?: n8n_chat_historiesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, n8n_chat_historiesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetN8n_chat_historiesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the n8n_chat_histories model
+   */
+  readonly fields: n8n_chat_historiesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for n8n_chat_histories.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__n8n_chat_historiesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the n8n_chat_histories model
+   */
+  interface n8n_chat_historiesFieldRefs {
+    readonly id: FieldRef<"n8n_chat_histories", 'Int'>
+    readonly session_id: FieldRef<"n8n_chat_histories", 'String'>
+    readonly message: FieldRef<"n8n_chat_histories", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * n8n_chat_histories findUnique
+   */
+  export type n8n_chat_historiesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_chat_histories to fetch.
+     */
+    where: n8n_chat_historiesWhereUniqueInput
+  }
+
+  /**
+   * n8n_chat_histories findUniqueOrThrow
+   */
+  export type n8n_chat_historiesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_chat_histories to fetch.
+     */
+    where: n8n_chat_historiesWhereUniqueInput
+  }
+
+  /**
+   * n8n_chat_histories findFirst
+   */
+  export type n8n_chat_historiesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_chat_histories to fetch.
+     */
+    where?: n8n_chat_historiesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_chat_histories to fetch.
+     */
+    orderBy?: n8n_chat_historiesOrderByWithRelationInput | n8n_chat_historiesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for n8n_chat_histories.
+     */
+    cursor?: n8n_chat_historiesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_chat_histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_chat_histories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of n8n_chat_histories.
+     */
+    distinct?: N8n_chat_historiesScalarFieldEnum | N8n_chat_historiesScalarFieldEnum[]
+  }
+
+  /**
+   * n8n_chat_histories findFirstOrThrow
+   */
+  export type n8n_chat_historiesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_chat_histories to fetch.
+     */
+    where?: n8n_chat_historiesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_chat_histories to fetch.
+     */
+    orderBy?: n8n_chat_historiesOrderByWithRelationInput | n8n_chat_historiesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for n8n_chat_histories.
+     */
+    cursor?: n8n_chat_historiesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_chat_histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_chat_histories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of n8n_chat_histories.
+     */
+    distinct?: N8n_chat_historiesScalarFieldEnum | N8n_chat_historiesScalarFieldEnum[]
+  }
+
+  /**
+   * n8n_chat_histories findMany
+   */
+  export type n8n_chat_historiesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_chat_histories to fetch.
+     */
+    where?: n8n_chat_historiesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_chat_histories to fetch.
+     */
+    orderBy?: n8n_chat_historiesOrderByWithRelationInput | n8n_chat_historiesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing n8n_chat_histories.
+     */
+    cursor?: n8n_chat_historiesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_chat_histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_chat_histories.
+     */
+    skip?: number
+    distinct?: N8n_chat_historiesScalarFieldEnum | N8n_chat_historiesScalarFieldEnum[]
+  }
+
+  /**
+   * n8n_chat_histories create
+   */
+  export type n8n_chat_historiesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * The data needed to create a n8n_chat_histories.
+     */
+    data: XOR<n8n_chat_historiesCreateInput, n8n_chat_historiesUncheckedCreateInput>
+  }
+
+  /**
+   * n8n_chat_histories createMany
+   */
+  export type n8n_chat_historiesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many n8n_chat_histories.
+     */
+    data: n8n_chat_historiesCreateManyInput | n8n_chat_historiesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * n8n_chat_histories createManyAndReturn
+   */
+  export type n8n_chat_historiesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * The data used to create many n8n_chat_histories.
+     */
+    data: n8n_chat_historiesCreateManyInput | n8n_chat_historiesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * n8n_chat_histories update
+   */
+  export type n8n_chat_historiesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * The data needed to update a n8n_chat_histories.
+     */
+    data: XOR<n8n_chat_historiesUpdateInput, n8n_chat_historiesUncheckedUpdateInput>
+    /**
+     * Choose, which n8n_chat_histories to update.
+     */
+    where: n8n_chat_historiesWhereUniqueInput
+  }
+
+  /**
+   * n8n_chat_histories updateMany
+   */
+  export type n8n_chat_historiesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update n8n_chat_histories.
+     */
+    data: XOR<n8n_chat_historiesUpdateManyMutationInput, n8n_chat_historiesUncheckedUpdateManyInput>
+    /**
+     * Filter which n8n_chat_histories to update
+     */
+    where?: n8n_chat_historiesWhereInput
+    /**
+     * Limit how many n8n_chat_histories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * n8n_chat_histories updateManyAndReturn
+   */
+  export type n8n_chat_historiesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * The data used to update n8n_chat_histories.
+     */
+    data: XOR<n8n_chat_historiesUpdateManyMutationInput, n8n_chat_historiesUncheckedUpdateManyInput>
+    /**
+     * Filter which n8n_chat_histories to update
+     */
+    where?: n8n_chat_historiesWhereInput
+    /**
+     * Limit how many n8n_chat_histories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * n8n_chat_histories upsert
+   */
+  export type n8n_chat_historiesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * The filter to search for the n8n_chat_histories to update in case it exists.
+     */
+    where: n8n_chat_historiesWhereUniqueInput
+    /**
+     * In case the n8n_chat_histories found by the `where` argument doesn't exist, create a new n8n_chat_histories with this data.
+     */
+    create: XOR<n8n_chat_historiesCreateInput, n8n_chat_historiesUncheckedCreateInput>
+    /**
+     * In case the n8n_chat_histories was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<n8n_chat_historiesUpdateInput, n8n_chat_historiesUncheckedUpdateInput>
+  }
+
+  /**
+   * n8n_chat_histories delete
+   */
+  export type n8n_chat_historiesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+    /**
+     * Filter which n8n_chat_histories to delete.
+     */
+    where: n8n_chat_historiesWhereUniqueInput
+  }
+
+  /**
+   * n8n_chat_histories deleteMany
+   */
+  export type n8n_chat_historiesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which n8n_chat_histories to delete
+     */
+    where?: n8n_chat_historiesWhereInput
+    /**
+     * Limit how many n8n_chat_histories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * n8n_chat_histories without action
+   */
+  export type n8n_chat_historiesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_chat_histories
+     */
+    select?: n8n_chat_historiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_chat_histories
+     */
+    omit?: n8n_chat_historiesOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -52657,8 +54880,8 @@ export namespace Prisma {
     serviceId: 'serviceId',
     quantity: 'quantity',
     createdAt: 'createdAt',
-    amount: 'amount',
-    status: 'status'
+    status: 'status',
+    price: 'price'
   };
 
   export type ProposalItemScalarFieldEnum = (typeof ProposalItemScalarFieldEnum)[keyof typeof ProposalItemScalarFieldEnum]
@@ -52844,6 +55067,27 @@ export namespace Prisma {
   };
 
   export type N8nchathistoryScalarFieldEnum = (typeof N8nchathistoryScalarFieldEnum)[keyof typeof N8nchathistoryScalarFieldEnum]
+
+
+  export const SystemConfigScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    value: 'value',
+    type: 'type',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
+
+
+  export const N8n_chat_historiesScalarFieldEnum: {
+    id: 'id',
+    session_id: 'session_id',
+    message: 'message'
+  };
+
+  export type N8n_chat_historiesScalarFieldEnum = (typeof N8n_chat_historiesScalarFieldEnum)[keyof typeof N8n_chat_historiesScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -55493,8 +57737,8 @@ export namespace Prisma {
     serviceId?: IntFilter<"ProposalItem"> | number
     quantity?: IntFilter<"ProposalItem"> | number
     createdAt?: DateTimeFilter<"ProposalItem"> | Date | string
-    amount?: FloatFilter<"ProposalItem"> | number
     status?: EnumProposalItemStatusFilter<"ProposalItem"> | $Enums.ProposalItemStatus
+    price?: FloatFilter<"ProposalItem"> | number
     Proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
     Service?: XOR<ServiceScalarRelationFilter, ServiceWhereInput>
   }
@@ -55505,8 +57749,8 @@ export namespace Prisma {
     serviceId?: SortOrder
     quantity?: SortOrder
     createdAt?: SortOrder
-    amount?: SortOrder
     status?: SortOrder
+    price?: SortOrder
     Proposal?: ProposalOrderByWithRelationInput
     Service?: ServiceOrderByWithRelationInput
   }
@@ -55520,8 +57764,8 @@ export namespace Prisma {
     serviceId?: IntFilter<"ProposalItem"> | number
     quantity?: IntFilter<"ProposalItem"> | number
     createdAt?: DateTimeFilter<"ProposalItem"> | Date | string
-    amount?: FloatFilter<"ProposalItem"> | number
     status?: EnumProposalItemStatusFilter<"ProposalItem"> | $Enums.ProposalItemStatus
+    price?: FloatFilter<"ProposalItem"> | number
     Proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
     Service?: XOR<ServiceScalarRelationFilter, ServiceWhereInput>
   }, "id">
@@ -55532,8 +57776,8 @@ export namespace Prisma {
     serviceId?: SortOrder
     quantity?: SortOrder
     createdAt?: SortOrder
-    amount?: SortOrder
     status?: SortOrder
+    price?: SortOrder
     _count?: ProposalItemCountOrderByAggregateInput
     _avg?: ProposalItemAvgOrderByAggregateInput
     _max?: ProposalItemMaxOrderByAggregateInput
@@ -55550,8 +57794,8 @@ export namespace Prisma {
     serviceId?: IntWithAggregatesFilter<"ProposalItem"> | number
     quantity?: IntWithAggregatesFilter<"ProposalItem"> | number
     createdAt?: DateTimeWithAggregatesFilter<"ProposalItem"> | Date | string
-    amount?: FloatWithAggregatesFilter<"ProposalItem"> | number
     status?: EnumProposalItemStatusWithAggregatesFilter<"ProposalItem"> | $Enums.ProposalItemStatus
+    price?: FloatWithAggregatesFilter<"ProposalItem"> | number
   }
 
   export type Service_ServiceItemsWhereInput = {
@@ -56535,6 +58779,109 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"n8nchathistory"> | number
     session_id?: StringWithAggregatesFilter<"n8nchathistory"> | string
     message?: JsonWithAggregatesFilter<"n8nchathistory">
+  }
+
+  export type SystemConfigWhereInput = {
+    AND?: SystemConfigWhereInput | SystemConfigWhereInput[]
+    OR?: SystemConfigWhereInput[]
+    NOT?: SystemConfigWhereInput | SystemConfigWhereInput[]
+    id?: IntFilter<"SystemConfig"> | number
+    key?: StringFilter<"SystemConfig"> | string
+    value?: StringNullableFilter<"SystemConfig"> | string | null
+    type?: StringNullableFilter<"SystemConfig"> | string | null
+    createdAt?: DateTimeFilter<"SystemConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"SystemConfig"> | Date | string
+  }
+
+  export type SystemConfigOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrderInput | SortOrder
+    type?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemConfigWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    key?: string
+    AND?: SystemConfigWhereInput | SystemConfigWhereInput[]
+    OR?: SystemConfigWhereInput[]
+    NOT?: SystemConfigWhereInput | SystemConfigWhereInput[]
+    value?: StringNullableFilter<"SystemConfig"> | string | null
+    type?: StringNullableFilter<"SystemConfig"> | string | null
+    createdAt?: DateTimeFilter<"SystemConfig"> | Date | string
+    updatedAt?: DateTimeFilter<"SystemConfig"> | Date | string
+  }, "id" | "key">
+
+  export type SystemConfigOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrderInput | SortOrder
+    type?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SystemConfigCountOrderByAggregateInput
+    _avg?: SystemConfigAvgOrderByAggregateInput
+    _max?: SystemConfigMaxOrderByAggregateInput
+    _min?: SystemConfigMinOrderByAggregateInput
+    _sum?: SystemConfigSumOrderByAggregateInput
+  }
+
+  export type SystemConfigScalarWhereWithAggregatesInput = {
+    AND?: SystemConfigScalarWhereWithAggregatesInput | SystemConfigScalarWhereWithAggregatesInput[]
+    OR?: SystemConfigScalarWhereWithAggregatesInput[]
+    NOT?: SystemConfigScalarWhereWithAggregatesInput | SystemConfigScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SystemConfig"> | number
+    key?: StringWithAggregatesFilter<"SystemConfig"> | string
+    value?: StringNullableWithAggregatesFilter<"SystemConfig"> | string | null
+    type?: StringNullableWithAggregatesFilter<"SystemConfig"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
+  }
+
+  export type n8n_chat_historiesWhereInput = {
+    AND?: n8n_chat_historiesWhereInput | n8n_chat_historiesWhereInput[]
+    OR?: n8n_chat_historiesWhereInput[]
+    NOT?: n8n_chat_historiesWhereInput | n8n_chat_historiesWhereInput[]
+    id?: IntFilter<"n8n_chat_histories"> | number
+    session_id?: StringFilter<"n8n_chat_histories"> | string
+    message?: JsonFilter<"n8n_chat_histories">
+  }
+
+  export type n8n_chat_historiesOrderByWithRelationInput = {
+    id?: SortOrder
+    session_id?: SortOrder
+    message?: SortOrder
+  }
+
+  export type n8n_chat_historiesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: n8n_chat_historiesWhereInput | n8n_chat_historiesWhereInput[]
+    OR?: n8n_chat_historiesWhereInput[]
+    NOT?: n8n_chat_historiesWhereInput | n8n_chat_historiesWhereInput[]
+    session_id?: StringFilter<"n8n_chat_histories"> | string
+    message?: JsonFilter<"n8n_chat_histories">
+  }, "id">
+
+  export type n8n_chat_historiesOrderByWithAggregationInput = {
+    id?: SortOrder
+    session_id?: SortOrder
+    message?: SortOrder
+    _count?: n8n_chat_historiesCountOrderByAggregateInput
+    _avg?: n8n_chat_historiesAvgOrderByAggregateInput
+    _max?: n8n_chat_historiesMaxOrderByAggregateInput
+    _min?: n8n_chat_historiesMinOrderByAggregateInput
+    _sum?: n8n_chat_historiesSumOrderByAggregateInput
+  }
+
+  export type n8n_chat_historiesScalarWhereWithAggregatesInput = {
+    AND?: n8n_chat_historiesScalarWhereWithAggregatesInput | n8n_chat_historiesScalarWhereWithAggregatesInput[]
+    OR?: n8n_chat_historiesScalarWhereWithAggregatesInput[]
+    NOT?: n8n_chat_historiesScalarWhereWithAggregatesInput | n8n_chat_historiesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"n8n_chat_histories"> | number
+    session_id?: StringWithAggregatesFilter<"n8n_chat_histories"> | string
+    message?: JsonWithAggregatesFilter<"n8n_chat_histories">
   }
 
   export type BookingCreateInput = {
@@ -58820,8 +61167,8 @@ export namespace Prisma {
   export type ProposalItemCreateInput = {
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
     Proposal: ProposalCreateNestedOneWithoutProposalItemInput
     Service: ServiceCreateNestedOneWithoutProposalItemInput
   }
@@ -58832,15 +61179,15 @@ export namespace Prisma {
     serviceId: number
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
   }
 
   export type ProposalItemUpdateInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
     Proposal?: ProposalUpdateOneRequiredWithoutProposalItemNestedInput
     Service?: ServiceUpdateOneRequiredWithoutProposalItemNestedInput
   }
@@ -58851,8 +61198,8 @@ export namespace Prisma {
     serviceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
   export type ProposalItemCreateManyInput = {
@@ -58861,15 +61208,15 @@ export namespace Prisma {
     serviceId: number
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
   }
 
   export type ProposalItemUpdateManyMutationInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
   export type ProposalItemUncheckedUpdateManyInput = {
@@ -58878,8 +61225,8 @@ export namespace Prisma {
     serviceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
   export type Service_ServiceItemsCreateInput = {
@@ -59849,6 +62196,105 @@ export namespace Prisma {
   }
 
   export type n8nchathistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    session_id?: StringFieldUpdateOperationsInput | string
+    message?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SystemConfigCreateInput = {
+    key: string
+    value?: string | null
+    type?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SystemConfigUncheckedCreateInput = {
+    id?: number
+    key: string
+    value?: string | null
+    type?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SystemConfigUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemConfigUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemConfigCreateManyInput = {
+    id?: number
+    key: string
+    value?: string | null
+    type?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SystemConfigUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemConfigUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type n8n_chat_historiesCreateInput = {
+    session_id: string
+    message: JsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_chat_historiesUncheckedCreateInput = {
+    id?: number
+    session_id: string
+    message: JsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_chat_historiesUpdateInput = {
+    session_id?: StringFieldUpdateOperationsInput | string
+    message?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_chat_historiesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    session_id?: StringFieldUpdateOperationsInput | string
+    message?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_chat_historiesCreateManyInput = {
+    id?: number
+    session_id: string
+    message: JsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_chat_historiesUpdateManyMutationInput = {
+    session_id?: StringFieldUpdateOperationsInput | string
+    message?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_chat_historiesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     session_id?: StringFieldUpdateOperationsInput | string
     message?: JsonNullValueInput | InputJsonValue
@@ -61962,8 +64408,8 @@ export namespace Prisma {
     serviceId?: SortOrder
     quantity?: SortOrder
     createdAt?: SortOrder
-    amount?: SortOrder
     status?: SortOrder
+    price?: SortOrder
   }
 
   export type ProposalItemAvgOrderByAggregateInput = {
@@ -61971,7 +64417,7 @@ export namespace Prisma {
     proposalId?: SortOrder
     serviceId?: SortOrder
     quantity?: SortOrder
-    amount?: SortOrder
+    price?: SortOrder
   }
 
   export type ProposalItemMaxOrderByAggregateInput = {
@@ -61980,8 +64426,8 @@ export namespace Prisma {
     serviceId?: SortOrder
     quantity?: SortOrder
     createdAt?: SortOrder
-    amount?: SortOrder
     status?: SortOrder
+    price?: SortOrder
   }
 
   export type ProposalItemMinOrderByAggregateInput = {
@@ -61990,8 +64436,8 @@ export namespace Prisma {
     serviceId?: SortOrder
     quantity?: SortOrder
     createdAt?: SortOrder
-    amount?: SortOrder
     status?: SortOrder
+    price?: SortOrder
   }
 
   export type ProposalItemSumOrderByAggregateInput = {
@@ -61999,7 +64445,7 @@ export namespace Prisma {
     proposalId?: SortOrder
     serviceId?: SortOrder
     quantity?: SortOrder
-    amount?: SortOrder
+    price?: SortOrder
   }
 
   export type EnumProposalItemStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -62840,6 +65286,65 @@ export namespace Prisma {
   }
 
   export type n8nchathistorySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SystemConfigCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemConfigAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SystemConfigMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemConfigMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SystemConfigSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type n8n_chat_historiesCountOrderByAggregateInput = {
+    id?: SortOrder
+    session_id?: SortOrder
+    message?: SortOrder
+  }
+
+  export type n8n_chat_historiesAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type n8n_chat_historiesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    session_id?: SortOrder
+  }
+
+  export type n8n_chat_historiesMinOrderByAggregateInput = {
+    id?: SortOrder
+    session_id?: SortOrder
+  }
+
+  export type n8n_chat_historiesSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -73469,8 +75974,8 @@ export namespace Prisma {
   export type ProposalItemCreateWithoutServiceInput = {
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
     Proposal: ProposalCreateNestedOneWithoutProposalItemInput
   }
 
@@ -73479,8 +75984,8 @@ export namespace Prisma {
     proposalId: number
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
   }
 
   export type ProposalItemCreateOrConnectWithoutServiceInput = {
@@ -73986,8 +76491,8 @@ export namespace Prisma {
     serviceId?: IntFilter<"ProposalItem"> | number
     quantity?: IntFilter<"ProposalItem"> | number
     createdAt?: DateTimeFilter<"ProposalItem"> | Date | string
-    amount?: FloatFilter<"ProposalItem"> | number
     status?: EnumProposalItemStatusFilter<"ProposalItem"> | $Enums.ProposalItemStatus
+    price?: FloatFilter<"ProposalItem"> | number
   }
 
   export type RecurringBookingUpsertWithWhereUniqueWithoutServiceInput = {
@@ -79497,8 +82002,8 @@ export namespace Prisma {
   export type ProposalItemCreateWithoutProposalInput = {
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
     Service: ServiceCreateNestedOneWithoutProposalItemInput
   }
 
@@ -79507,8 +82012,8 @@ export namespace Prisma {
     serviceId: number
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
   }
 
   export type ProposalItemCreateOrConnectWithoutProposalInput = {
@@ -83566,8 +86071,8 @@ export namespace Prisma {
     proposalId: number
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
   }
 
   export type RecurringBookingCreateManyServiceInput = {
@@ -83618,8 +86123,8 @@ export namespace Prisma {
   export type ProposalItemUpdateWithoutServiceInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
     Proposal?: ProposalUpdateOneRequiredWithoutProposalItemNestedInput
   }
 
@@ -83628,8 +86133,8 @@ export namespace Prisma {
     proposalId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
   export type ProposalItemUncheckedUpdateManyWithoutServiceInput = {
@@ -83637,8 +86142,8 @@ export namespace Prisma {
     proposalId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
   export type RecurringBookingUpdateWithoutServiceInput = {
@@ -85952,15 +88457,15 @@ export namespace Prisma {
     serviceId: number
     quantity?: number
     createdAt?: Date | string
-    amount: number
     status?: $Enums.ProposalItemStatus
+    price: number
   }
 
   export type ProposalItemUpdateWithoutProposalInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
     Service?: ServiceUpdateOneRequiredWithoutProposalItemNestedInput
   }
 
@@ -85969,8 +88474,8 @@ export namespace Prisma {
     serviceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
   export type ProposalItemUncheckedUpdateManyWithoutProposalInput = {
@@ -85978,8 +88483,8 @@ export namespace Prisma {
     serviceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumProposalItemStatusFieldUpdateOperationsInput | $Enums.ProposalItemStatus
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
   export type MessageCreateManyConversationInput = {
