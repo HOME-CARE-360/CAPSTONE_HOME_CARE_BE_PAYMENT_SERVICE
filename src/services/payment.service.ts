@@ -369,6 +369,11 @@ export const handlePayOSCallback = async (payload: {
           data: { status: ProposalStatus.ACCEPTED },
         });
 
+        await tx.proposalItem.updateMany({
+  where: { proposalId: proposal.id },
+  data: { status: ProposalStatus.ACCEPTED },
+});
+
         await tx.booking.update({
           where: { id: txn.bookingId },
           data: { status: BookingStatus.CONFIRMED },
@@ -467,7 +472,6 @@ export const payProposalWithWalletAtomic = async (
   bookingId: number,
   amount: number,
 ): Promise<Transaction> => {
-  // Chuẩn hoá VND (Int)
   const amountVnd = Math.trunc(Number(amount));
   if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
     throw new AppError(
@@ -478,7 +482,7 @@ export const payProposalWithWalletAtomic = async (
   }
 
   return prisma.$transaction(async (tx) => {
-    // 1) Lấy booking để kiểm tra tồn tại
+    // 1) Ensure booking exists
     const booking = await tx.booking.findUnique({
       where: { id: bookingId },
       select: { id: true },
@@ -491,7 +495,7 @@ export const payProposalWithWalletAtomic = async (
       );
     }
 
-    // 2) Đọc ví và kiểm tra số dư
+    // 2) Read wallet & check balance
     const wallet = await tx.wallet.findUnique({ where: { userId } });
     if (!wallet) {
       throw new AppError(
@@ -512,22 +516,21 @@ export const payProposalWithWalletAtomic = async (
       );
     }
 
-    // 3) Trừ ví
+    // 3) Deduct wallet
     await tx.wallet.update({
       where: { userId },
       data: { balance: { decrement: amountVnd }, updatedAt: new Date() },
     });
 
-    // 4) Tạo orderCode và Transaction
+    // 4) Write/Update Transaction as PAID (wallet)
     const orderCode = `WALLET-${bookingId}-${Date.now()}`;
-    
-    // Sử dụng upsert logic tương tự như các hàm khác
+
     const existingTx = await tx.transaction.findUnique({
-      where: { bookingId }
+      where: { bookingId },
+      select: { id: true, status: true },
     });
 
     let transaction: Transaction;
-    
     if (existingTx) {
       if (existingTx.status === PaymentStatus.PAID) {
         throw new AppError(
@@ -536,7 +539,6 @@ export const payProposalWithWalletAtomic = async (
           409,
         );
       }
-      // Update existing transaction
       transaction = await tx.transaction.update({
         where: { id: existingTx.id },
         data: {
@@ -550,7 +552,6 @@ export const payProposalWithWalletAtomic = async (
         },
       });
     } else {
-      // Create new transaction
       transaction = await tx.transaction.create({
         data: {
           bookingId,
@@ -560,20 +561,28 @@ export const payProposalWithWalletAtomic = async (
           status: PaymentStatus.PAID,
           paidAt: new Date(),
           createdById: userId,
-          type: "PROPOSAL_PAYMENT", 
+          type: "PROPOSAL_PAYMENT",
         },
       });
     }
 
-    // 5) Cập nhật Proposal → ACCEPTED
-    await tx.proposal.update({
-      where: { bookingId },
+    // 5) Accept Proposal and all ProposalItems
+    const proposal = await tx.proposal.update({
+      where: { bookingId }, // bookingId is @unique on Proposal
+      data: { status: ProposalStatus.ACCEPTED },
+      select: { id: true },
+    });
+
+    await tx.proposalItem.updateMany({
+      where: { proposalId: proposal.id },
       data: { status: ProposalStatus.ACCEPTED },
     });
 
     return transaction;
   });
 };
+
+
 export const createProposalPayment = async ({
   bookingId,
   method,
