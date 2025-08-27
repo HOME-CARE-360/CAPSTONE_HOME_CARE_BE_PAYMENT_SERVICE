@@ -498,12 +498,16 @@ export const payProposalWithWalletAtomic = async (
       });
     }
 
-    // 5) Update Proposal → ACCEPTED
-    await tx.proposal.update({
-      where: { bookingId },
+ const proposal = await tx.proposal.update({
+      where: { bookingId }, // bookingId is @unique on Proposal
       data: { status: ProposalStatus.ACCEPTED },
+      select: { id: true },
     });
 
+    await tx.proposalItem.updateMany({
+      where: { proposalId: proposal.id },
+      data: { status: ProposalStatus.ACCEPTED },
+    });
     // 6) Update Booking → CONFIRMED
     await tx.booking.update({
       where: { id: bookingId },
