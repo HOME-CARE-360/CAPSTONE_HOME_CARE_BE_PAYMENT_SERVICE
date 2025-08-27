@@ -20,10 +20,8 @@ import * as paymentRepo from "../repositories/payment.repository";
 import { CheckoutResponseDataType } from "@payos/node/lib/type";
 import { getConfig } from "./config.service";
 
-// NOTE: Tốt nhất dùng 1 instance Prisma chung, nhưng giữ nguyên phong cách file này:
 const prisma = new PrismaClient();
 
-// Khởi tạo PayOS SDK (đúng bộ key của PayOS)
 const payos = new PayOS(
   process.env.PAYOS_CLIENT_ID!, // clientId của PayOS
   process.env.PAYOS_API_KEY!, // apiKey của PayOS
@@ -195,19 +193,24 @@ async function handleWalletTransaction(
       where: { id: data.serviceRequestId },
       data: { status: RequestStatus.PENDING },
     });
+    const bookingId = await tx.booking.findUnique({
+      where: { id: data.serviceRequestId },
+      select: { id: true }
+    });
 
     return {
       message: "Deposit payment completed via wallet",
       paymentTransactionId: paymentTx.id,
       referenceNumber: paymentTx.referenceNumber,
-      status: paymentTx.status, // SUCCESS
-      amountOut: paymentTx.amountOut, // = amountVnd
-      gateway: paymentTx.gateway, // INTERNAL_WALLET
+      status: paymentTx.status, 
+      amountOut: paymentTx.amountOut, 
+      gateway: paymentTx.gateway,
       transactionDate: paymentTx.transactionDate,
       userId: paymentTx.userId,
       serviceRequestId: data.serviceRequestId,
       paidViaWallet: true,
       walletBalanceAfter: wallet.balance - amountVnd,
+      bookingId: bookingId
     };
   });
 }
