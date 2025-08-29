@@ -10,7 +10,7 @@ import {
   PaymentMethod,
   PaymentStatus,
   PaymentTransactionStatus,
-  ProposalStatus,
+  ProposalStatus,   
   PrismaClient,
   BookingStatus,
   RequestStatus,
@@ -334,69 +334,7 @@ export const handlePayOSCallback = async (payload: {
   const { orderCode, status } = payload;
 
   return prisma.$transaction(async (tx) => {
-    const txn = await tx.transaction.findUnique({
-      where: { orderCode },
-      select: { id: true, orderCode: true, status: true, bookingId: true },
-    });
-
-    if (txn) {
-      if (txn.status !== PaymentStatus.PENDING) {
-        return { message: "Transaction already handled" };
-      }
-
-      if (status === "PAID") {
-        await tx.transaction.update({
-          where: { orderCode },
-          data: { status: PaymentStatus.PAID, paidAt: new Date() },
-        });
-
-        if (!txn.bookingId) {
-          throw new AppError("Error.InvalidBookingId", { orderCode }, 400);
-        }
-
-        // Proposal payment: chấp nhận proposal của booking này
-        const proposal = await tx.proposal.findUnique({
-          where: { bookingId: txn.bookingId },
-          select: { id: true },
-        });
-        if (!proposal) {
-          throw new AppError(
-            "Error.ProposalNotFound",
-            { orderCode, bookingId: txn.bookingId },
-            404,
-          );
-        }
-
-        await tx.proposal.update({
-          where: { id: proposal.id },
-          data: { status: ProposalStatus.ACCEPTED },
-        });
-
-        await tx.proposalItem.updateMany({
-  where: { proposalId: proposal.id },
-  data: { status: ProposalStatus.ACCEPTED },
-});
-
-        await tx.booking.update({
-          where: { id: txn.bookingId },
-          data: { status: BookingStatus.CONFIRMED },
-        });
-
-        return { message: "Proposal payment success handled" };
-      }
-
-      if (status === "CANCELLED") {
-        await tx.transaction.update({
-          where: { orderCode },
-          data: { status: PaymentStatus.FAILED },
-        });
-        return { message: "Proposal payment failure handled" };
-      }
-
-      throw new AppError("Error.InvalidStatus", { status }, 400);
-    }
-
-    // 2) TH 2: Deposit/Top-up ở bảng PaymentTransaction (referenceNumber = orderCode)
+    // 1) Try to resolve by PaymentTransaction.referenceNumber (TOPUP or DEPOSIT) first.
     const paymentTx = await tx.paymentTransaction.findFirst({
       where: { referenceNumber: orderCode },
       select: {
@@ -408,59 +346,127 @@ export const handlePayOSCallback = async (payload: {
       },
     });
 
-    if (!paymentTx) {
+    if (paymentTx) {
+      // Idempotency guard
+      if (
+        paymentTx.status !== PaymentTransactionStatus.PENDING &&
+        paymentTx.status !== PaymentTransactionStatus.PROCESSING
+      ) {
+        return {
+          message:
+            "Payment transaction already handled or in an unchangeable state",
+        };
+      }
+
+      if (status === "PAID") {
+        // Mark success first to avoid re-entrancy races
+        await tx.paymentTransaction.update({
+          where: { id: paymentTx.id },
+          data: { status: PaymentTransactionStatus.SUCCESS },
+        });
+
+        if (paymentTx.serviceRequestId == null) {
+          // TOPUP → credit wallet
+          if (paymentTx.userId) {
+            await tx.wallet.update({
+              where: { userId: paymentTx.userId },
+              data: { balance: { increment: paymentTx.amountIn } },
+            });
+          }
+          return { message: "Wallet top-up success handled" };
+        } else {
+          // DEPOSIT → move SR to pending (or whatever your next state is)
+          await tx.serviceRequest.update({
+            where: { id: paymentTx.serviceRequestId },
+            data: { status: RequestStatus.PENDING },
+          });
+
+          return { message: "Deposit payment success handled" };
+        }
+      }
+
+      if (status === "CANCELLED") {
+        await tx.paymentTransaction.update({
+          where: { id: paymentTx.id },
+          data: { status: PaymentTransactionStatus.FAILED },
+        });
+        return {
+          message:
+            paymentTx.serviceRequestId == null
+              ? "Wallet top-up failure handled"
+              : "Deposit payment failure handled",
+        };
+      }
+
+      throw new AppError("Error.InvalidStatus", { status }, 400);
+    }
+
+    // 2) Otherwise, resolve by Transaction.orderCode (PROPOSAL/BOOKING flow)
+    const txn = await tx.transaction.findUnique({
+      where: { orderCode },
+      select: { id: true, orderCode: true, status: true, bookingId: true },
+    });
+
+    if (!txn) {
+      // Neither paymentTransaction nor transaction found
       throw new AppError("Error.TransactionNotFound", { orderCode }, 404);
     }
 
-    // Đã xử lý?
-    if (
-      paymentTx.status !== PaymentTransactionStatus.PENDING &&
-      paymentTx.status !== PaymentTransactionStatus.PROCESSING
-    ) {
-      return {
-        message:
-          "Payment transaction already handled or in an unchangeable state",
-      };
+    // Idempotency guard
+    if (txn.status !== PaymentStatus.PENDING) {
+      return { message: "Transaction already handled" };
     }
 
     if (status === "PAID") {
-      // Đánh dấu SUCCESS trước
-      await tx.paymentTransaction.update({
-        where: { id: paymentTx.id },
-        data: { status: PaymentTransactionStatus.SUCCESS },
+      await tx.transaction.update({
+        where: { orderCode },
+        data: { status: PaymentStatus.PAID, paidAt: new Date() },
       });
 
-      // Phân nhánh theo TOPUP / DEPOSIT
-      if (paymentTx.serviceRequestId == null) {
-        // TOPUP: cộng ví
-        if (paymentTx.userId) {
-          await tx.wallet.update({
-            where: { userId: paymentTx.userId },
-            data: { balance: { increment: paymentTx.amountIn } },
-          });
-        }
-        return { message: "Wallet top-up success handled" };
-      } else {
-        await tx.serviceRequest.update({
-          where: { id: paymentTx.serviceRequestId },
-          data: { status: RequestStatus.PENDING },
-        });
-
-        return { message: "Deposit payment success handled" };
+      if (!txn.bookingId) {
+        throw new AppError("Error.InvalidBookingId", { orderCode }, 400);
       }
+
+      const proposal = await tx.proposal.findUnique({
+        where: { bookingId: txn.bookingId },
+        select: { id: true },
+      });
+      if (!proposal) {
+        throw new AppError(
+          "Error.ProposalNotFound",
+          { orderCode, bookingId: txn.bookingId },
+          404,
+        );
+      }
+
+      await tx.proposal.update({
+        where: { id: proposal.id },
+        data: { status: ProposalStatus.ACCEPTED },
+      });
+
+      // NOTE: ensure this status enum matches proposal item’s enum.
+      // If ProposalItem has its own enum (e.g., ProposalItemStatus.ACCEPTED), use that instead.
+      await tx.proposalItem.updateMany({
+        where: { proposalId: proposal.id },
+        data: { status: ProposalStatus.ACCEPTED },
+      });
+
+      await tx.booking.update({
+        where: { id: txn.bookingId },
+        data: { status: BookingStatus.CONFIRMED },
+      });
+
+      return { message: "Proposal payment success handled" };
     }
 
     if (status === "CANCELLED") {
-      await tx.paymentTransaction.update({
-        where: { id: paymentTx.id },
-        data: { status: PaymentTransactionStatus.FAILED },
+      // Mark the main transaction failed
+      await tx.transaction.update({
+        where: { orderCode },
+        data: { status: PaymentStatus.FAILED },
       });
-      return {
-        message:
-          paymentTx.serviceRequestId == null
-            ? "Wallet top-up failure handled"
-            : "Deposit payment failure handled",
-      };
+
+      return { message: "Proposal payment failure handled" };
     }
 
     throw new AppError("Error.InvalidStatus", { status }, 400);
@@ -586,6 +592,7 @@ export async function getPaymentStatus(orderCode: string) {
         404,
       );
     }
+    console.log("Found booking transaction:", bookingTx);
 
     return {
       ok: true,
@@ -607,6 +614,7 @@ export async function getPaymentStatus(orderCode: string) {
       404,
     );
   }
+  console.log("Found payment transaction:", payTx);
 
   const unifiedStatus = paymentRepo.mapPaymentTxStatus(payTx.status);
   const kind = payTx.serviceRequestId
