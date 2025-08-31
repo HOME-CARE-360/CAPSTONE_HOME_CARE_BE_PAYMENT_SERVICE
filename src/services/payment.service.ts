@@ -792,7 +792,7 @@ async function handleExistingServiceRequestWalletPayment(
     // 1. Tạo PaymentTransaction SUCCESS
     const paymentTx = await paymentRepo.createPaymentTransaction({
       kind: "DEPOSIT",
-      referenceNumber: `WALLET_SR_${serviceRequestId}_${Date.now()}`,
+      referenceNumber: `WALLET_${serviceRequestId}_${Date.now()}`,
       gateway: "INTERNAL_WALLET",
       status: PaymentTransactionStatus.SUCCESS,
       userId: userId,
