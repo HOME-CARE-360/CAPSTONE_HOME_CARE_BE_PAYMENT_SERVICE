@@ -200,11 +200,6 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
       }
 
       case "PAY_EXISTING_SERVICE_REQUEST": {
-
-      }
-
-
-      case "PAY_EXISTING_SERVICE_REQUEST": {
   if (!data) {
     throw new AppError(
       "Error.MissingData",
@@ -216,23 +211,13 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
   const {
     serviceRequestId,
     userId,
-    amount,
     paymentMethod,
   } = data as {
     serviceRequestId?: unknown;
     userId?: unknown;
-    amount?: unknown;
     paymentMethod?: unknown;
   };
 
-  const amountNum = Number(amount);
-  if (!Number.isFinite(amountNum) || amountNum <= 0) {
-    throw new AppError(
-      "Error.InvalidAmount",
-      { message: "amount must be a valid positive number (VND)", path: "data.amount" },
-      422
-    );
-  }
 
   if (!(paymentMethod === PaymentMethod.WALLET || paymentMethod === PaymentMethod.BANK_TRANSFER)) {
     throw new AppError(
