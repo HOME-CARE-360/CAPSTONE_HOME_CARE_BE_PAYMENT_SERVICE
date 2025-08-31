@@ -213,6 +213,11 @@ export type SystemConfig = $Result.DefaultSelection<Prisma.$SystemConfigPayload>
  * 
  */
 export type n8n_chat_histories = $Result.DefaultSelection<Prisma.$n8n_chat_historiesPayload>
+/**
+ * Model n8n_data
+ * 
+ */
+export type n8n_data = $Result.DefaultSelection<Prisma.$n8n_dataPayload>
 
 /**
  * Enums
@@ -1080,6 +1085,16 @@ export class PrismaClient<
     * ```
     */
   get n8n_chat_histories(): Prisma.n8n_chat_historiesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.n8n_data`: Exposes CRUD operations for the **n8n_data** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more N8n_data
+    * const n8n_data = await prisma.n8n_data.findMany()
+    * ```
+    */
+  get n8n_data(): Prisma.n8n_dataDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1559,7 +1574,8 @@ export namespace Prisma {
     ProductEmbedding: 'ProductEmbedding',
     n8nchathistory: 'n8nchathistory',
     SystemConfig: 'SystemConfig',
-    n8n_chat_histories: 'n8n_chat_histories'
+    n8n_chat_histories: 'n8n_chat_histories',
+    n8n_data: 'n8n_data'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1578,7 +1594,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "booking" | "category" | "chatMessage" | "customerProfile" | "device" | "notification" | "paymentTransaction" | "permission" | "recurringBooking" | "refreshToken" | "review" | "role" | "service" | "serviceProvider" | "staff" | "staffCategory" | "transaction" | "user" | "verificationCode" | "workLog" | "inspectionReport" | "serviceItem" | "serviceRequest" | "proposal" | "proposalItem" | "service_ServiceItems" | "wallet" | "withdrawalRequest" | "conversation" | "favoriteService" | "message" | "suggested_services_config" | "customerAsset" | "assetSuggestion" | "bookingReport" | "externalProduct" | "productEmbedding" | "n8nchathistory" | "systemConfig" | "n8n_chat_histories"
+      modelProps: "booking" | "category" | "chatMessage" | "customerProfile" | "device" | "notification" | "paymentTransaction" | "permission" | "recurringBooking" | "refreshToken" | "review" | "role" | "service" | "serviceProvider" | "staff" | "staffCategory" | "transaction" | "user" | "verificationCode" | "workLog" | "inspectionReport" | "serviceItem" | "serviceRequest" | "proposal" | "proposalItem" | "service_ServiceItems" | "wallet" | "withdrawalRequest" | "conversation" | "favoriteService" | "message" | "suggested_services_config" | "customerAsset" | "assetSuggestion" | "bookingReport" | "externalProduct" | "productEmbedding" | "n8nchathistory" | "systemConfig" | "n8n_chat_histories" | "n8n_data"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4542,6 +4558,80 @@ export namespace Prisma {
           }
         }
       }
+      n8n_data: {
+        payload: Prisma.$n8n_dataPayload<ExtArgs>
+        fields: Prisma.n8n_dataFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.n8n_dataFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.n8n_dataFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>
+          }
+          findFirst: {
+            args: Prisma.n8n_dataFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.n8n_dataFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>
+          }
+          findMany: {
+            args: Prisma.n8n_dataFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>[]
+          }
+          create: {
+            args: Prisma.n8n_dataCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>
+          }
+          createMany: {
+            args: Prisma.n8n_dataCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.n8n_dataCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>[]
+          }
+          delete: {
+            args: Prisma.n8n_dataDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>
+          }
+          update: {
+            args: Prisma.n8n_dataUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>
+          }
+          deleteMany: {
+            args: Prisma.n8n_dataDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.n8n_dataUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.n8n_dataUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>[]
+          }
+          upsert: {
+            args: Prisma.n8n_dataUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$n8n_dataPayload>
+          }
+          aggregate: {
+            args: Prisma.N8n_dataAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateN8n_data>
+          }
+          groupBy: {
+            args: Prisma.n8n_dataGroupByArgs<ExtArgs>
+            result: $Utils.Optional<N8n_dataGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.n8n_dataCountArgs<ExtArgs>
+            result: $Utils.Optional<N8n_dataCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4666,6 +4756,7 @@ export namespace Prisma {
     n8nchathistory?: n8nchathistoryOmit
     systemConfig?: SystemConfigOmit
     n8n_chat_histories?: n8n_chat_historiesOmit
+    n8n_data?: n8n_dataOmit
   }
 
   /* Types for Logging */
@@ -5592,6 +5683,37 @@ export namespace Prisma {
    */
   export type ServiceItemCountOutputTypeCountService_ServiceItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Service_ServiceItemsWhereInput
+  }
+
+
+  /**
+   * Count Type ServiceRequestCountOutputType
+   */
+
+  export type ServiceRequestCountOutputType = {
+    PaymentTransaction: number
+  }
+
+  export type ServiceRequestCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    PaymentTransaction?: boolean | ServiceRequestCountOutputTypeCountPaymentTransactionArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ServiceRequestCountOutputType without action
+   */
+  export type ServiceRequestCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ServiceRequestCountOutputType
+     */
+    select?: ServiceRequestCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ServiceRequestCountOutputType without action
+   */
+  export type ServiceRequestCountOutputTypeCountPaymentTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentTransactionWhereInput
   }
 
 
@@ -13326,6 +13448,7 @@ export namespace Prisma {
     serviceRequestId: number | null
     userId: number | null
     withdrawalRequestId: number | null
+    bookingReportId: number | null
   }
 
   export type PaymentTransactionSumAggregateOutputType = {
@@ -13336,6 +13459,7 @@ export namespace Prisma {
     serviceRequestId: number | null
     userId: number | null
     withdrawalRequestId: number | null
+    bookingReportId: number | null
   }
 
   export type PaymentTransactionMinAggregateOutputType = {
@@ -13355,6 +13479,7 @@ export namespace Prisma {
     status: $Enums.PaymentTransactionStatus | null
     userId: number | null
     withdrawalRequestId: number | null
+    bookingReportId: number | null
   }
 
   export type PaymentTransactionMaxAggregateOutputType = {
@@ -13374,6 +13499,7 @@ export namespace Prisma {
     status: $Enums.PaymentTransactionStatus | null
     userId: number | null
     withdrawalRequestId: number | null
+    bookingReportId: number | null
   }
 
   export type PaymentTransactionCountAggregateOutputType = {
@@ -13393,6 +13519,7 @@ export namespace Prisma {
     status: number
     userId: number
     withdrawalRequestId: number
+    bookingReportId: number
     _all: number
   }
 
@@ -13405,6 +13532,7 @@ export namespace Prisma {
     serviceRequestId?: true
     userId?: true
     withdrawalRequestId?: true
+    bookingReportId?: true
   }
 
   export type PaymentTransactionSumAggregateInputType = {
@@ -13415,6 +13543,7 @@ export namespace Prisma {
     serviceRequestId?: true
     userId?: true
     withdrawalRequestId?: true
+    bookingReportId?: true
   }
 
   export type PaymentTransactionMinAggregateInputType = {
@@ -13434,6 +13563,7 @@ export namespace Prisma {
     status?: true
     userId?: true
     withdrawalRequestId?: true
+    bookingReportId?: true
   }
 
   export type PaymentTransactionMaxAggregateInputType = {
@@ -13453,6 +13583,7 @@ export namespace Prisma {
     status?: true
     userId?: true
     withdrawalRequestId?: true
+    bookingReportId?: true
   }
 
   export type PaymentTransactionCountAggregateInputType = {
@@ -13472,6 +13603,7 @@ export namespace Prisma {
     status?: true
     userId?: true
     withdrawalRequestId?: true
+    bookingReportId?: true
     _all?: true
   }
 
@@ -13578,6 +13710,7 @@ export namespace Prisma {
     status: $Enums.PaymentTransactionStatus
     userId: number | null
     withdrawalRequestId: number | null
+    bookingReportId: number | null
     _count: PaymentTransactionCountAggregateOutputType | null
     _avg: PaymentTransactionAvgAggregateOutputType | null
     _sum: PaymentTransactionSumAggregateOutputType | null
@@ -13616,6 +13749,8 @@ export namespace Prisma {
     status?: boolean
     userId?: boolean
     withdrawalRequestId?: boolean
+    bookingReportId?: boolean
+    BookingReport?: boolean | PaymentTransaction$BookingReportArgs<ExtArgs>
     ServiceRequest?: boolean | PaymentTransaction$ServiceRequestArgs<ExtArgs>
     WithdrawalRequest?: boolean | PaymentTransaction$WithdrawalRequestArgs<ExtArgs>
   }, ExtArgs["result"]["paymentTransaction"]>
@@ -13637,6 +13772,8 @@ export namespace Prisma {
     status?: boolean
     userId?: boolean
     withdrawalRequestId?: boolean
+    bookingReportId?: boolean
+    BookingReport?: boolean | PaymentTransaction$BookingReportArgs<ExtArgs>
     ServiceRequest?: boolean | PaymentTransaction$ServiceRequestArgs<ExtArgs>
     WithdrawalRequest?: boolean | PaymentTransaction$WithdrawalRequestArgs<ExtArgs>
   }, ExtArgs["result"]["paymentTransaction"]>
@@ -13658,6 +13795,8 @@ export namespace Prisma {
     status?: boolean
     userId?: boolean
     withdrawalRequestId?: boolean
+    bookingReportId?: boolean
+    BookingReport?: boolean | PaymentTransaction$BookingReportArgs<ExtArgs>
     ServiceRequest?: boolean | PaymentTransaction$ServiceRequestArgs<ExtArgs>
     WithdrawalRequest?: boolean | PaymentTransaction$WithdrawalRequestArgs<ExtArgs>
   }, ExtArgs["result"]["paymentTransaction"]>
@@ -13679,18 +13818,22 @@ export namespace Prisma {
     status?: boolean
     userId?: boolean
     withdrawalRequestId?: boolean
+    bookingReportId?: boolean
   }
 
-  export type PaymentTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "gateway" | "transactionDate" | "accountNumber" | "subAccount" | "amountIn" | "amountOut" | "accumulated" | "referenceNumber" | "transactionContent" | "body" | "createdAt" | "serviceRequestId" | "status" | "userId" | "withdrawalRequestId", ExtArgs["result"]["paymentTransaction"]>
+  export type PaymentTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "gateway" | "transactionDate" | "accountNumber" | "subAccount" | "amountIn" | "amountOut" | "accumulated" | "referenceNumber" | "transactionContent" | "body" | "createdAt" | "serviceRequestId" | "status" | "userId" | "withdrawalRequestId" | "bookingReportId", ExtArgs["result"]["paymentTransaction"]>
   export type PaymentTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    BookingReport?: boolean | PaymentTransaction$BookingReportArgs<ExtArgs>
     ServiceRequest?: boolean | PaymentTransaction$ServiceRequestArgs<ExtArgs>
     WithdrawalRequest?: boolean | PaymentTransaction$WithdrawalRequestArgs<ExtArgs>
   }
   export type PaymentTransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    BookingReport?: boolean | PaymentTransaction$BookingReportArgs<ExtArgs>
     ServiceRequest?: boolean | PaymentTransaction$ServiceRequestArgs<ExtArgs>
     WithdrawalRequest?: boolean | PaymentTransaction$WithdrawalRequestArgs<ExtArgs>
   }
   export type PaymentTransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    BookingReport?: boolean | PaymentTransaction$BookingReportArgs<ExtArgs>
     ServiceRequest?: boolean | PaymentTransaction$ServiceRequestArgs<ExtArgs>
     WithdrawalRequest?: boolean | PaymentTransaction$WithdrawalRequestArgs<ExtArgs>
   }
@@ -13698,6 +13841,7 @@ export namespace Prisma {
   export type $PaymentTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PaymentTransaction"
     objects: {
+      BookingReport: Prisma.$BookingReportPayload<ExtArgs> | null
       ServiceRequest: Prisma.$ServiceRequestPayload<ExtArgs> | null
       WithdrawalRequest: Prisma.$WithdrawalRequestPayload<ExtArgs> | null
     }
@@ -13718,6 +13862,7 @@ export namespace Prisma {
       status: $Enums.PaymentTransactionStatus
       userId: number | null
       withdrawalRequestId: number | null
+      bookingReportId: number | null
     }, ExtArgs["result"]["paymentTransaction"]>
     composites: {}
   }
@@ -14112,6 +14257,7 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    BookingReport<T extends PaymentTransaction$BookingReportArgs<ExtArgs> = {}>(args?: Subset<T, PaymentTransaction$BookingReportArgs<ExtArgs>>): Prisma__BookingReportClient<$Result.GetResult<Prisma.$BookingReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ServiceRequest<T extends PaymentTransaction$ServiceRequestArgs<ExtArgs> = {}>(args?: Subset<T, PaymentTransaction$ServiceRequestArgs<ExtArgs>>): Prisma__ServiceRequestClient<$Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     WithdrawalRequest<T extends PaymentTransaction$WithdrawalRequestArgs<ExtArgs> = {}>(args?: Subset<T, PaymentTransaction$WithdrawalRequestArgs<ExtArgs>>): Prisma__WithdrawalRequestClient<$Result.GetResult<Prisma.$WithdrawalRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -14159,6 +14305,7 @@ export namespace Prisma {
     readonly status: FieldRef<"PaymentTransaction", 'PaymentTransactionStatus'>
     readonly userId: FieldRef<"PaymentTransaction", 'Int'>
     readonly withdrawalRequestId: FieldRef<"PaymentTransaction", 'Int'>
+    readonly bookingReportId: FieldRef<"PaymentTransaction", 'Int'>
   }
     
 
@@ -14552,6 +14699,25 @@ export namespace Prisma {
      * Limit how many PaymentTransactions to delete.
      */
     limit?: number
+  }
+
+  /**
+   * PaymentTransaction.BookingReport
+   */
+  export type PaymentTransaction$BookingReportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookingReport
+     */
+    select?: BookingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookingReport
+     */
+    omit?: BookingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookingReportInclude<ExtArgs> | null
+    where?: BookingReportWhereInput
   }
 
   /**
@@ -34148,6 +34314,7 @@ export namespace Prisma {
     Category?: boolean | CategoryDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
     ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    _count?: boolean | ServiceRequestCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["serviceRequest"]>
 
   export type ServiceRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -34205,6 +34372,7 @@ export namespace Prisma {
     Category?: boolean | CategoryDefaultArgs<ExtArgs>
     CustomerProfile?: boolean | CustomerProfileDefaultArgs<ExtArgs>
     ServiceProvider?: boolean | ServiceProviderDefaultArgs<ExtArgs>
+    _count?: boolean | ServiceRequestCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ServiceRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -34221,7 +34389,7 @@ export namespace Prisma {
     name: "ServiceRequest"
     objects: {
       Booking: Prisma.$BookingPayload<ExtArgs> | null
-      PaymentTransaction: Prisma.$PaymentTransactionPayload<ExtArgs> | null
+      PaymentTransaction: Prisma.$PaymentTransactionPayload<ExtArgs>[]
       Category: Prisma.$CategoryPayload<ExtArgs>
       CustomerProfile: Prisma.$CustomerProfilePayload<ExtArgs>
       ServiceProvider: Prisma.$ServiceProviderPayload<ExtArgs>
@@ -34633,7 +34801,7 @@ export namespace Prisma {
   export interface Prisma__ServiceRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Booking<T extends ServiceRequest$BookingArgs<ExtArgs> = {}>(args?: Subset<T, ServiceRequest$BookingArgs<ExtArgs>>): Prisma__BookingClient<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    PaymentTransaction<T extends ServiceRequest$PaymentTransactionArgs<ExtArgs> = {}>(args?: Subset<T, ServiceRequest$PaymentTransactionArgs<ExtArgs>>): Prisma__PaymentTransactionClient<$Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    PaymentTransaction<T extends ServiceRequest$PaymentTransactionArgs<ExtArgs> = {}>(args?: Subset<T, ServiceRequest$PaymentTransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     CustomerProfile<T extends CustomerProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerProfileDefaultArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ServiceProvider<T extends ServiceProviderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServiceProviderDefaultArgs<ExtArgs>>): Prisma__ServiceProviderClient<$Result.GetResult<Prisma.$ServiceProviderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -35108,6 +35276,11 @@ export namespace Prisma {
      */
     include?: PaymentTransactionInclude<ExtArgs> | null
     where?: PaymentTransactionWhereInput
+    orderBy?: PaymentTransactionOrderByWithRelationInput | PaymentTransactionOrderByWithRelationInput[]
+    cursor?: PaymentTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentTransactionScalarFieldEnum | PaymentTransactionScalarFieldEnum[]
   }
 
   /**
@@ -48076,6 +48249,7 @@ export namespace Prisma {
     ServiceProvider?: boolean | BookingReport$ServiceProviderArgs<ExtArgs>
     User_BookingReport_reporterIdToUser?: boolean | UserDefaultArgs<ExtArgs>
     User_BookingReport_reviewedByIdToUser?: boolean | BookingReport$User_BookingReport_reviewedByIdToUserArgs<ExtArgs>
+    PaymentTransaction?: boolean | BookingReport$PaymentTransactionArgs<ExtArgs>
   }, ExtArgs["result"]["bookingReport"]>
 
   export type BookingReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -48149,6 +48323,7 @@ export namespace Prisma {
     ServiceProvider?: boolean | BookingReport$ServiceProviderArgs<ExtArgs>
     User_BookingReport_reporterIdToUser?: boolean | UserDefaultArgs<ExtArgs>
     User_BookingReport_reviewedByIdToUser?: boolean | BookingReport$User_BookingReport_reviewedByIdToUserArgs<ExtArgs>
+    PaymentTransaction?: boolean | BookingReport$PaymentTransactionArgs<ExtArgs>
   }
   export type BookingReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Booking?: boolean | BookingDefaultArgs<ExtArgs>
@@ -48173,6 +48348,7 @@ export namespace Prisma {
       ServiceProvider: Prisma.$ServiceProviderPayload<ExtArgs> | null
       User_BookingReport_reporterIdToUser: Prisma.$UserPayload<ExtArgs>
       User_BookingReport_reviewedByIdToUser: Prisma.$UserPayload<ExtArgs> | null
+      PaymentTransaction: Prisma.$PaymentTransactionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -48589,6 +48765,7 @@ export namespace Prisma {
     ServiceProvider<T extends BookingReport$ServiceProviderArgs<ExtArgs> = {}>(args?: Subset<T, BookingReport$ServiceProviderArgs<ExtArgs>>): Prisma__ServiceProviderClient<$Result.GetResult<Prisma.$ServiceProviderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     User_BookingReport_reporterIdToUser<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     User_BookingReport_reviewedByIdToUser<T extends BookingReport$User_BookingReport_reviewedByIdToUserArgs<ExtArgs> = {}>(args?: Subset<T, BookingReport$User_BookingReport_reviewedByIdToUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    PaymentTransaction<T extends BookingReport$PaymentTransactionArgs<ExtArgs> = {}>(args?: Subset<T, BookingReport$PaymentTransactionArgs<ExtArgs>>): Prisma__PaymentTransactionClient<$Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -49083,6 +49260,25 @@ export namespace Prisma {
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
+  }
+
+  /**
+   * BookingReport.PaymentTransaction
+   */
+  export type BookingReport$PaymentTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentTransaction
+     */
+    select?: PaymentTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentTransaction
+     */
+    omit?: PaymentTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentTransactionInclude<ExtArgs> | null
+    where?: PaymentTransactionWhereInput
   }
 
   /**
@@ -52474,6 +52670,7 @@ export namespace Prisma {
     type: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    expiresAt: Date | null
   }
 
   export type SystemConfigMaxAggregateOutputType = {
@@ -52483,6 +52680,7 @@ export namespace Prisma {
     type: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    expiresAt: Date | null
   }
 
   export type SystemConfigCountAggregateOutputType = {
@@ -52492,6 +52690,7 @@ export namespace Prisma {
     type: number
     createdAt: number
     updatedAt: number
+    expiresAt: number
     _all: number
   }
 
@@ -52511,6 +52710,7 @@ export namespace Prisma {
     type?: true
     createdAt?: true
     updatedAt?: true
+    expiresAt?: true
   }
 
   export type SystemConfigMaxAggregateInputType = {
@@ -52520,6 +52720,7 @@ export namespace Prisma {
     type?: true
     createdAt?: true
     updatedAt?: true
+    expiresAt?: true
   }
 
   export type SystemConfigCountAggregateInputType = {
@@ -52529,6 +52730,7 @@ export namespace Prisma {
     type?: true
     createdAt?: true
     updatedAt?: true
+    expiresAt?: true
     _all?: true
   }
 
@@ -52625,6 +52827,7 @@ export namespace Prisma {
     type: string | null
     createdAt: Date
     updatedAt: Date
+    expiresAt: Date | null
     _count: SystemConfigCountAggregateOutputType | null
     _avg: SystemConfigAvgAggregateOutputType | null
     _sum: SystemConfigSumAggregateOutputType | null
@@ -52653,6 +52856,7 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    expiresAt?: boolean
   }, ExtArgs["result"]["systemConfig"]>
 
   export type SystemConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -52662,6 +52866,7 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    expiresAt?: boolean
   }, ExtArgs["result"]["systemConfig"]>
 
   export type SystemConfigSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -52671,6 +52876,7 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    expiresAt?: boolean
   }, ExtArgs["result"]["systemConfig"]>
 
   export type SystemConfigSelectScalar = {
@@ -52680,9 +52886,10 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    expiresAt?: boolean
   }
 
-  export type SystemConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "value" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["systemConfig"]>
+  export type SystemConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "value" | "type" | "createdAt" | "updatedAt" | "expiresAt", ExtArgs["result"]["systemConfig"]>
 
   export type $SystemConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SystemConfig"
@@ -52694,6 +52901,7 @@ export namespace Prisma {
       type: string | null
       createdAt: Date
       updatedAt: Date
+      expiresAt: Date | null
     }, ExtArgs["result"]["systemConfig"]>
     composites: {}
   }
@@ -53123,6 +53331,7 @@ export namespace Prisma {
     readonly type: FieldRef<"SystemConfig", 'String'>
     readonly createdAt: FieldRef<"SystemConfig", 'DateTime'>
     readonly updatedAt: FieldRef<"SystemConfig", 'DateTime'>
+    readonly expiresAt: FieldRef<"SystemConfig", 'DateTime'>
   }
     
 
@@ -54489,6 +54698,1005 @@ export namespace Prisma {
 
 
   /**
+   * Model n8n_data
+   */
+
+  export type AggregateN8n_data = {
+    _count: N8n_dataCountAggregateOutputType | null
+    _avg: N8n_dataAvgAggregateOutputType | null
+    _sum: N8n_dataSumAggregateOutputType | null
+    _min: N8n_dataMinAggregateOutputType | null
+    _max: N8n_dataMaxAggregateOutputType | null
+  }
+
+  export type N8n_dataAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type N8n_dataSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type N8n_dataMinAggregateOutputType = {
+    id: number | null
+    text: string | null
+  }
+
+  export type N8n_dataMaxAggregateOutputType = {
+    id: number | null
+    text: string | null
+  }
+
+  export type N8n_dataCountAggregateOutputType = {
+    id: number
+    text: number
+    metadata: number
+    _all: number
+  }
+
+
+  export type N8n_dataAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type N8n_dataSumAggregateInputType = {
+    id?: true
+  }
+
+  export type N8n_dataMinAggregateInputType = {
+    id?: true
+    text?: true
+  }
+
+  export type N8n_dataMaxAggregateInputType = {
+    id?: true
+    text?: true
+  }
+
+  export type N8n_dataCountAggregateInputType = {
+    id?: true
+    text?: true
+    metadata?: true
+    _all?: true
+  }
+
+  export type N8n_dataAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which n8n_data to aggregate.
+     */
+    where?: n8n_dataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_data to fetch.
+     */
+    orderBy?: n8n_dataOrderByWithRelationInput | n8n_dataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: n8n_dataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_data from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_data.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned n8n_data
+    **/
+    _count?: true | N8n_dataCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: N8n_dataAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: N8n_dataSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: N8n_dataMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: N8n_dataMaxAggregateInputType
+  }
+
+  export type GetN8n_dataAggregateType<T extends N8n_dataAggregateArgs> = {
+        [P in keyof T & keyof AggregateN8n_data]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateN8n_data[P]>
+      : GetScalarType<T[P], AggregateN8n_data[P]>
+  }
+
+
+
+
+  export type n8n_dataGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: n8n_dataWhereInput
+    orderBy?: n8n_dataOrderByWithAggregationInput | n8n_dataOrderByWithAggregationInput[]
+    by: N8n_dataScalarFieldEnum[] | N8n_dataScalarFieldEnum
+    having?: n8n_dataScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: N8n_dataCountAggregateInputType | true
+    _avg?: N8n_dataAvgAggregateInputType
+    _sum?: N8n_dataSumAggregateInputType
+    _min?: N8n_dataMinAggregateInputType
+    _max?: N8n_dataMaxAggregateInputType
+  }
+
+  export type N8n_dataGroupByOutputType = {
+    id: number
+    text: string | null
+    metadata: JsonValue | null
+    _count: N8n_dataCountAggregateOutputType | null
+    _avg: N8n_dataAvgAggregateOutputType | null
+    _sum: N8n_dataSumAggregateOutputType | null
+    _min: N8n_dataMinAggregateOutputType | null
+    _max: N8n_dataMaxAggregateOutputType | null
+  }
+
+  type GetN8n_dataGroupByPayload<T extends n8n_dataGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<N8n_dataGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof N8n_dataGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], N8n_dataGroupByOutputType[P]>
+            : GetScalarType<T[P], N8n_dataGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type n8n_dataSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    metadata?: boolean
+  }, ExtArgs["result"]["n8n_data"]>
+
+  export type n8n_dataSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    metadata?: boolean
+  }, ExtArgs["result"]["n8n_data"]>
+
+  export type n8n_dataSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    metadata?: boolean
+  }, ExtArgs["result"]["n8n_data"]>
+
+  export type n8n_dataSelectScalar = {
+    id?: boolean
+    text?: boolean
+    metadata?: boolean
+  }
+
+  export type n8n_dataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "metadata", ExtArgs["result"]["n8n_data"]>
+
+  export type $n8n_dataPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "n8n_data"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      text: string | null
+      metadata: Prisma.JsonValue | null
+    }, ExtArgs["result"]["n8n_data"]>
+    composites: {}
+  }
+
+  type n8n_dataGetPayload<S extends boolean | null | undefined | n8n_dataDefaultArgs> = $Result.GetResult<Prisma.$n8n_dataPayload, S>
+
+  type n8n_dataCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<n8n_dataFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: N8n_dataCountAggregateInputType | true
+    }
+
+  export interface n8n_dataDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['n8n_data'], meta: { name: 'n8n_data' } }
+    /**
+     * Find zero or one N8n_data that matches the filter.
+     * @param {n8n_dataFindUniqueArgs} args - Arguments to find a N8n_data
+     * @example
+     * // Get one N8n_data
+     * const n8n_data = await prisma.n8n_data.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends n8n_dataFindUniqueArgs>(args: SelectSubset<T, n8n_dataFindUniqueArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one N8n_data that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {n8n_dataFindUniqueOrThrowArgs} args - Arguments to find a N8n_data
+     * @example
+     * // Get one N8n_data
+     * const n8n_data = await prisma.n8n_data.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends n8n_dataFindUniqueOrThrowArgs>(args: SelectSubset<T, n8n_dataFindUniqueOrThrowArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first N8n_data that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_dataFindFirstArgs} args - Arguments to find a N8n_data
+     * @example
+     * // Get one N8n_data
+     * const n8n_data = await prisma.n8n_data.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends n8n_dataFindFirstArgs>(args?: SelectSubset<T, n8n_dataFindFirstArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first N8n_data that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_dataFindFirstOrThrowArgs} args - Arguments to find a N8n_data
+     * @example
+     * // Get one N8n_data
+     * const n8n_data = await prisma.n8n_data.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends n8n_dataFindFirstOrThrowArgs>(args?: SelectSubset<T, n8n_dataFindFirstOrThrowArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more N8n_data that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_dataFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all N8n_data
+     * const n8n_data = await prisma.n8n_data.findMany()
+     * 
+     * // Get first 10 N8n_data
+     * const n8n_data = await prisma.n8n_data.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const n8n_dataWithIdOnly = await prisma.n8n_data.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends n8n_dataFindManyArgs>(args?: SelectSubset<T, n8n_dataFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a N8n_data.
+     * @param {n8n_dataCreateArgs} args - Arguments to create a N8n_data.
+     * @example
+     * // Create one N8n_data
+     * const N8n_data = await prisma.n8n_data.create({
+     *   data: {
+     *     // ... data to create a N8n_data
+     *   }
+     * })
+     * 
+     */
+    create<T extends n8n_dataCreateArgs>(args: SelectSubset<T, n8n_dataCreateArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many N8n_data.
+     * @param {n8n_dataCreateManyArgs} args - Arguments to create many N8n_data.
+     * @example
+     * // Create many N8n_data
+     * const n8n_data = await prisma.n8n_data.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends n8n_dataCreateManyArgs>(args?: SelectSubset<T, n8n_dataCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many N8n_data and returns the data saved in the database.
+     * @param {n8n_dataCreateManyAndReturnArgs} args - Arguments to create many N8n_data.
+     * @example
+     * // Create many N8n_data
+     * const n8n_data = await prisma.n8n_data.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many N8n_data and only return the `id`
+     * const n8n_dataWithIdOnly = await prisma.n8n_data.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends n8n_dataCreateManyAndReturnArgs>(args?: SelectSubset<T, n8n_dataCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a N8n_data.
+     * @param {n8n_dataDeleteArgs} args - Arguments to delete one N8n_data.
+     * @example
+     * // Delete one N8n_data
+     * const N8n_data = await prisma.n8n_data.delete({
+     *   where: {
+     *     // ... filter to delete one N8n_data
+     *   }
+     * })
+     * 
+     */
+    delete<T extends n8n_dataDeleteArgs>(args: SelectSubset<T, n8n_dataDeleteArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one N8n_data.
+     * @param {n8n_dataUpdateArgs} args - Arguments to update one N8n_data.
+     * @example
+     * // Update one N8n_data
+     * const n8n_data = await prisma.n8n_data.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends n8n_dataUpdateArgs>(args: SelectSubset<T, n8n_dataUpdateArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more N8n_data.
+     * @param {n8n_dataDeleteManyArgs} args - Arguments to filter N8n_data to delete.
+     * @example
+     * // Delete a few N8n_data
+     * const { count } = await prisma.n8n_data.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends n8n_dataDeleteManyArgs>(args?: SelectSubset<T, n8n_dataDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more N8n_data.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_dataUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many N8n_data
+     * const n8n_data = await prisma.n8n_data.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends n8n_dataUpdateManyArgs>(args: SelectSubset<T, n8n_dataUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more N8n_data and returns the data updated in the database.
+     * @param {n8n_dataUpdateManyAndReturnArgs} args - Arguments to update many N8n_data.
+     * @example
+     * // Update many N8n_data
+     * const n8n_data = await prisma.n8n_data.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more N8n_data and only return the `id`
+     * const n8n_dataWithIdOnly = await prisma.n8n_data.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends n8n_dataUpdateManyAndReturnArgs>(args: SelectSubset<T, n8n_dataUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one N8n_data.
+     * @param {n8n_dataUpsertArgs} args - Arguments to update or create a N8n_data.
+     * @example
+     * // Update or create a N8n_data
+     * const n8n_data = await prisma.n8n_data.upsert({
+     *   create: {
+     *     // ... data to create a N8n_data
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the N8n_data we want to update
+     *   }
+     * })
+     */
+    upsert<T extends n8n_dataUpsertArgs>(args: SelectSubset<T, n8n_dataUpsertArgs<ExtArgs>>): Prisma__n8n_dataClient<$Result.GetResult<Prisma.$n8n_dataPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of N8n_data.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_dataCountArgs} args - Arguments to filter N8n_data to count.
+     * @example
+     * // Count the number of N8n_data
+     * const count = await prisma.n8n_data.count({
+     *   where: {
+     *     // ... the filter for the N8n_data we want to count
+     *   }
+     * })
+    **/
+    count<T extends n8n_dataCountArgs>(
+      args?: Subset<T, n8n_dataCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], N8n_dataCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a N8n_data.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {N8n_dataAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends N8n_dataAggregateArgs>(args: Subset<T, N8n_dataAggregateArgs>): Prisma.PrismaPromise<GetN8n_dataAggregateType<T>>
+
+    /**
+     * Group by N8n_data.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {n8n_dataGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends n8n_dataGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: n8n_dataGroupByArgs['orderBy'] }
+        : { orderBy?: n8n_dataGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, n8n_dataGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetN8n_dataGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the n8n_data model
+   */
+  readonly fields: n8n_dataFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for n8n_data.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__n8n_dataClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the n8n_data model
+   */
+  interface n8n_dataFieldRefs {
+    readonly id: FieldRef<"n8n_data", 'Int'>
+    readonly text: FieldRef<"n8n_data", 'String'>
+    readonly metadata: FieldRef<"n8n_data", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * n8n_data findUnique
+   */
+  export type n8n_dataFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_data to fetch.
+     */
+    where: n8n_dataWhereUniqueInput
+  }
+
+  /**
+   * n8n_data findUniqueOrThrow
+   */
+  export type n8n_dataFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_data to fetch.
+     */
+    where: n8n_dataWhereUniqueInput
+  }
+
+  /**
+   * n8n_data findFirst
+   */
+  export type n8n_dataFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_data to fetch.
+     */
+    where?: n8n_dataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_data to fetch.
+     */
+    orderBy?: n8n_dataOrderByWithRelationInput | n8n_dataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for n8n_data.
+     */
+    cursor?: n8n_dataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_data from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_data.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of n8n_data.
+     */
+    distinct?: N8n_dataScalarFieldEnum | N8n_dataScalarFieldEnum[]
+  }
+
+  /**
+   * n8n_data findFirstOrThrow
+   */
+  export type n8n_dataFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_data to fetch.
+     */
+    where?: n8n_dataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_data to fetch.
+     */
+    orderBy?: n8n_dataOrderByWithRelationInput | n8n_dataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for n8n_data.
+     */
+    cursor?: n8n_dataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_data from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_data.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of n8n_data.
+     */
+    distinct?: N8n_dataScalarFieldEnum | N8n_dataScalarFieldEnum[]
+  }
+
+  /**
+   * n8n_data findMany
+   */
+  export type n8n_dataFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * Filter, which n8n_data to fetch.
+     */
+    where?: n8n_dataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of n8n_data to fetch.
+     */
+    orderBy?: n8n_dataOrderByWithRelationInput | n8n_dataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing n8n_data.
+     */
+    cursor?: n8n_dataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` n8n_data from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` n8n_data.
+     */
+    skip?: number
+    distinct?: N8n_dataScalarFieldEnum | N8n_dataScalarFieldEnum[]
+  }
+
+  /**
+   * n8n_data create
+   */
+  export type n8n_dataCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * The data needed to create a n8n_data.
+     */
+    data?: XOR<n8n_dataCreateInput, n8n_dataUncheckedCreateInput>
+  }
+
+  /**
+   * n8n_data createMany
+   */
+  export type n8n_dataCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many n8n_data.
+     */
+    data: n8n_dataCreateManyInput | n8n_dataCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * n8n_data createManyAndReturn
+   */
+  export type n8n_dataCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * The data used to create many n8n_data.
+     */
+    data: n8n_dataCreateManyInput | n8n_dataCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * n8n_data update
+   */
+  export type n8n_dataUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * The data needed to update a n8n_data.
+     */
+    data: XOR<n8n_dataUpdateInput, n8n_dataUncheckedUpdateInput>
+    /**
+     * Choose, which n8n_data to update.
+     */
+    where: n8n_dataWhereUniqueInput
+  }
+
+  /**
+   * n8n_data updateMany
+   */
+  export type n8n_dataUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update n8n_data.
+     */
+    data: XOR<n8n_dataUpdateManyMutationInput, n8n_dataUncheckedUpdateManyInput>
+    /**
+     * Filter which n8n_data to update
+     */
+    where?: n8n_dataWhereInput
+    /**
+     * Limit how many n8n_data to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * n8n_data updateManyAndReturn
+   */
+  export type n8n_dataUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * The data used to update n8n_data.
+     */
+    data: XOR<n8n_dataUpdateManyMutationInput, n8n_dataUncheckedUpdateManyInput>
+    /**
+     * Filter which n8n_data to update
+     */
+    where?: n8n_dataWhereInput
+    /**
+     * Limit how many n8n_data to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * n8n_data upsert
+   */
+  export type n8n_dataUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * The filter to search for the n8n_data to update in case it exists.
+     */
+    where: n8n_dataWhereUniqueInput
+    /**
+     * In case the n8n_data found by the `where` argument doesn't exist, create a new n8n_data with this data.
+     */
+    create: XOR<n8n_dataCreateInput, n8n_dataUncheckedCreateInput>
+    /**
+     * In case the n8n_data was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<n8n_dataUpdateInput, n8n_dataUncheckedUpdateInput>
+  }
+
+  /**
+   * n8n_data delete
+   */
+  export type n8n_dataDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+    /**
+     * Filter which n8n_data to delete.
+     */
+    where: n8n_dataWhereUniqueInput
+  }
+
+  /**
+   * n8n_data deleteMany
+   */
+  export type n8n_dataDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which n8n_data to delete
+     */
+    where?: n8n_dataWhereInput
+    /**
+     * Limit how many n8n_data to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * n8n_data without action
+   */
+  export type n8n_dataDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the n8n_data
+     */
+    select?: n8n_dataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the n8n_data
+     */
+    omit?: n8n_dataOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -54600,7 +55808,8 @@ export namespace Prisma {
     serviceRequestId: 'serviceRequestId',
     status: 'status',
     userId: 'userId',
-    withdrawalRequestId: 'withdrawalRequestId'
+    withdrawalRequestId: 'withdrawalRequestId',
+    bookingReportId: 'bookingReportId'
   };
 
   export type PaymentTransactionScalarFieldEnum = (typeof PaymentTransactionScalarFieldEnum)[keyof typeof PaymentTransactionScalarFieldEnum]
@@ -55075,7 +56284,8 @@ export namespace Prisma {
     value: 'value',
     type: 'type',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt'
   };
 
   export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
@@ -55088,6 +56298,15 @@ export namespace Prisma {
   };
 
   export type N8n_chat_historiesScalarFieldEnum = (typeof N8n_chat_historiesScalarFieldEnum)[keyof typeof N8n_chat_historiesScalarFieldEnum]
+
+
+  export const N8n_dataScalarFieldEnum: {
+    id: 'id',
+    text: 'text',
+    metadata: 'metadata'
+  };
+
+  export type N8n_dataScalarFieldEnum = (typeof N8n_dataScalarFieldEnum)[keyof typeof N8n_dataScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -55103,6 +56322,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const NullsOrder: {
@@ -56035,6 +57262,8 @@ export namespace Prisma {
     status?: EnumPaymentTransactionStatusFilter<"PaymentTransaction"> | $Enums.PaymentTransactionStatus
     userId?: IntNullableFilter<"PaymentTransaction"> | number | null
     withdrawalRequestId?: IntNullableFilter<"PaymentTransaction"> | number | null
+    bookingReportId?: IntNullableFilter<"PaymentTransaction"> | number | null
+    BookingReport?: XOR<BookingReportNullableScalarRelationFilter, BookingReportWhereInput> | null
     ServiceRequest?: XOR<ServiceRequestNullableScalarRelationFilter, ServiceRequestWhereInput> | null
     WithdrawalRequest?: XOR<WithdrawalRequestNullableScalarRelationFilter, WithdrawalRequestWhereInput> | null
   }
@@ -56056,14 +57285,16 @@ export namespace Prisma {
     status?: SortOrder
     userId?: SortOrderInput | SortOrder
     withdrawalRequestId?: SortOrderInput | SortOrder
+    bookingReportId?: SortOrderInput | SortOrder
+    BookingReport?: BookingReportOrderByWithRelationInput
     ServiceRequest?: ServiceRequestOrderByWithRelationInput
     WithdrawalRequest?: WithdrawalRequestOrderByWithRelationInput
   }
 
   export type PaymentTransactionWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    serviceRequestId?: number
     withdrawalRequestId?: number
+    bookingReportId?: number
     AND?: PaymentTransactionWhereInput | PaymentTransactionWhereInput[]
     OR?: PaymentTransactionWhereInput[]
     NOT?: PaymentTransactionWhereInput | PaymentTransactionWhereInput[]
@@ -56078,11 +57309,13 @@ export namespace Prisma {
     transactionContent?: StringNullableFilter<"PaymentTransaction"> | string | null
     body?: StringNullableFilter<"PaymentTransaction"> | string | null
     createdAt?: DateTimeFilter<"PaymentTransaction"> | Date | string
+    serviceRequestId?: IntNullableFilter<"PaymentTransaction"> | number | null
     status?: EnumPaymentTransactionStatusFilter<"PaymentTransaction"> | $Enums.PaymentTransactionStatus
     userId?: IntNullableFilter<"PaymentTransaction"> | number | null
+    BookingReport?: XOR<BookingReportNullableScalarRelationFilter, BookingReportWhereInput> | null
     ServiceRequest?: XOR<ServiceRequestNullableScalarRelationFilter, ServiceRequestWhereInput> | null
     WithdrawalRequest?: XOR<WithdrawalRequestNullableScalarRelationFilter, WithdrawalRequestWhereInput> | null
-  }, "id" | "serviceRequestId" | "withdrawalRequestId">
+  }, "id" | "withdrawalRequestId" | "bookingReportId">
 
   export type PaymentTransactionOrderByWithAggregationInput = {
     id?: SortOrder
@@ -56101,6 +57334,7 @@ export namespace Prisma {
     status?: SortOrder
     userId?: SortOrderInput | SortOrder
     withdrawalRequestId?: SortOrderInput | SortOrder
+    bookingReportId?: SortOrderInput | SortOrder
     _count?: PaymentTransactionCountOrderByAggregateInput
     _avg?: PaymentTransactionAvgOrderByAggregateInput
     _max?: PaymentTransactionMaxOrderByAggregateInput
@@ -56128,6 +57362,7 @@ export namespace Prisma {
     status?: EnumPaymentTransactionStatusWithAggregatesFilter<"PaymentTransaction"> | $Enums.PaymentTransactionStatus
     userId?: IntNullableWithAggregatesFilter<"PaymentTransaction"> | number | null
     withdrawalRequestId?: IntNullableWithAggregatesFilter<"PaymentTransaction"> | number | null
+    bookingReportId?: IntNullableWithAggregatesFilter<"PaymentTransaction"> | number | null
   }
 
   export type PermissionWhereInput = {
@@ -57585,7 +58820,7 @@ export namespace Prisma {
     phoneNumber?: StringFilter<"ServiceRequest"> | string
     categoryId?: IntFilter<"ServiceRequest"> | number
     Booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
-    PaymentTransaction?: XOR<PaymentTransactionNullableScalarRelationFilter, PaymentTransactionWhereInput> | null
+    PaymentTransaction?: PaymentTransactionListRelationFilter
     Category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     CustomerProfile?: XOR<CustomerProfileScalarRelationFilter, CustomerProfileWhereInput>
     ServiceProvider?: XOR<ServiceProviderScalarRelationFilter, ServiceProviderWhereInput>
@@ -57604,7 +58839,7 @@ export namespace Prisma {
     phoneNumber?: SortOrder
     categoryId?: SortOrder
     Booking?: BookingOrderByWithRelationInput
-    PaymentTransaction?: PaymentTransactionOrderByWithRelationInput
+    PaymentTransaction?: PaymentTransactionOrderByRelationAggregateInput
     Category?: CategoryOrderByWithRelationInput
     CustomerProfile?: CustomerProfileOrderByWithRelationInput
     ServiceProvider?: ServiceProviderOrderByWithRelationInput
@@ -57626,7 +58861,7 @@ export namespace Prisma {
     phoneNumber?: StringFilter<"ServiceRequest"> | string
     categoryId?: IntFilter<"ServiceRequest"> | number
     Booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
-    PaymentTransaction?: XOR<PaymentTransactionNullableScalarRelationFilter, PaymentTransactionWhereInput> | null
+    PaymentTransaction?: PaymentTransactionListRelationFilter
     Category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     CustomerProfile?: XOR<CustomerProfileScalarRelationFilter, CustomerProfileWhereInput>
     ServiceProvider?: XOR<ServiceProviderScalarRelationFilter, ServiceProviderWhereInput>
@@ -58479,6 +59714,7 @@ export namespace Prisma {
     ServiceProvider?: XOR<ServiceProviderNullableScalarRelationFilter, ServiceProviderWhereInput> | null
     User_BookingReport_reporterIdToUser?: XOR<UserScalarRelationFilter, UserWhereInput>
     User_BookingReport_reviewedByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    PaymentTransaction?: XOR<PaymentTransactionNullableScalarRelationFilter, PaymentTransactionWhereInput> | null
   }
 
   export type BookingReportOrderByWithRelationInput = {
@@ -58502,6 +59738,7 @@ export namespace Prisma {
     ServiceProvider?: ServiceProviderOrderByWithRelationInput
     User_BookingReport_reporterIdToUser?: UserOrderByWithRelationInput
     User_BookingReport_reviewedByIdToUser?: UserOrderByWithRelationInput
+    PaymentTransaction?: PaymentTransactionOrderByWithRelationInput
   }
 
   export type BookingReportWhereUniqueInput = Prisma.AtLeast<{
@@ -58528,6 +59765,7 @@ export namespace Prisma {
     ServiceProvider?: XOR<ServiceProviderNullableScalarRelationFilter, ServiceProviderWhereInput> | null
     User_BookingReport_reporterIdToUser?: XOR<UserScalarRelationFilter, UserWhereInput>
     User_BookingReport_reviewedByIdToUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    PaymentTransaction?: XOR<PaymentTransactionNullableScalarRelationFilter, PaymentTransactionWhereInput> | null
   }, "id">
 
   export type BookingReportOrderByWithAggregationInput = {
@@ -58791,6 +60029,7 @@ export namespace Prisma {
     type?: StringNullableFilter<"SystemConfig"> | string | null
     createdAt?: DateTimeFilter<"SystemConfig"> | Date | string
     updatedAt?: DateTimeFilter<"SystemConfig"> | Date | string
+    expiresAt?: DateTimeNullableFilter<"SystemConfig"> | Date | string | null
   }
 
   export type SystemConfigOrderByWithRelationInput = {
@@ -58800,6 +60039,7 @@ export namespace Prisma {
     type?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
   }
 
   export type SystemConfigWhereUniqueInput = Prisma.AtLeast<{
@@ -58812,6 +60052,7 @@ export namespace Prisma {
     type?: StringNullableFilter<"SystemConfig"> | string | null
     createdAt?: DateTimeFilter<"SystemConfig"> | Date | string
     updatedAt?: DateTimeFilter<"SystemConfig"> | Date | string
+    expiresAt?: DateTimeNullableFilter<"SystemConfig"> | Date | string | null
   }, "id" | "key">
 
   export type SystemConfigOrderByWithAggregationInput = {
@@ -58821,6 +60062,7 @@ export namespace Prisma {
     type?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
     _count?: SystemConfigCountOrderByAggregateInput
     _avg?: SystemConfigAvgOrderByAggregateInput
     _max?: SystemConfigMaxOrderByAggregateInput
@@ -58838,6 +60080,7 @@ export namespace Prisma {
     type?: StringNullableWithAggregatesFilter<"SystemConfig"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
+    expiresAt?: DateTimeNullableWithAggregatesFilter<"SystemConfig"> | Date | string | null
   }
 
   export type n8n_chat_historiesWhereInput = {
@@ -58882,6 +60125,50 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"n8n_chat_histories"> | number
     session_id?: StringWithAggregatesFilter<"n8n_chat_histories"> | string
     message?: JsonWithAggregatesFilter<"n8n_chat_histories">
+  }
+
+  export type n8n_dataWhereInput = {
+    AND?: n8n_dataWhereInput | n8n_dataWhereInput[]
+    OR?: n8n_dataWhereInput[]
+    NOT?: n8n_dataWhereInput | n8n_dataWhereInput[]
+    id?: IntFilter<"n8n_data"> | number
+    text?: StringNullableFilter<"n8n_data"> | string | null
+    metadata?: JsonNullableFilter<"n8n_data">
+  }
+
+  export type n8n_dataOrderByWithRelationInput = {
+    id?: SortOrder
+    text?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+  }
+
+  export type n8n_dataWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: n8n_dataWhereInput | n8n_dataWhereInput[]
+    OR?: n8n_dataWhereInput[]
+    NOT?: n8n_dataWhereInput | n8n_dataWhereInput[]
+    text?: StringNullableFilter<"n8n_data"> | string | null
+    metadata?: JsonNullableFilter<"n8n_data">
+  }, "id">
+
+  export type n8n_dataOrderByWithAggregationInput = {
+    id?: SortOrder
+    text?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    _count?: n8n_dataCountOrderByAggregateInput
+    _avg?: n8n_dataAvgOrderByAggregateInput
+    _max?: n8n_dataMaxOrderByAggregateInput
+    _min?: n8n_dataMinOrderByAggregateInput
+    _sum?: n8n_dataSumOrderByAggregateInput
+  }
+
+  export type n8n_dataScalarWhereWithAggregatesInput = {
+    AND?: n8n_dataScalarWhereWithAggregatesInput | n8n_dataScalarWhereWithAggregatesInput[]
+    OR?: n8n_dataScalarWhereWithAggregatesInput[]
+    NOT?: n8n_dataScalarWhereWithAggregatesInput | n8n_dataScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"n8n_data"> | number
+    text?: StringNullableWithAggregatesFilter<"n8n_data"> | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"n8n_data">
   }
 
   export type BookingCreateInput = {
@@ -59404,6 +60691,7 @@ export namespace Prisma {
     createdAt?: Date | string
     status: $Enums.PaymentTransactionStatus
     userId?: number | null
+    BookingReport?: BookingReportCreateNestedOneWithoutPaymentTransactionInput
     ServiceRequest?: ServiceRequestCreateNestedOneWithoutPaymentTransactionInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedOneWithoutPaymentTransactionInput
   }
@@ -59425,6 +60713,7 @@ export namespace Prisma {
     status: $Enums.PaymentTransactionStatus
     userId?: number | null
     withdrawalRequestId?: number | null
+    bookingReportId?: number | null
   }
 
   export type PaymentTransactionUpdateInput = {
@@ -59441,6 +60730,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    BookingReport?: BookingReportUpdateOneWithoutPaymentTransactionNestedInput
     ServiceRequest?: ServiceRequestUpdateOneWithoutPaymentTransactionNestedInput
     WithdrawalRequest?: WithdrawalRequestUpdateOneWithoutPaymentTransactionNestedInput
   }
@@ -59462,6 +60752,7 @@ export namespace Prisma {
     status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
     userId?: NullableIntFieldUpdateOperationsInput | number | null
     withdrawalRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingReportId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PaymentTransactionCreateManyInput = {
@@ -59481,6 +60772,7 @@ export namespace Prisma {
     status: $Enums.PaymentTransactionStatus
     userId?: number | null
     withdrawalRequestId?: number | null
+    bookingReportId?: number | null
   }
 
   export type PaymentTransactionUpdateManyMutationInput = {
@@ -59516,6 +60808,7 @@ export namespace Prisma {
     status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
     userId?: NullableIntFieldUpdateOperationsInput | number | null
     withdrawalRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingReportId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PermissionCreateInput = {
@@ -61017,7 +62310,7 @@ export namespace Prisma {
     location: string
     phoneNumber: string
     Booking?: BookingCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutServiceRequestInput
     Category: CategoryCreateNestedOneWithoutServiceRequestInput
     CustomerProfile: CustomerProfileCreateNestedOneWithoutServiceRequestInput
     ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceRequestInput
@@ -61036,7 +62329,7 @@ export namespace Prisma {
     phoneNumber: string
     categoryId: number
     Booking?: BookingUncheckedCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutServiceRequestInput
   }
 
   export type ServiceRequestUpdateInput = {
@@ -61048,7 +62341,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     Booking?: BookingUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutServiceRequestNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceRequestNestedInput
     CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutServiceRequestNestedInput
     ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceRequestNestedInput
@@ -61067,7 +62360,7 @@ export namespace Prisma {
     phoneNumber?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
     Booking?: BookingUncheckedUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutServiceRequestNestedInput
   }
 
   export type ServiceRequestCreateManyInput = {
@@ -61880,6 +63173,7 @@ export namespace Prisma {
     ServiceProvider?: ServiceProviderCreateNestedOneWithoutBookingReportInput
     User_BookingReport_reporterIdToUser: UserCreateNestedOneWithoutBookingReport_BookingReport_reporterIdToUserInput
     User_BookingReport_reviewedByIdToUser?: UserCreateNestedOneWithoutBookingReport_BookingReport_reviewedByIdToUserInput
+    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportUncheckedCreateInput = {
@@ -61898,6 +63192,7 @@ export namespace Prisma {
     reviewedById?: number | null
     note?: string | null
     reviewResponse?: string | null
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportUpdateInput = {
@@ -61915,6 +63210,7 @@ export namespace Prisma {
     ServiceProvider?: ServiceProviderUpdateOneWithoutBookingReportNestedInput
     User_BookingReport_reporterIdToUser?: UserUpdateOneRequiredWithoutBookingReport_BookingReport_reporterIdToUserNestedInput
     User_BookingReport_reviewedByIdToUser?: UserUpdateOneWithoutBookingReport_BookingReport_reviewedByIdToUserNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateInput = {
@@ -61933,6 +63229,7 @@ export namespace Prisma {
     reviewedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportCreateManyInput = {
@@ -62207,6 +63504,7 @@ export namespace Prisma {
     type?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    expiresAt?: Date | string | null
   }
 
   export type SystemConfigUncheckedCreateInput = {
@@ -62216,6 +63514,7 @@ export namespace Prisma {
     type?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    expiresAt?: Date | string | null
   }
 
   export type SystemConfigUpdateInput = {
@@ -62224,6 +63523,7 @@ export namespace Prisma {
     type?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SystemConfigUncheckedUpdateInput = {
@@ -62233,6 +63533,7 @@ export namespace Prisma {
     type?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SystemConfigCreateManyInput = {
@@ -62242,6 +63543,7 @@ export namespace Prisma {
     type?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    expiresAt?: Date | string | null
   }
 
   export type SystemConfigUpdateManyMutationInput = {
@@ -62250,6 +63552,7 @@ export namespace Prisma {
     type?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SystemConfigUncheckedUpdateManyInput = {
@@ -62259,6 +63562,7 @@ export namespace Prisma {
     type?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type n8n_chat_historiesCreateInput = {
@@ -62298,6 +63602,45 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     session_id?: StringFieldUpdateOperationsInput | string
     message?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_dataCreateInput = {
+    text?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_dataUncheckedCreateInput = {
+    id?: number
+    text?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_dataUpdateInput = {
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_dataUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_dataCreateManyInput = {
+    id?: number
+    text?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_dataUpdateManyMutationInput = {
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type n8n_dataUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -62998,6 +64341,11 @@ export namespace Prisma {
     not?: NestedEnumPaymentTransactionStatusFilter<$PrismaModel> | $Enums.PaymentTransactionStatus
   }
 
+  export type BookingReportNullableScalarRelationFilter = {
+    is?: BookingReportWhereInput | null
+    isNot?: BookingReportWhereInput | null
+  }
+
   export type WithdrawalRequestNullableScalarRelationFilter = {
     is?: WithdrawalRequestWhereInput | null
     isNot?: WithdrawalRequestWhereInput | null
@@ -63020,6 +64368,7 @@ export namespace Prisma {
     status?: SortOrder
     userId?: SortOrder
     withdrawalRequestId?: SortOrder
+    bookingReportId?: SortOrder
   }
 
   export type PaymentTransactionAvgOrderByAggregateInput = {
@@ -63030,6 +64379,7 @@ export namespace Prisma {
     serviceRequestId?: SortOrder
     userId?: SortOrder
     withdrawalRequestId?: SortOrder
+    bookingReportId?: SortOrder
   }
 
   export type PaymentTransactionMaxOrderByAggregateInput = {
@@ -63049,6 +64399,7 @@ export namespace Prisma {
     status?: SortOrder
     userId?: SortOrder
     withdrawalRequestId?: SortOrder
+    bookingReportId?: SortOrder
   }
 
   export type PaymentTransactionMinOrderByAggregateInput = {
@@ -63068,6 +64419,7 @@ export namespace Prisma {
     status?: SortOrder
     userId?: SortOrder
     withdrawalRequestId?: SortOrder
+    bookingReportId?: SortOrder
   }
 
   export type PaymentTransactionSumOrderByAggregateInput = {
@@ -63078,6 +64430,7 @@ export namespace Prisma {
     serviceRequestId?: SortOrder
     userId?: SortOrder
     withdrawalRequestId?: SortOrder
+    bookingReportId?: SortOrder
   }
 
   export type EnumPaymentTransactionStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -64268,9 +65621,14 @@ export namespace Prisma {
     isNot?: BookingWhereInput | null
   }
 
-  export type PaymentTransactionNullableScalarRelationFilter = {
-    is?: PaymentTransactionWhereInput | null
-    isNot?: PaymentTransactionWhereInput | null
+  export type PaymentTransactionListRelationFilter = {
+    every?: PaymentTransactionWhereInput
+    some?: PaymentTransactionWhereInput
+    none?: PaymentTransactionWhereInput
+  }
+
+  export type PaymentTransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ServiceRequestCountOrderByAggregateInput = {
@@ -64543,6 +65901,11 @@ export namespace Prisma {
     in?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumWithdrawalStatusFilter<$PrismaModel> | $Enums.WithdrawalStatus
+  }
+
+  export type PaymentTransactionNullableScalarRelationFilter = {
+    is?: PaymentTransactionWhereInput | null
+    isNot?: PaymentTransactionWhereInput | null
   }
 
   export type WithdrawalRequestCountOrderByAggregateInput = {
@@ -65296,6 +66659,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    expiresAt?: SortOrder
   }
 
   export type SystemConfigAvgOrderByAggregateInput = {
@@ -65309,6 +66673,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    expiresAt?: SortOrder
   }
 
   export type SystemConfigMinOrderByAggregateInput = {
@@ -65318,6 +66683,7 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    expiresAt?: SortOrder
   }
 
   export type SystemConfigSumOrderByAggregateInput = {
@@ -65346,6 +66712,79 @@ export namespace Prisma {
 
   export type n8n_chat_historiesSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type n8n_dataCountOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    metadata?: SortOrder
+  }
+
+  export type n8n_dataAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type n8n_dataMaxOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+  }
+
+  export type n8n_dataMinOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+  }
+
+  export type n8n_dataSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type CustomerProfileCreateNestedOneWithoutBookingInput = {
@@ -66456,6 +67895,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationInput, UserUpdateWithoutNotificationInput>, UserUncheckedUpdateWithoutNotificationInput>
   }
 
+  export type BookingReportCreateNestedOneWithoutPaymentTransactionInput = {
+    create?: XOR<BookingReportCreateWithoutPaymentTransactionInput, BookingReportUncheckedCreateWithoutPaymentTransactionInput>
+    connectOrCreate?: BookingReportCreateOrConnectWithoutPaymentTransactionInput
+    connect?: BookingReportWhereUniqueInput
+  }
+
   export type ServiceRequestCreateNestedOneWithoutPaymentTransactionInput = {
     create?: XOR<ServiceRequestCreateWithoutPaymentTransactionInput, ServiceRequestUncheckedCreateWithoutPaymentTransactionInput>
     connectOrCreate?: ServiceRequestCreateOrConnectWithoutPaymentTransactionInput
@@ -66470,6 +67915,16 @@ export namespace Prisma {
 
   export type EnumPaymentTransactionStatusFieldUpdateOperationsInput = {
     set?: $Enums.PaymentTransactionStatus
+  }
+
+  export type BookingReportUpdateOneWithoutPaymentTransactionNestedInput = {
+    create?: XOR<BookingReportCreateWithoutPaymentTransactionInput, BookingReportUncheckedCreateWithoutPaymentTransactionInput>
+    connectOrCreate?: BookingReportCreateOrConnectWithoutPaymentTransactionInput
+    upsert?: BookingReportUpsertWithoutPaymentTransactionInput
+    disconnect?: BookingReportWhereInput | boolean
+    delete?: BookingReportWhereInput | boolean
+    connect?: BookingReportWhereUniqueInput
+    update?: XOR<XOR<BookingReportUpdateToOneWithWhereWithoutPaymentTransactionInput, BookingReportUpdateWithoutPaymentTransactionInput>, BookingReportUncheckedUpdateWithoutPaymentTransactionInput>
   }
 
   export type ServiceRequestUpdateOneWithoutPaymentTransactionNestedInput = {
@@ -69135,10 +70590,11 @@ export namespace Prisma {
     connect?: BookingWhereUniqueInput
   }
 
-  export type PaymentTransactionCreateNestedOneWithoutServiceRequestInput = {
-    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput>
-    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput
-    connect?: PaymentTransactionWhereUniqueInput
+  export type PaymentTransactionCreateNestedManyWithoutServiceRequestInput = {
+    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput> | PaymentTransactionCreateWithoutServiceRequestInput[] | PaymentTransactionUncheckedCreateWithoutServiceRequestInput[]
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput | PaymentTransactionCreateOrConnectWithoutServiceRequestInput[]
+    createMany?: PaymentTransactionCreateManyServiceRequestInputEnvelope
+    connect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
   }
 
   export type CategoryCreateNestedOneWithoutServiceRequestInput = {
@@ -69165,10 +70621,11 @@ export namespace Prisma {
     connect?: BookingWhereUniqueInput
   }
 
-  export type PaymentTransactionUncheckedCreateNestedOneWithoutServiceRequestInput = {
-    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput>
-    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput
-    connect?: PaymentTransactionWhereUniqueInput
+  export type PaymentTransactionUncheckedCreateNestedManyWithoutServiceRequestInput = {
+    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput> | PaymentTransactionCreateWithoutServiceRequestInput[] | PaymentTransactionUncheckedCreateWithoutServiceRequestInput[]
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput | PaymentTransactionCreateOrConnectWithoutServiceRequestInput[]
+    createMany?: PaymentTransactionCreateManyServiceRequestInputEnvelope
+    connect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
   }
 
   export type EnumRequestStatusFieldUpdateOperationsInput = {
@@ -69185,14 +70642,18 @@ export namespace Prisma {
     update?: XOR<XOR<BookingUpdateToOneWithWhereWithoutServiceRequestInput, BookingUpdateWithoutServiceRequestInput>, BookingUncheckedUpdateWithoutServiceRequestInput>
   }
 
-  export type PaymentTransactionUpdateOneWithoutServiceRequestNestedInput = {
-    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput>
-    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput
-    upsert?: PaymentTransactionUpsertWithoutServiceRequestInput
-    disconnect?: PaymentTransactionWhereInput | boolean
-    delete?: PaymentTransactionWhereInput | boolean
-    connect?: PaymentTransactionWhereUniqueInput
-    update?: XOR<XOR<PaymentTransactionUpdateToOneWithWhereWithoutServiceRequestInput, PaymentTransactionUpdateWithoutServiceRequestInput>, PaymentTransactionUncheckedUpdateWithoutServiceRequestInput>
+  export type PaymentTransactionUpdateManyWithoutServiceRequestNestedInput = {
+    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput> | PaymentTransactionCreateWithoutServiceRequestInput[] | PaymentTransactionUncheckedCreateWithoutServiceRequestInput[]
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput | PaymentTransactionCreateOrConnectWithoutServiceRequestInput[]
+    upsert?: PaymentTransactionUpsertWithWhereUniqueWithoutServiceRequestInput | PaymentTransactionUpsertWithWhereUniqueWithoutServiceRequestInput[]
+    createMany?: PaymentTransactionCreateManyServiceRequestInputEnvelope
+    set?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    disconnect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    delete?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    connect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    update?: PaymentTransactionUpdateWithWhereUniqueWithoutServiceRequestInput | PaymentTransactionUpdateWithWhereUniqueWithoutServiceRequestInput[]
+    updateMany?: PaymentTransactionUpdateManyWithWhereWithoutServiceRequestInput | PaymentTransactionUpdateManyWithWhereWithoutServiceRequestInput[]
+    deleteMany?: PaymentTransactionScalarWhereInput | PaymentTransactionScalarWhereInput[]
   }
 
   export type CategoryUpdateOneRequiredWithoutServiceRequestNestedInput = {
@@ -69229,14 +70690,18 @@ export namespace Prisma {
     update?: XOR<XOR<BookingUpdateToOneWithWhereWithoutServiceRequestInput, BookingUpdateWithoutServiceRequestInput>, BookingUncheckedUpdateWithoutServiceRequestInput>
   }
 
-  export type PaymentTransactionUncheckedUpdateOneWithoutServiceRequestNestedInput = {
-    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput>
-    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput
-    upsert?: PaymentTransactionUpsertWithoutServiceRequestInput
-    disconnect?: PaymentTransactionWhereInput | boolean
-    delete?: PaymentTransactionWhereInput | boolean
-    connect?: PaymentTransactionWhereUniqueInput
-    update?: XOR<XOR<PaymentTransactionUpdateToOneWithWhereWithoutServiceRequestInput, PaymentTransactionUpdateWithoutServiceRequestInput>, PaymentTransactionUncheckedUpdateWithoutServiceRequestInput>
+  export type PaymentTransactionUncheckedUpdateManyWithoutServiceRequestNestedInput = {
+    create?: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput> | PaymentTransactionCreateWithoutServiceRequestInput[] | PaymentTransactionUncheckedCreateWithoutServiceRequestInput[]
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutServiceRequestInput | PaymentTransactionCreateOrConnectWithoutServiceRequestInput[]
+    upsert?: PaymentTransactionUpsertWithWhereUniqueWithoutServiceRequestInput | PaymentTransactionUpsertWithWhereUniqueWithoutServiceRequestInput[]
+    createMany?: PaymentTransactionCreateManyServiceRequestInputEnvelope
+    set?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    disconnect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    delete?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    connect?: PaymentTransactionWhereUniqueInput | PaymentTransactionWhereUniqueInput[]
+    update?: PaymentTransactionUpdateWithWhereUniqueWithoutServiceRequestInput | PaymentTransactionUpdateWithWhereUniqueWithoutServiceRequestInput[]
+    updateMany?: PaymentTransactionUpdateManyWithWhereWithoutServiceRequestInput | PaymentTransactionUpdateManyWithWhereWithoutServiceRequestInput[]
+    deleteMany?: PaymentTransactionScalarWhereInput | PaymentTransactionScalarWhereInput[]
   }
 
   export type BookingCreateNestedOneWithoutProposalInput = {
@@ -69747,6 +71212,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type PaymentTransactionCreateNestedOneWithoutBookingReportInput = {
+    create?: XOR<PaymentTransactionCreateWithoutBookingReportInput, PaymentTransactionUncheckedCreateWithoutBookingReportInput>
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutBookingReportInput
+    connect?: PaymentTransactionWhereUniqueInput
+  }
+
+  export type PaymentTransactionUncheckedCreateNestedOneWithoutBookingReportInput = {
+    create?: XOR<PaymentTransactionCreateWithoutBookingReportInput, PaymentTransactionUncheckedCreateWithoutBookingReportInput>
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutBookingReportInput
+    connect?: PaymentTransactionWhereUniqueInput
+  }
+
   export type EnumReporterTypeFieldUpdateOperationsInput = {
     set?: $Enums.ReporterType
   }
@@ -69804,6 +71281,26 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBookingReport_BookingReport_reviewedByIdToUserInput, UserUpdateWithoutBookingReport_BookingReport_reviewedByIdToUserInput>, UserUncheckedUpdateWithoutBookingReport_BookingReport_reviewedByIdToUserInput>
+  }
+
+  export type PaymentTransactionUpdateOneWithoutBookingReportNestedInput = {
+    create?: XOR<PaymentTransactionCreateWithoutBookingReportInput, PaymentTransactionUncheckedCreateWithoutBookingReportInput>
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutBookingReportInput
+    upsert?: PaymentTransactionUpsertWithoutBookingReportInput
+    disconnect?: PaymentTransactionWhereInput | boolean
+    delete?: PaymentTransactionWhereInput | boolean
+    connect?: PaymentTransactionWhereUniqueInput
+    update?: XOR<XOR<PaymentTransactionUpdateToOneWithWhereWithoutBookingReportInput, PaymentTransactionUpdateWithoutBookingReportInput>, PaymentTransactionUncheckedUpdateWithoutBookingReportInput>
+  }
+
+  export type PaymentTransactionUncheckedUpdateOneWithoutBookingReportNestedInput = {
+    create?: XOR<PaymentTransactionCreateWithoutBookingReportInput, PaymentTransactionUncheckedCreateWithoutBookingReportInput>
+    connectOrCreate?: PaymentTransactionCreateOrConnectWithoutBookingReportInput
+    upsert?: PaymentTransactionUpsertWithoutBookingReportInput
+    disconnect?: PaymentTransactionWhereInput | boolean
+    delete?: PaymentTransactionWhereInput | boolean
+    connect?: PaymentTransactionWhereUniqueInput
+    update?: XOR<XOR<PaymentTransactionUpdateToOneWithWhereWithoutBookingReportInput, PaymentTransactionUpdateWithoutBookingReportInput>, PaymentTransactionUncheckedUpdateWithoutBookingReportInput>
   }
 
   export type AssetSuggestionCreateNestedManyWithoutExternalProductInput = {
@@ -70527,6 +72024,29 @@ export namespace Prisma {
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type CustomerProfileCreateWithoutBookingInput = {
     address?: string | null
@@ -70628,7 +72148,7 @@ export namespace Prisma {
     updatedAt: Date | string
     location: string
     phoneNumber: string
-    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutServiceRequestInput
     Category: CategoryCreateNestedOneWithoutServiceRequestInput
     CustomerProfile: CustomerProfileCreateNestedOneWithoutServiceRequestInput
     ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceRequestInput
@@ -70646,7 +72166,7 @@ export namespace Prisma {
     location: string
     phoneNumber: string
     categoryId: number
-    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutServiceRequestInput
   }
 
   export type ServiceRequestCreateOrConnectWithoutBookingInput = {
@@ -70696,6 +72216,7 @@ export namespace Prisma {
     ServiceProvider?: ServiceProviderCreateNestedOneWithoutBookingReportInput
     User_BookingReport_reporterIdToUser: UserCreateNestedOneWithoutBookingReport_BookingReport_reporterIdToUserInput
     User_BookingReport_reviewedByIdToUser?: UserCreateNestedOneWithoutBookingReport_BookingReport_reviewedByIdToUserInput
+    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportUncheckedCreateWithoutBookingInput = {
@@ -70713,6 +72234,7 @@ export namespace Prisma {
     reviewedById?: number | null
     note?: string | null
     reviewResponse?: string | null
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportCreateOrConnectWithoutBookingInput = {
@@ -70991,7 +72513,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    PaymentTransaction?: PaymentTransactionUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutServiceRequestNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceRequestNestedInput
     CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutServiceRequestNestedInput
     ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceRequestNestedInput
@@ -71009,7 +72531,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
-    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutServiceRequestNestedInput
   }
 
   export type StaffUpsertWithoutBooking_Booking_staffIdToStaffInput = {
@@ -71719,7 +73241,7 @@ export namespace Prisma {
     location: string
     phoneNumber: string
     Booking?: BookingCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutServiceRequestInput
     CustomerProfile: CustomerProfileCreateNestedOneWithoutServiceRequestInput
     ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceRequestInput
   }
@@ -71736,7 +73258,7 @@ export namespace Prisma {
     location: string
     phoneNumber: string
     Booking?: BookingUncheckedCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutServiceRequestInput
   }
 
   export type ServiceRequestCreateOrConnectWithoutCategoryInput = {
@@ -72474,6 +73996,7 @@ export namespace Prisma {
     ServiceProvider?: ServiceProviderCreateNestedOneWithoutBookingReportInput
     User_BookingReport_reporterIdToUser: UserCreateNestedOneWithoutBookingReport_BookingReport_reporterIdToUserInput
     User_BookingReport_reviewedByIdToUser?: UserCreateNestedOneWithoutBookingReport_BookingReport_reviewedByIdToUserInput
+    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportUncheckedCreateWithoutCustomerProfileInput = {
@@ -72491,6 +74014,7 @@ export namespace Prisma {
     reviewedById?: number | null
     note?: string | null
     reviewResponse?: string | null
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportCreateOrConnectWithoutCustomerProfileInput = {
@@ -72790,7 +74314,7 @@ export namespace Prisma {
     location: string
     phoneNumber: string
     Booking?: BookingCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutServiceRequestInput
     Category: CategoryCreateNestedOneWithoutServiceRequestInput
     ServiceProvider: ServiceProviderCreateNestedOneWithoutServiceRequestInput
   }
@@ -72807,7 +74331,7 @@ export namespace Prisma {
     phoneNumber: string
     categoryId: number
     Booking?: BookingUncheckedCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutServiceRequestInput
   }
 
   export type ServiceRequestCreateOrConnectWithoutCustomerProfileInput = {
@@ -73580,6 +75104,46 @@ export namespace Prisma {
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
+  export type BookingReportCreateWithoutPaymentTransactionInput = {
+    reporterType: $Enums.ReporterType
+    reason: string
+    description?: string | null
+    imageUrls?: BookingReportCreateimageUrlsInput | string[]
+    status?: $Enums.ReportStatus
+    createdAt?: Date | string
+    reviewedAt?: Date | string | null
+    note?: string | null
+    reviewResponse?: string | null
+    Booking: BookingCreateNestedOneWithoutBookingReportInput
+    CustomerProfile?: CustomerProfileCreateNestedOneWithoutBookingReportInput
+    ServiceProvider?: ServiceProviderCreateNestedOneWithoutBookingReportInput
+    User_BookingReport_reporterIdToUser: UserCreateNestedOneWithoutBookingReport_BookingReport_reporterIdToUserInput
+    User_BookingReport_reviewedByIdToUser?: UserCreateNestedOneWithoutBookingReport_BookingReport_reviewedByIdToUserInput
+  }
+
+  export type BookingReportUncheckedCreateWithoutPaymentTransactionInput = {
+    id?: number
+    bookingId: number
+    reporterId: number
+    reporterType: $Enums.ReporterType
+    reportedCustomerId?: number | null
+    reportedProviderId?: number | null
+    reason: string
+    description?: string | null
+    imageUrls?: BookingReportCreateimageUrlsInput | string[]
+    status?: $Enums.ReportStatus
+    createdAt?: Date | string
+    reviewedAt?: Date | string | null
+    reviewedById?: number | null
+    note?: string | null
+    reviewResponse?: string | null
+  }
+
+  export type BookingReportCreateOrConnectWithoutPaymentTransactionInput = {
+    where: BookingReportWhereUniqueInput
+    create: XOR<BookingReportCreateWithoutPaymentTransactionInput, BookingReportUncheckedCreateWithoutPaymentTransactionInput>
+  }
+
   export type ServiceRequestCreateWithoutPaymentTransactionInput = {
     note?: string | null
     preferredDate: Date | string
@@ -73638,6 +75202,52 @@ export namespace Prisma {
   export type WithdrawalRequestCreateOrConnectWithoutPaymentTransactionInput = {
     where: WithdrawalRequestWhereUniqueInput
     create: XOR<WithdrawalRequestCreateWithoutPaymentTransactionInput, WithdrawalRequestUncheckedCreateWithoutPaymentTransactionInput>
+  }
+
+  export type BookingReportUpsertWithoutPaymentTransactionInput = {
+    update: XOR<BookingReportUpdateWithoutPaymentTransactionInput, BookingReportUncheckedUpdateWithoutPaymentTransactionInput>
+    create: XOR<BookingReportCreateWithoutPaymentTransactionInput, BookingReportUncheckedCreateWithoutPaymentTransactionInput>
+    where?: BookingReportWhereInput
+  }
+
+  export type BookingReportUpdateToOneWithWhereWithoutPaymentTransactionInput = {
+    where?: BookingReportWhereInput
+    data: XOR<BookingReportUpdateWithoutPaymentTransactionInput, BookingReportUncheckedUpdateWithoutPaymentTransactionInput>
+  }
+
+  export type BookingReportUpdateWithoutPaymentTransactionInput = {
+    reporterType?: EnumReporterTypeFieldUpdateOperationsInput | $Enums.ReporterType
+    reason?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrls?: BookingReportUpdateimageUrlsInput | string[]
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
+    Booking?: BookingUpdateOneRequiredWithoutBookingReportNestedInput
+    CustomerProfile?: CustomerProfileUpdateOneWithoutBookingReportNestedInput
+    ServiceProvider?: ServiceProviderUpdateOneWithoutBookingReportNestedInput
+    User_BookingReport_reporterIdToUser?: UserUpdateOneRequiredWithoutBookingReport_BookingReport_reporterIdToUserNestedInput
+    User_BookingReport_reviewedByIdToUser?: UserUpdateOneWithoutBookingReport_BookingReport_reviewedByIdToUserNestedInput
+  }
+
+  export type BookingReportUncheckedUpdateWithoutPaymentTransactionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookingId?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    reporterType?: EnumReporterTypeFieldUpdateOperationsInput | $Enums.ReporterType
+    reportedCustomerId?: NullableIntFieldUpdateOperationsInput | number | null
+    reportedProviderId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrls?: BookingReportUpdateimageUrlsInput | string[]
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ServiceRequestUpsertWithoutPaymentTransactionInput = {
@@ -77008,6 +78618,7 @@ export namespace Prisma {
     CustomerProfile?: CustomerProfileCreateNestedOneWithoutBookingReportInput
     User_BookingReport_reporterIdToUser: UserCreateNestedOneWithoutBookingReport_BookingReport_reporterIdToUserInput
     User_BookingReport_reviewedByIdToUser?: UserCreateNestedOneWithoutBookingReport_BookingReport_reviewedByIdToUserInput
+    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportUncheckedCreateWithoutServiceProviderInput = {
@@ -77025,6 +78636,7 @@ export namespace Prisma {
     reviewedById?: number | null
     note?: string | null
     reviewResponse?: string | null
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportCreateOrConnectWithoutServiceProviderInput = {
@@ -77402,7 +79014,7 @@ export namespace Prisma {
     location: string
     phoneNumber: string
     Booking?: BookingCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionCreateNestedManyWithoutServiceRequestInput
     Category: CategoryCreateNestedOneWithoutServiceRequestInput
     CustomerProfile: CustomerProfileCreateNestedOneWithoutServiceRequestInput
   }
@@ -77419,7 +79031,7 @@ export namespace Prisma {
     phoneNumber: string
     categoryId: number
     Booking?: BookingUncheckedCreateNestedOneWithoutServiceRequestInput
-    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutServiceRequestInput
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedManyWithoutServiceRequestInput
   }
 
   export type ServiceRequestCreateOrConnectWithoutServiceProviderInput = {
@@ -78571,6 +80183,7 @@ export namespace Prisma {
     CustomerProfile?: CustomerProfileCreateNestedOneWithoutBookingReportInput
     ServiceProvider?: ServiceProviderCreateNestedOneWithoutBookingReportInput
     User_BookingReport_reviewedByIdToUser?: UserCreateNestedOneWithoutBookingReport_BookingReport_reviewedByIdToUserInput
+    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportUncheckedCreateWithoutUser_BookingReport_reporterIdToUserInput = {
@@ -78588,6 +80201,7 @@ export namespace Prisma {
     reviewedById?: number | null
     note?: string | null
     reviewResponse?: string | null
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportCreateOrConnectWithoutUser_BookingReport_reporterIdToUserInput = {
@@ -78614,6 +80228,7 @@ export namespace Prisma {
     CustomerProfile?: CustomerProfileCreateNestedOneWithoutBookingReportInput
     ServiceProvider?: ServiceProviderCreateNestedOneWithoutBookingReportInput
     User_BookingReport_reporterIdToUser: UserCreateNestedOneWithoutBookingReport_BookingReport_reporterIdToUserInput
+    PaymentTransaction?: PaymentTransactionCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportUncheckedCreateWithoutUser_BookingReport_reviewedByIdToUserInput = {
@@ -78631,6 +80246,7 @@ export namespace Prisma {
     reviewedAt?: Date | string | null
     note?: string | null
     reviewResponse?: string | null
+    PaymentTransaction?: PaymentTransactionUncheckedCreateNestedOneWithoutBookingReportInput
   }
 
   export type BookingReportCreateOrConnectWithoutUser_BookingReport_reviewedByIdToUserInput = {
@@ -81559,6 +83175,7 @@ export namespace Prisma {
     createdAt?: Date | string
     status: $Enums.PaymentTransactionStatus
     userId?: number | null
+    BookingReport?: BookingReportCreateNestedOneWithoutPaymentTransactionInput
     WithdrawalRequest?: WithdrawalRequestCreateNestedOneWithoutPaymentTransactionInput
   }
 
@@ -81578,11 +83195,17 @@ export namespace Prisma {
     status: $Enums.PaymentTransactionStatus
     userId?: number | null
     withdrawalRequestId?: number | null
+    bookingReportId?: number | null
   }
 
   export type PaymentTransactionCreateOrConnectWithoutServiceRequestInput = {
     where: PaymentTransactionWhereUniqueInput
     create: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput>
+  }
+
+  export type PaymentTransactionCreateManyServiceRequestInputEnvelope = {
+    data: PaymentTransactionCreateManyServiceRequestInput | PaymentTransactionCreateManyServiceRequestInput[]
+    skipDuplicates?: boolean
   }
 
   export type CategoryCreateWithoutServiceRequestInput = {
@@ -81763,50 +83386,43 @@ export namespace Prisma {
     WorkLog?: WorkLogUncheckedUpdateManyWithoutBookingNestedInput
   }
 
-  export type PaymentTransactionUpsertWithoutServiceRequestInput = {
+  export type PaymentTransactionUpsertWithWhereUniqueWithoutServiceRequestInput = {
+    where: PaymentTransactionWhereUniqueInput
     update: XOR<PaymentTransactionUpdateWithoutServiceRequestInput, PaymentTransactionUncheckedUpdateWithoutServiceRequestInput>
     create: XOR<PaymentTransactionCreateWithoutServiceRequestInput, PaymentTransactionUncheckedCreateWithoutServiceRequestInput>
-    where?: PaymentTransactionWhereInput
   }
 
-  export type PaymentTransactionUpdateToOneWithWhereWithoutServiceRequestInput = {
-    where?: PaymentTransactionWhereInput
+  export type PaymentTransactionUpdateWithWhereUniqueWithoutServiceRequestInput = {
+    where: PaymentTransactionWhereUniqueInput
     data: XOR<PaymentTransactionUpdateWithoutServiceRequestInput, PaymentTransactionUncheckedUpdateWithoutServiceRequestInput>
   }
 
-  export type PaymentTransactionUpdateWithoutServiceRequestInput = {
-    gateway?: StringFieldUpdateOperationsInput | string
-    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    subAccount?: NullableStringFieldUpdateOperationsInput | string | null
-    amountIn?: IntFieldUpdateOperationsInput | number
-    amountOut?: IntFieldUpdateOperationsInput | number
-    accumulated?: IntFieldUpdateOperationsInput | number
-    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    transactionContent?: NullableStringFieldUpdateOperationsInput | string | null
-    body?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
-    WithdrawalRequest?: WithdrawalRequestUpdateOneWithoutPaymentTransactionNestedInput
+  export type PaymentTransactionUpdateManyWithWhereWithoutServiceRequestInput = {
+    where: PaymentTransactionScalarWhereInput
+    data: XOR<PaymentTransactionUpdateManyMutationInput, PaymentTransactionUncheckedUpdateManyWithoutServiceRequestInput>
   }
 
-  export type PaymentTransactionUncheckedUpdateWithoutServiceRequestInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    gateway?: StringFieldUpdateOperationsInput | string
-    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    subAccount?: NullableStringFieldUpdateOperationsInput | string | null
-    amountIn?: IntFieldUpdateOperationsInput | number
-    amountOut?: IntFieldUpdateOperationsInput | number
-    accumulated?: IntFieldUpdateOperationsInput | number
-    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    transactionContent?: NullableStringFieldUpdateOperationsInput | string | null
-    body?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
-    withdrawalRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+  export type PaymentTransactionScalarWhereInput = {
+    AND?: PaymentTransactionScalarWhereInput | PaymentTransactionScalarWhereInput[]
+    OR?: PaymentTransactionScalarWhereInput[]
+    NOT?: PaymentTransactionScalarWhereInput | PaymentTransactionScalarWhereInput[]
+    id?: IntFilter<"PaymentTransaction"> | number
+    gateway?: StringFilter<"PaymentTransaction"> | string
+    transactionDate?: DateTimeFilter<"PaymentTransaction"> | Date | string
+    accountNumber?: StringNullableFilter<"PaymentTransaction"> | string | null
+    subAccount?: StringNullableFilter<"PaymentTransaction"> | string | null
+    amountIn?: IntFilter<"PaymentTransaction"> | number
+    amountOut?: IntFilter<"PaymentTransaction"> | number
+    accumulated?: IntFilter<"PaymentTransaction"> | number
+    referenceNumber?: StringNullableFilter<"PaymentTransaction"> | string | null
+    transactionContent?: StringNullableFilter<"PaymentTransaction"> | string | null
+    body?: StringNullableFilter<"PaymentTransaction"> | string | null
+    createdAt?: DateTimeFilter<"PaymentTransaction"> | Date | string
+    serviceRequestId?: IntNullableFilter<"PaymentTransaction"> | number | null
+    status?: EnumPaymentTransactionStatusFilter<"PaymentTransaction"> | $Enums.PaymentTransactionStatus
+    userId?: IntNullableFilter<"PaymentTransaction"> | number | null
+    withdrawalRequestId?: IntNullableFilter<"PaymentTransaction"> | number | null
+    bookingReportId?: IntNullableFilter<"PaymentTransaction"> | number | null
   }
 
   export type CategoryUpsertWithoutServiceRequestInput = {
@@ -82648,6 +84264,7 @@ export namespace Prisma {
     createdAt?: Date | string
     status: $Enums.PaymentTransactionStatus
     userId?: number | null
+    BookingReport?: BookingReportCreateNestedOneWithoutPaymentTransactionInput
     ServiceRequest?: ServiceRequestCreateNestedOneWithoutPaymentTransactionInput
   }
 
@@ -82667,6 +84284,7 @@ export namespace Prisma {
     serviceRequestId?: number | null
     status: $Enums.PaymentTransactionStatus
     userId?: number | null
+    bookingReportId?: number | null
   }
 
   export type PaymentTransactionCreateOrConnectWithoutWithdrawalRequestInput = {
@@ -82883,6 +84501,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    BookingReport?: BookingReportUpdateOneWithoutPaymentTransactionNestedInput
     ServiceRequest?: ServiceRequestUpdateOneWithoutPaymentTransactionNestedInput
   }
 
@@ -82902,6 +84521,7 @@ export namespace Prisma {
     serviceRequestId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingReportId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserUpsertWithoutWithdrawalRequestInput = {
@@ -84462,6 +86082,48 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutBookingReport_BookingReport_reviewedByIdToUserInput, UserUncheckedCreateWithoutBookingReport_BookingReport_reviewedByIdToUserInput>
   }
 
+  export type PaymentTransactionCreateWithoutBookingReportInput = {
+    gateway: string
+    transactionDate?: Date | string
+    accountNumber?: string | null
+    subAccount?: string | null
+    amountIn?: number
+    amountOut?: number
+    accumulated?: number
+    referenceNumber?: string | null
+    transactionContent?: string | null
+    body?: string | null
+    createdAt?: Date | string
+    status: $Enums.PaymentTransactionStatus
+    userId?: number | null
+    ServiceRequest?: ServiceRequestCreateNestedOneWithoutPaymentTransactionInput
+    WithdrawalRequest?: WithdrawalRequestCreateNestedOneWithoutPaymentTransactionInput
+  }
+
+  export type PaymentTransactionUncheckedCreateWithoutBookingReportInput = {
+    id?: number
+    gateway: string
+    transactionDate?: Date | string
+    accountNumber?: string | null
+    subAccount?: string | null
+    amountIn?: number
+    amountOut?: number
+    accumulated?: number
+    referenceNumber?: string | null
+    transactionContent?: string | null
+    body?: string | null
+    createdAt?: Date | string
+    serviceRequestId?: number | null
+    status: $Enums.PaymentTransactionStatus
+    userId?: number | null
+    withdrawalRequestId?: number | null
+  }
+
+  export type PaymentTransactionCreateOrConnectWithoutBookingReportInput = {
+    where: PaymentTransactionWhereUniqueInput
+    create: XOR<PaymentTransactionCreateWithoutBookingReportInput, PaymentTransactionUncheckedCreateWithoutBookingReportInput>
+  }
+
   export type BookingUpsertWithoutBookingReportInput = {
     update: XOR<BookingUpdateWithoutBookingReportInput, BookingUncheckedUpdateWithoutBookingReportInput>
     create: XOR<BookingCreateWithoutBookingReportInput, BookingUncheckedCreateWithoutBookingReportInput>
@@ -84808,6 +86470,54 @@ export namespace Prisma {
     Role_UserRoles?: RoleUncheckedUpdateManyWithoutUser_UserRolesNestedInput
   }
 
+  export type PaymentTransactionUpsertWithoutBookingReportInput = {
+    update: XOR<PaymentTransactionUpdateWithoutBookingReportInput, PaymentTransactionUncheckedUpdateWithoutBookingReportInput>
+    create: XOR<PaymentTransactionCreateWithoutBookingReportInput, PaymentTransactionUncheckedCreateWithoutBookingReportInput>
+    where?: PaymentTransactionWhereInput
+  }
+
+  export type PaymentTransactionUpdateToOneWithWhereWithoutBookingReportInput = {
+    where?: PaymentTransactionWhereInput
+    data: XOR<PaymentTransactionUpdateWithoutBookingReportInput, PaymentTransactionUncheckedUpdateWithoutBookingReportInput>
+  }
+
+  export type PaymentTransactionUpdateWithoutBookingReportInput = {
+    gateway?: StringFieldUpdateOperationsInput | string
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    subAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    amountIn?: IntFieldUpdateOperationsInput | number
+    amountOut?: IntFieldUpdateOperationsInput | number
+    accumulated?: IntFieldUpdateOperationsInput | number
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    transactionContent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    ServiceRequest?: ServiceRequestUpdateOneWithoutPaymentTransactionNestedInput
+    WithdrawalRequest?: WithdrawalRequestUpdateOneWithoutPaymentTransactionNestedInput
+  }
+
+  export type PaymentTransactionUncheckedUpdateWithoutBookingReportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    gateway?: StringFieldUpdateOperationsInput | string
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    subAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    amountIn?: IntFieldUpdateOperationsInput | number
+    amountOut?: IntFieldUpdateOperationsInput | number
+    accumulated?: IntFieldUpdateOperationsInput | number
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    transactionContent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    withdrawalRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type AssetSuggestionCreateWithoutExternalProductInput = {
     score: number
     reason?: string | null
@@ -85026,6 +86736,7 @@ export namespace Prisma {
     ServiceProvider?: ServiceProviderUpdateOneWithoutBookingReportNestedInput
     User_BookingReport_reporterIdToUser?: UserUpdateOneRequiredWithoutBookingReport_BookingReport_reporterIdToUserNestedInput
     User_BookingReport_reviewedByIdToUser?: UserUpdateOneWithoutBookingReport_BookingReport_reviewedByIdToUserNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateWithoutBookingInput = {
@@ -85043,6 +86754,7 @@ export namespace Prisma {
     reviewedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateManyWithoutBookingInput = {
@@ -85340,7 +87052,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     Booking?: BookingUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutServiceRequestNestedInput
     CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutServiceRequestNestedInput
     ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceRequestNestedInput
   }
@@ -85357,7 +87069,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     Booking?: BookingUncheckedUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutServiceRequestNestedInput
   }
 
   export type ServiceRequestUncheckedUpdateManyWithoutCategoryInput = {
@@ -85580,6 +87292,7 @@ export namespace Prisma {
     ServiceProvider?: ServiceProviderUpdateOneWithoutBookingReportNestedInput
     User_BookingReport_reporterIdToUser?: UserUpdateOneRequiredWithoutBookingReport_BookingReport_reporterIdToUserNestedInput
     User_BookingReport_reviewedByIdToUser?: UserUpdateOneWithoutBookingReport_BookingReport_reviewedByIdToUserNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateWithoutCustomerProfileInput = {
@@ -85597,6 +87310,7 @@ export namespace Prisma {
     reviewedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateManyWithoutCustomerProfileInput = {
@@ -85814,7 +87528,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     Booking?: BookingUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutServiceRequestNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceRequestNestedInput
     ServiceProvider?: ServiceProviderUpdateOneRequiredWithoutServiceRequestNestedInput
   }
@@ -85831,7 +87545,7 @@ export namespace Prisma {
     phoneNumber?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
     Booking?: BookingUncheckedUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutServiceRequestNestedInput
   }
 
   export type ServiceRequestUncheckedUpdateManyWithoutCustomerProfileInput = {
@@ -86400,6 +88114,7 @@ export namespace Prisma {
     CustomerProfile?: CustomerProfileUpdateOneWithoutBookingReportNestedInput
     User_BookingReport_reporterIdToUser?: UserUpdateOneRequiredWithoutBookingReport_BookingReport_reporterIdToUserNestedInput
     User_BookingReport_reviewedByIdToUser?: UserUpdateOneWithoutBookingReport_BookingReport_reviewedByIdToUserNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateWithoutServiceProviderInput = {
@@ -86417,6 +88132,7 @@ export namespace Prisma {
     reviewedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateManyWithoutServiceProviderInput = {
@@ -86638,7 +88354,7 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     Booking?: BookingUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateManyWithoutServiceRequestNestedInput
     Category?: CategoryUpdateOneRequiredWithoutServiceRequestNestedInput
     CustomerProfile?: CustomerProfileUpdateOneRequiredWithoutServiceRequestNestedInput
   }
@@ -86655,7 +88371,7 @@ export namespace Prisma {
     phoneNumber?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
     Booking?: BookingUncheckedUpdateOneWithoutServiceRequestNestedInput
-    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutServiceRequestNestedInput
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateManyWithoutServiceRequestNestedInput
   }
 
   export type ServiceRequestUncheckedUpdateManyWithoutServiceProviderInput = {
@@ -87186,6 +88902,7 @@ export namespace Prisma {
     CustomerProfile?: CustomerProfileUpdateOneWithoutBookingReportNestedInput
     ServiceProvider?: ServiceProviderUpdateOneWithoutBookingReportNestedInput
     User_BookingReport_reviewedByIdToUser?: UserUpdateOneWithoutBookingReport_BookingReport_reviewedByIdToUserNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateWithoutUser_BookingReport_reporterIdToUserInput = {
@@ -87203,6 +88920,7 @@ export namespace Prisma {
     reviewedById?: NullableIntFieldUpdateOperationsInput | number | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateManyWithoutUser_BookingReport_reporterIdToUserInput = {
@@ -87236,6 +88954,7 @@ export namespace Prisma {
     CustomerProfile?: CustomerProfileUpdateOneWithoutBookingReportNestedInput
     ServiceProvider?: ServiceProviderUpdateOneWithoutBookingReportNestedInput
     User_BookingReport_reporterIdToUser?: UserUpdateOneRequiredWithoutBookingReport_BookingReport_reporterIdToUserNestedInput
+    PaymentTransaction?: PaymentTransactionUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateWithoutUser_BookingReport_reviewedByIdToUserInput = {
@@ -87253,6 +88972,7 @@ export namespace Prisma {
     reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     reviewResponse?: NullableStringFieldUpdateOperationsInput | string | null
+    PaymentTransaction?: PaymentTransactionUncheckedUpdateOneWithoutBookingReportNestedInput
   }
 
   export type BookingReportUncheckedUpdateManyWithoutUser_BookingReport_reviewedByIdToUserInput = {
@@ -88450,6 +90170,81 @@ export namespace Prisma {
 
   export type Service_ServiceItemsUncheckedUpdateManyWithoutServiceItemInput = {
     serviceId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type PaymentTransactionCreateManyServiceRequestInput = {
+    id?: number
+    gateway: string
+    transactionDate?: Date | string
+    accountNumber?: string | null
+    subAccount?: string | null
+    amountIn?: number
+    amountOut?: number
+    accumulated?: number
+    referenceNumber?: string | null
+    transactionContent?: string | null
+    body?: string | null
+    createdAt?: Date | string
+    status: $Enums.PaymentTransactionStatus
+    userId?: number | null
+    withdrawalRequestId?: number | null
+    bookingReportId?: number | null
+  }
+
+  export type PaymentTransactionUpdateWithoutServiceRequestInput = {
+    gateway?: StringFieldUpdateOperationsInput | string
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    subAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    amountIn?: IntFieldUpdateOperationsInput | number
+    amountOut?: IntFieldUpdateOperationsInput | number
+    accumulated?: IntFieldUpdateOperationsInput | number
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    transactionContent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    BookingReport?: BookingReportUpdateOneWithoutPaymentTransactionNestedInput
+    WithdrawalRequest?: WithdrawalRequestUpdateOneWithoutPaymentTransactionNestedInput
+  }
+
+  export type PaymentTransactionUncheckedUpdateWithoutServiceRequestInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    gateway?: StringFieldUpdateOperationsInput | string
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    subAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    amountIn?: IntFieldUpdateOperationsInput | number
+    amountOut?: IntFieldUpdateOperationsInput | number
+    accumulated?: IntFieldUpdateOperationsInput | number
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    transactionContent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    withdrawalRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingReportId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PaymentTransactionUncheckedUpdateManyWithoutServiceRequestInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    gateway?: StringFieldUpdateOperationsInput | string
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    subAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    amountIn?: IntFieldUpdateOperationsInput | number
+    amountOut?: IntFieldUpdateOperationsInput | number
+    accumulated?: IntFieldUpdateOperationsInput | number
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    transactionContent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentTransactionStatusFieldUpdateOperationsInput | $Enums.PaymentTransactionStatus
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    withdrawalRequestId?: NullableIntFieldUpdateOperationsInput | number | null
+    bookingReportId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ProposalItemCreateManyProposalInput = {

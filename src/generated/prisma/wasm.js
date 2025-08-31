@@ -200,7 +200,8 @@ exports.Prisma.PaymentTransactionScalarFieldEnum = {
   serviceRequestId: 'serviceRequestId',
   status: 'status',
   userId: 'userId',
-  withdrawalRequestId: 'withdrawalRequestId'
+  withdrawalRequestId: 'withdrawalRequestId',
+  bookingReportId: 'bookingReportId'
 };
 
 exports.Prisma.PermissionScalarFieldEnum = {
@@ -579,7 +580,8 @@ exports.Prisma.SystemConfigScalarFieldEnum = {
   value: 'value',
   type: 'type',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  expiresAt: 'expiresAt'
 };
 
 exports.Prisma.N8n_chat_historiesScalarFieldEnum = {
@@ -588,12 +590,23 @@ exports.Prisma.N8n_chat_historiesScalarFieldEnum = {
   message: 'message'
 };
 
+exports.Prisma.N8n_dataScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  metadata: 'metadata'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
 };
 
 exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -800,7 +813,8 @@ exports.Prisma.ModelName = {
   ProductEmbedding: 'ProductEmbedding',
   n8nchathistory: 'n8nchathistory',
   SystemConfig: 'SystemConfig',
-  n8n_chat_histories: 'n8n_chat_histories'
+  n8n_chat_histories: 'n8n_chat_histories',
+  n8n_data: 'n8n_data'
 };
 
 /**

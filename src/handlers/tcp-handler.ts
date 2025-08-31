@@ -1,4 +1,5 @@
 // FIX: Corrected import path for AppError
+import { PaymentMethod } from "../generated/prisma";
 import { AppError } from "../handlers/error";
 import {
   TCPResponseError,
@@ -198,6 +199,60 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
         break;
       }
 
+      case "PAY_EXISTING_SERVICE_REQUEST": {
+
+      }
+
+
+      case "PAY_EXISTING_SERVICE_REQUEST": {
+  if (!data) {
+    throw new AppError(
+      "Error.MissingData",
+      { message: "Missing data for PAY_EXISTING_SERVICE_REQUEST", path: "data" },
+      400
+    );
+  }
+
+  const {
+    serviceRequestId,
+    userId,
+    amount,
+    paymentMethod,
+  } = data as {
+    serviceRequestId?: unknown;
+    userId?: unknown;
+    amount?: unknown;
+    paymentMethod?: unknown;
+  };
+
+  const amountNum = Number(amount);
+  if (!Number.isFinite(amountNum) || amountNum <= 0) {
+    throw new AppError(
+      "Error.InvalidAmount",
+      { message: "amount must be a valid positive number (VND)", path: "data.amount" },
+      422
+    );
+  }
+
+  if (!(paymentMethod === PaymentMethod.WALLET || paymentMethod === PaymentMethod.BANK_TRANSFER)) {
+    throw new AppError(
+      "Error.UnsupportedPaymentMethod",
+      { message: "Payment method not supported for this flow", method: paymentMethod },
+      400
+    );
+  }
+
+
+  responseData = await paymentService.payExistingServiceRequest({
+    serviceRequestId: Number(serviceRequestId),
+    userId: Number(userId),
+    paymentMethod,
+    amount: amountNum,
+  });
+
+  message = "Payment initiated for existing service request";
+  break;
+}
 
       default: {
         throw new AppError(

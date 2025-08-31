@@ -633,9 +633,7 @@ export async function getPaymentStatus(orderCode: string) {
   };
 }
 
- /**
- * Thanh toán cho service request đã tồn tại
- */
+
 export const payExistingServiceRequest = async ({
   serviceRequestId,
   userId,
@@ -690,6 +688,7 @@ export const payExistingServiceRequest = async ({
       );
     }
 
+    // Kiểm tra và xử lý PaymentTransaction đang tồn tại
     const existingPaymentTx = await prisma.paymentTransaction.findFirst({
       where: {
         serviceRequestId: serviceRequestId,
@@ -700,18 +699,24 @@ export const payExistingServiceRequest = async ({
           ],
         },
       },
-      select: { id: true, status: true, referenceNumber: true },
+      select: { id: true, status: true, referenceNumber: true, createdAt: true },
     });
 
     if (existingPaymentTx) {
-      throw new AppError(
-        "Error.PaymentAlreadyInProgress",
-        {
-          message: "A payment is already in progress for this service request",
-          existingTransactionId: existingPaymentTx.id,
-          referenceNumber: existingPaymentTx.referenceNumber,
-        },
-        409,
+      console.log(
+        `🔄 Found existing payment transaction ${existingPaymentTx.id} for service request ${serviceRequestId}, cancelling it...`
+      );
+
+      // Hủy transaction cũ trước khi tạo mới
+      await prisma.paymentTransaction.update({
+        where: { id: existingPaymentTx.id },
+        data: { 
+          status: PaymentTransactionStatus.FAILED,
+        }
+      });
+
+      console.log(
+        `✅ Cancelled old payment transaction ${existingPaymentTx.id} (ref: ${existingPaymentTx.referenceNumber})`
       );
     }
 
@@ -816,7 +821,7 @@ async function handleExistingServiceRequestWalletPayment(
       },
     });
 
-    // 4. Trả về kết quả
+    // 5. Trả về kết quả
     return {
       message: "Service request payment completed via wallet",
       paymentTransactionId: paymentTx.id,
@@ -845,41 +850,73 @@ async function handleExistingServiceRequestBankTransferPayment(
     `${serviceRequestId}${Date.now().toString().slice(-6)}`,
   );
 
-  const description = `Thanh toán service request #${serviceRequestId}`;
+  const description = `Thanh toán đặt cọc #${serviceRequestId}`;
 
-  // Tạo payment link qua PayOS
-  const responseData = await requestPayOS(orderCode, amountVnd, description);
+  try {
+    // Tạo payment link qua PayOS
+    const responseData = await requestPayOS(orderCode, amountVnd, description);
 
-  // Tạo PaymentTransaction với trạng thái PENDING
-  const paymentTx = await paymentRepo.createPaymentTransaction({
-    kind: "DEPOSIT",
-    referenceNumber: String(orderCode),
-    gateway: "PAYOS",
-    status: PaymentTransactionStatus.PENDING,
-    userId: userId,
-    serviceRequestId: serviceRequestId,
-    amount: amountVnd,
-    description,
-    body: JSON.stringify({
-      method: PaymentMethod.BANK_TRANSFER,
+    // Tạo PaymentTransaction với trạng thái PENDING
+    const paymentTx = await paymentRepo.createPaymentTransaction({
+      kind: "DEPOSIT",
+      referenceNumber: String(orderCode),
+      gateway: "PAYOS",
+      status: PaymentTransactionStatus.PENDING,
+      userId: userId,
       serviceRequestId: serviceRequestId,
-      createdById: userId,
-      orderCode: orderCode,
-    }),
-  });
+      amount: amountVnd,
+      description,
+      body: JSON.stringify({
+        method: PaymentMethod.BANK_TRANSFER,
+        serviceRequestId: serviceRequestId,
+        createdById: userId,
+        orderCode: orderCode,
+        payOSResponse: responseData,
+      }),
+    });
 
-  return {
-    message: "Service request payment transaction created",
-    paymentTransactionId: paymentTx.id,
-    referenceNumber: paymentTx.referenceNumber,
-    status: paymentTx.status,
-    amountOut: paymentTx.amountOut,
-    gateway: paymentTx.gateway,
-    transactionDate: paymentTx.transactionDate,
-    userId: paymentTx.userId,
-    serviceRequestId: serviceRequestId,
-    responseData,
-    checkoutUrl: responseData?.checkoutUrl,
-    requiresPayment: true,
-  };
+    return {
+      message: "Service request payment transaction created",
+      paymentTransactionId: paymentTx.id,
+      referenceNumber: paymentTx.referenceNumber,
+      status: paymentTx.status,
+      amountOut: paymentTx.amountOut,
+      gateway: paymentTx.gateway,
+      transactionDate: paymentTx.transactionDate,
+      userId: paymentTx.userId,
+      serviceRequestId: serviceRequestId,
+      responseData,
+      checkoutUrl: responseData?.checkoutUrl,
+      requiresPayment: true,
+    };
+  } catch (error) {
+    console.error("🚨 Error creating PayOS payment:", error);
+    
+    // Nếu tạo PayOS payment link thất bại, vẫn tạo transaction để track
+    const paymentTx = await paymentRepo.createPaymentTransaction({
+      kind: "DEPOSIT",
+      referenceNumber: String(orderCode),
+      gateway: "PAYOS",
+      status: PaymentTransactionStatus.FAILED,
+      userId: userId,
+      serviceRequestId: serviceRequestId,
+      amount: amountVnd,
+      description,
+      body: JSON.stringify({
+        method: PaymentMethod.BANK_TRANSFER,
+        serviceRequestId: serviceRequestId,
+        createdById: userId,
+        orderCode: orderCode,
+      }),
+    });
+
+    throw new AppError(
+      "Error.PaymentGatewayError",
+      { 
+        message: "Failed to create payment link", 
+        paymentTransactionId: paymentTx.id,
+      },
+      500,
+    );
+  }
 }
