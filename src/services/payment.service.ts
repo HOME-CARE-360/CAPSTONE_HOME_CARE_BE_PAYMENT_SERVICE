@@ -638,15 +638,15 @@ export const payExistingServiceRequest = async ({
   serviceRequestId,
   userId,
   paymentMethod = PaymentMethod.BANK_TRANSFER,
-  amount,
 }: {
   serviceRequestId: number;
   userId: number;
   paymentMethod?: PaymentMethod;
-  amount: number;
 }) => {
   try {
-    const amountVnd = Math.trunc(Number(amount));
+    const bookingDeposit = getConfig<number>("BOOKING_DEPOSIT", 30000);
+
+    const amountVnd = Math.trunc(Number(bookingDeposit));
     if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
       throw new AppError(
         "Error.InvalidAmount",

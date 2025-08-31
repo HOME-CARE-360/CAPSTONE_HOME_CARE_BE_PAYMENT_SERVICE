@@ -247,7 +247,6 @@ export async function handleTCPRequest(payload: any): Promise<HandleTCPReturn> {
     serviceRequestId: Number(serviceRequestId),
     userId: Number(userId),
     paymentMethod,
-    amount: amountNum,
   });
 
   message = "Payment initiated for existing service request";
