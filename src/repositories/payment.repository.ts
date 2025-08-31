@@ -8,6 +8,7 @@ import {
   Wallet,
   PaymentTransaction,
   BookingStatus,
+  ProposalItemStatus,
 } from "../generated/prisma";
 import { AppError } from "../handlers/error";
 
@@ -499,14 +500,14 @@ export const payProposalWithWalletAtomic = async (
     }
 
  const proposal = await tx.proposal.update({
-      where: { bookingId }, // bookingId is @unique on Proposal
+      where: { bookingId }, 
       data: { status: ProposalStatus.ACCEPTED },
       select: { id: true },
     });
 
     await tx.proposalItem.updateMany({
-      where: { proposalId: proposal.id },
-      data: { status: ProposalStatus.ACCEPTED },
+      where: { proposalId: proposal.id, status: ProposalItemStatus.PENDING },
+      data: { status: ProposalItemStatus.ACCEPTED },
     });
     // 6) Update Booking → CONFIRMED
     await tx.booking.update({
