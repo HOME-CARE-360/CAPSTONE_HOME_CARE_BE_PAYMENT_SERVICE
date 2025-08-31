@@ -786,7 +786,7 @@ async function handleExistingServiceRequestWalletPayment(
     );
   }
 
-  const description = `Thanh toán service request #${serviceRequestId}`;
+  const description = `Thanh toán đặt cọc #${serviceRequestId}`;
 
   return prisma.$transaction(async (tx) => {
     // 1. Tạo PaymentTransaction SUCCESS
