@@ -505,7 +505,7 @@ export const createProposalPayment = async ({
     );
   }
 
-  const bookingDeposit = getConfig<number>("BOOKING_DEPOSIT", 30000);
+  const bookingDeposit = await getConfig<number>("BOOKING_DEPOSIT", 30000);
 
   const rawAmount =
     acceptedItems.reduce(
@@ -644,8 +644,8 @@ export const payExistingServiceRequest = async ({
   paymentMethod?: PaymentMethod;
 }) => {
   try {
-    const bookingDeposit = getConfig<number>("BOOKING_DEPOSIT", 30000);
-
+    const bookingDeposit = await getConfig<number>("BOOKING_DEPOSIT", 30000);
+    console.log("Booking deposit amount:", bookingDeposit);
     const amountVnd = Math.trunc(Number(bookingDeposit));
     if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
       throw new AppError(
