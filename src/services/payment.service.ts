@@ -645,7 +645,7 @@ export const payExistingServiceRequest = async ({
 }) => {
   try {
     const bookingDeposit = getConfig<number>("BOOKING_DEPOSIT", 30000);
-
+    
     const amountVnd = Math.trunc(Number(bookingDeposit));
     if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
       throw new AppError(
