@@ -33,16 +33,67 @@ export async function loadConfigFromDb() {
  * @param defaultValue Giá trị mặc định nếu không tìm thấy.
  * @returns Giá trị cấu hình đã được chuyển đổi kiểu dữ liệu.
  */
-export function getConfig<T>(key: string, defaultValue?: T): T {
-  if (configCache.has(key)) {
-    return configCache.get(key) as T;
+export async function getConfig<T>(key: string, defaultValue?: T): Promise<T> {
+  try {
+    // Call Prisma directly to get config by key
+    const config = await prisma.systemConfig.findUnique({
+      where: { key }
+    });
+    
+    if (config && config.value !== null) {
+      // Parse value based on type if needed
+      let parsedValue: any = config.value;
+      
+      if (config.type) {
+        switch (config.type) {
+          case 'number':
+            const numValue = Number(config.value);
+            parsedValue = isNaN(numValue) ? config.value : numValue;
+            break;
+          case 'boolean':
+            parsedValue = config.value === 'true';
+            break;
+          case 'json':
+            try {
+              parsedValue = JSON.parse(config.value);
+            } catch {
+              parsedValue = config.value;
+            }
+            break;
+          case 'string':
+          default:
+            parsedValue = config.value;
+        }
+      }
+      
+      return parsedValue as T;
+    }
+    
+    if (defaultValue !== undefined) {
+      return defaultValue;
+    }
+    
+    throw new AppError(
+      "Error.ConfigNotFound", 
+      { message: `Configuration key '${key}' not found.` }, 
+      500
+    );
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    }
+    
+    if (defaultValue !== undefined) {
+      return defaultValue;
+    }
+    
+    throw new AppError(
+      "Error.ConfigNotFound", 
+      { message: `Configuration key '${key}' not found.` }, 
+      500
+    );
   }
-  if (defaultValue !== undefined) {
-    return defaultValue;
-  }
-  throw new AppError("Error.ConfigNotFound", { message: `Configuration key '${key}' not found.` }, 500);
 }
-
 
 export async function updateConfig(key: string, value: string, type: string = 'string') {
   await prisma.systemConfig.upsert({

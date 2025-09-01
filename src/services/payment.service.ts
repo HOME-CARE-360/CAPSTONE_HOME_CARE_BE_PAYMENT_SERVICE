@@ -276,7 +276,7 @@ export const createWalletTopUpUsingPaymentTransaction = async (
   try {
     const orderCode = Date.now();
     const amountVnd = Math.trunc(Number(data.amount));
-    const minTopUpAmount = getConfig<number>("WALLET_TOPUP_MIN", 10000);
+    const minTopUpAmount = await getConfig<number>("WALLET_TOPUP_MIN", 10000);
     if (!Number.isFinite(amountVnd) || amountVnd < minTopUpAmount) {
       throw new AppError(
         "Error.InvalidAmount",
@@ -511,7 +511,7 @@ export const createProposalPayment = async ({
     acceptedItems.reduce(
       (sum, item) => sum + item.quantity * item.price,
       0,
-    ) - bookingDeposit;
+    ) - Number(bookingDeposit);
 
 
   console.log("Raw amount (ACCEPTED only):", rawAmount);
@@ -645,7 +645,7 @@ export const payExistingServiceRequest = async ({
 }) => {
   try {
     const bookingDeposit = getConfig<number>("BOOKING_DEPOSIT", 30000);
-    
+
     const amountVnd = Math.trunc(Number(bookingDeposit));
     if (!Number.isFinite(amountVnd) || amountVnd <= 0) {
       throw new AppError(
