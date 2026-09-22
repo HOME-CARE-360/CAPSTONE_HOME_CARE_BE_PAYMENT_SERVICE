@@ -46,3 +46,6 @@ tmp/
 data/
 *.sqlite
 .vercel
+
+# Prisma client is generated at install time (prisma generate)
+src/generated/
